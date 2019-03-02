@@ -46,7 +46,7 @@ a:hover {
     position: relative;
     display: grid;
     min-height: 100%;
-    max-width: 64em;
+    max-width: 60em;
     margin: 0 auto;
 
     grid-template-columns: 1em 1fr 2em 14em 1em;

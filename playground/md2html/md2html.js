@@ -38,8 +38,6 @@ var md2html = (function(my) {
             blocks.push(this.createBlock(lines[i], blocktype, indent));
         }
         var mergedBlocks = this.mergeBlocks(blocks);
-        console.log(blocks);
-        console.log(mergedBlocks);
         return mergedBlocks;
     }
 

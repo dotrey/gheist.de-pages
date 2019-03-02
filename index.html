@@ -15,7 +15,7 @@
         </div>
         <div class="logo-dot">.</div>
         <div class="logo-de">de</div>
-        <div class="gh logo-gh">
+        <div class="gh logo-gh" onclick="site.navigate('');">
                 <div class="colors">
                     <div class="color" data-color="1"></div>
                     <div class="color" data-color="2"></div>
@@ -32,10 +32,11 @@
             </div>
         <div class="menu">
             <div class="link">about</div>
-            <div class="link">playground</div>
+            <div class="link" onclick="site.navigate('/playground/md2html/')">playground</div>
         </div>
     </div>
 
-    <script src="/js/site.js" async></script>
+    <script src="/js/site.js"></script>
+    <script src="/playground/md2html/md2html.js"></script>
 </body>
 </html>

@@ -13,7 +13,31 @@ var site = (function(my) {
     my.navigate = function(loc) {
         if (!loc || loc === "/") {
             this.setContent("");
+        }else{
+            if (loc[loc.length - 1] === "/") {
+                loc += "readme.md";
+            }
+            this.loadContent(loc);
         }
+    }
+
+    my.loadContent = function(loc) {
+        var req = new XMLHttpRequest();
+        req.addEventListener("load", function() {
+            if (req.status === 200) {
+                this.displayContent(req.responseText);
+            }
+        }.bind(this));
+        req.open("GET", loc);
+        req.send();
+    }
+
+    my.displayContent = function(md) {
+        var content = md;
+        if (typeof md2html !== "undefined") {
+            content = md2html.html(md)
+        }
+        this.setContent(content);
     }
 
     my.setContent = function(html) {
