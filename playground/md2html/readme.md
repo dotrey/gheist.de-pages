@@ -1,0 +1,90 @@
+# md2html.js
+This is a js lib with the intention to parse given markdown syntax and return
+matching HTML. The HTML can be further styled using CSS, and some special cases
+like code blocks require CSS, to be distinguishable from the regular text. The
+library will convert them into usable HTML-elements with pre-defined classes.
+Since this lib is intended to be used with github pages, it focuses on the MD
+syntax as described here: https://guides.github.com/features/mastering-markdown/
+
+## Useful Links
+* great regex tester: https://regex101.com/
+
+# Parsing Structure
+To create the HTML, the MD needs to be parsed in a way, that the larger HTML
+structures can be created before the smaller structures, e.g. the paragraph before
+the contained bold text or links.
+
+## Parsing Order
+The parser will work from the large to the small in the following order:
+1. Split into headers and paragraphs
+1. Extract blocks from the paragraphs, which can be either
+  1. Lists
+  1. Blockquotes
+  1. Code blocks
+  1. Simple text
+1. For each block, replace all inline MD like emphasis or links
+
+# Test Area
+This section contains various formats for testing
+
+# H1
+Main Heading
+
+Second paragraph - just for the show.
+## H2
+Sub Heading
+### H3
+SubSub Heading
+#### H4
+SubSubSub Heading
+##### H5
+Does someone even use this?
+###### H6
+Really, who need 5 sub-headings?
+
+# Lists
+
+## Unordered
+* Item 1
+* Item 2
+  * Item 2a
+  * Item 2b
+
+## Ordered
+1. Item 1
+1. Item 2
+1. Item 3
+    1. Item 3a
+    1. Item 3b
+
+# Links
+[GitHub](http://github.com)
+
+# Emphasis
+*This text will be italic*
+_This will also be italic_
+
+**This text will be bold**
+__This will also be bold__
+
+_You **can** combine them_
+__You *can* combine them__
+
+# Blockquotes
+As Kanye West said:
+
+> We're living the future so
+> the present is our past.
+
+# Inline Code
+I think you should use an `<addr>` element here instead.
+
+# Code Block
+Here comes my favourity JS
+```javascript
+function fancyAlert(arg) {
+  if(arg) {
+    $.facebox({div:'#foo'})
+  }
+}
+```

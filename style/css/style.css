@@ -1,0 +1,304 @@
+@font-face {
+	font-family: "Open Sans Regular";
+	src: url('../font/OpenSans-Regular.ttf'); /* see font/Apache License.txt */
+}
+
+@font-face {
+	font-family: "Roboto Mono Regular";
+	src: url('../font/RobotoMono-Regular.ttf'); /* see font/Apache License.txt */
+}
+
+:root {
+    --main-bg-color: #2B2B2B;
+    --content-bg-color: #333333;
+    --content-border-color: #303030;
+    --main-color: #EEEEEE;
+    --main-link-color:#589DF6;
+}
+
+body, html {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+	font-family: "Open Sans Regular", Arial, sans-serif;
+	font-size: 14pt;
+	line-height: 1.4;
+    color: var(--main-color);
+    background-color: var(--main-bg-color);
+}
+
+a, a:visited {
+    color: var(--main-color);
+    text-decoration: underline;
+}
+
+a:hover {
+    color: var(--main-link-color);
+}
+
+/* layout */
+.layout-container {
+    position: relative;
+    display: grid;
+    min-height: 100%;
+    max-width: 64em;
+    margin: 0 auto;
+
+    grid-template-columns: 1em 1fr 2em 14em 1em;
+    grid-template-rows: 2em calc(50vh - 7em) 10em 1fr 2em;
+    grid-template-areas: 
+        ". . . . ."
+        ". content . . ."
+        ". content dot menumiddle ."
+        ". content . menu ."
+        ". . . . .";
+}
+
+.layout-container .logo-de {
+    position: relative;
+    grid-area: menumiddle;
+    font-size: 10em;
+    line-height: 1;
+    user-select: none;
+}
+
+.layout-container .logo-gheist {
+    position: relative;
+    grid-column: 2;
+    grid-row: 3;
+    text-align: right;
+    font-size: 10em;
+    line-height: 1;
+    user-select: none;
+}
+
+.layout-container .logo-gheist .subtitle {
+    position: absolute;
+    right: 0;
+    bottom: -3.5em;
+    font-size: 0.1em;
+    line-height: 1.9;
+    width: 20em;
+    text-align: left;
+}
+
+.layout-container .logo-dot {
+    position: relative;
+    grid-area: dot;
+    font-size: 10em;
+    line-height: 1;
+    color: var(--main-color);
+    align-self: end;
+    user-select: none;
+}
+
+.layout-container .logo-gh {
+    position: relative;
+    grid-area: menumiddle;
+    width: 10.5em;
+    height: 7.5em;
+    justify-self: center;
+    align-self: center;
+    display: none;
+}
+
+.layout-container .menu {
+    position: relative;
+    grid-area: menu;
+    margin: 0 0 0 3.5em;
+}
+
+.layout-container .menu .link {
+    position: relative;
+    display: block;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+    transition: color 0.25s linear;
+}
+
+.layout-container .menu .link:before {
+    position: absolute;
+    display: block;
+    left: -1.4em;
+    content: "\2192";
+}
+
+.layout-container .menu .link:hover {
+    color: var(--main-link-color);
+}
+
+.layout-container .content {
+    position: relative;
+    grid-area: content;
+    justify-self: center;
+    max-width: 42em;
+    width: 100%;
+    box-sizing: border-box;
+    margin: -0.5em;
+    padding: 0.5em;
+}
+
+.content:not(:empty) ~ .logo-gheist,
+.content:not(:empty) ~ .logo-dot,
+.content:not(:empty) ~ .logo-de {
+    display: none;
+}
+
+.content:not(:empty) ~ .logo-gh {
+    display: block;
+}
+
+/* content design */
+.layout-container .content:not(:empty) {
+    border: 0.5em solid var(--content-border-color);
+    background-color: var(--content-bg-color);
+}
+
+/* GH */
+.gh {
+    position: relative;
+    grid-area: content;
+    width: 35em;
+    height: 25em;
+    background-color: var(--main-bg-color);
+    overflow: hidden;
+}
+
+.gh .block {
+    position: absolute;
+    background-color: inherit;
+    z-index: 10;
+}
+
+.gh .block.b1 {
+    top: 0;
+    left: 57.2%;
+    height: 40%;
+    width: 28.6%;
+}
+
+.gh .block.b2 {
+    top: 20%;
+    left: 14.3%;
+    height: 20%;
+    width: 42.9%;
+}
+
+.gh .block.b3 {
+    top: 20%;
+    left: 14.3%;
+    height: 60%;
+    width: 14.3%;
+}
+
+.gh .block.b4 {
+    top: 60%;
+    left: 14.3%;
+    height: 20%;
+    width: 28.6%;
+}
+
+.gh .block.b5 {
+    bottom: 0;
+    left: 57.2%;
+    height: 40%;
+    width: 28.6%;
+}
+
+.gh .colors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #660000;
+}
+
+.gh .colors .color {
+    position: absolute;
+    width: 90%;
+    animation-name: gh-color-move;
+    animation-duration: 60s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform: translate(-50%, -50%);
+}
+.gh .colors .color::before {
+    position: relative;
+    display: block;
+    content: " ";
+    padding-top: 100%;
+}
+
+.gh .colors .color[data-color="1"] {
+    background: radial-gradient(rgba(112,0,255,1) 0%, transparent 70%);
+    animation-delay: 0s;
+    z-index: 6;
+}
+
+.gh .colors .color[data-color="2"] {
+    background: radial-gradient(rgba(0,225,255,1) 0%, transparent 70%);
+    animation-delay: -10s;
+    z-index: 2;
+}
+
+.gh .colors .color[data-color="3"] {
+    background: radial-gradient(rgba(255,21,0,1) 0%, transparent 70%);
+    animation-delay: -20s;
+    z-index: 3;
+}
+
+.gh .colors .color[data-color="4"] {
+    background: radial-gradient(rgba(0,255,0,1) 0%, transparent 70%);
+    animation-delay: -30s;
+    z-index: 4;
+}
+
+.gh .colors .color[data-color="5"] {
+    background: radial-gradient(rgba(255,0,210,1) 0%, transparent 70%);
+    animation-delay: -40s;
+    z-index: 1;
+}
+
+.gh .colors .color[data-color="6"] {
+    background: radial-gradient(rgba(255,255,0,1) 0%, transparent 70%);
+    animation-delay: -50s;
+    z-index: 5;
+}
+
+@keyframes gh-color-move {
+    0% { top: 22%; left: 50%;}
+    16.66% { top: 22%; left: 85%; }
+    33.32% { top: 78%; left: 85%; }
+    49.98% { top: 78%; left: 50%; }
+    66.64% { top: 78%; left: 15%; }
+    83.3% { top: 22%; left: 15%; }
+    100% { top: 22%; left: 50%;}
+}
+
+.gh .colors.gray {
+    background-color: #666666;
+}
+.gh .colors.gray .color[data-color="1"] {
+    background: radial-gradient(rgba(125,125,125,1) 0%, transparent 70%);
+}
+.gh .colors.gray .color[data-color="2"] {
+    background: radial-gradient(rgba(200,200,200,1) 0%, transparent 70%);
+}
+.gh .colors.gray .color[data-color="3"] {
+    background: radial-gradient(rgba(50,50,50,1) 0%, transparent 70%);
+}
+.gh .colors.gray .color[data-color="4"] {
+    background: radial-gradient(rgba(150,150,150,1) 0%, transparent 70%);
+}
+.gh .colors.gray .color[data-color="5"] {
+    background: radial-gradient(rgba(175,175,175,1) 0%, transparent 70%);
+}
+.gh .colors.gray .color[data-color="6"] {
+    background: radial-gradient(rgba(75,75,75,1) 0%, transparent 70%);
+}

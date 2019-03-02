@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- can inline iframe+content call outer function? -->
+    <iframe sandbox="allow-scripts" srcdoc='
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        </head>
+        <body>
+            <script>
+                document.body.onload = function() {
+                    console.log("inner window loaded");
+                    window.parent.outerFunction();
+                }
+                console.log("inner window test");
+            </script>
+        </body>
+        </html>'>
+    </iframe>
+
+    <script>
+        function outerFunction() {
+            alert("outer function was called");
+        }
+    </script>
+</body>
+</html>
