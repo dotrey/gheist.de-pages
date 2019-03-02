@@ -1,4 +1,23 @@
-var md2html = (function(my){
+var md2html = (function(my) {
+
+    my.settings = {
+        // blocks that can stretch over multiple lines
+        multilineBlocks : [
+            "paragraph", "blockquote", "orderedlist", "unorderedlist"
+        ],
+        // blocks where indents have semantic value
+        indentableBlocks : [
+            "orderedlist", "unorderedlist"
+        ],
+        // blocks that can contain empty rows
+        multiparagraphBlocks : [
+            "codeblock"
+        ],
+        // block that neither contain formated text nor sub-blocks
+        unformattedBlocks : [
+            "codeblock"
+        ]
+    }
 
     my.html = function(md) {
         var blocks = this.parse(md);
@@ -6,30 +25,166 @@ var md2html = (function(my){
     }
 
     my.parse = function(md) {
-        var blocks = [];
         var lines = md.split("\n");
-        var lastBlock = null;
+        var blocks = [];
         for (var i = 0, ic = lines.length; i < ic; i++) {
-            var line = lines[i];
-            if (line.indexOf("#") === 0) {
-                // heading
-                lastBlock = this.createBlock("heading", null);
-                lastBlock.appendLine(line);
-                blocks.push(lastBlock);
-            }else if (!line.trim()) {
+            if (!lines[i].trim()) {
                 // empty line
-                lastBlock = null;
-            }else{
-                // regular line, add to last paragraph
-                if (!lastBlock || lastBlock.type !== "paragraph") {
-                    lastBlock = this.createBlock("paragraph", null);
-                    blocks.push(lastBlock);
+                blocks.push(null);
+                continue;
+            }
+            var blocktype = this.detectBlockType(lines[i]);
+            var indent = this.getIndent(lines[i]);
+            blocks.push(this.createBlock(lines[i], blocktype, indent));
+        }
+        var mergedBlocks = this.mergeBlocks(blocks);
+        console.log(blocks);
+        console.log(mergedBlocks);
+        return mergedBlocks;
+    }
+
+    my.mergeBlocks = function(blocks) {
+        var merged = [];
+        var lastBlock = null;
+        for (var i = 0, ic = blocks.length; i < ic; i++) {
+            if (lastBlock && !blocks[i]) {
+                if (!this.isMultiParagraph(lastBlock)) {
+                    // if the last block isn't a block that allows empty line,
+                    // the empty line will always start a new block
+                    lastBlock = null;
+                }else{
+                    // if the last block allows empty lines, we add one
+                    lastBlock.appendLine("");
                 }
-                lastBlock.appendLine(line);
+                continue;
+            }
+            if (!lastBlock) {
+                lastBlock = blocks[i];
+                if (lastBlock) {
+                    merged.push(lastBlock);
+                }
+            }else{
+                if(this.isUnformatted(lastBlock)) {
+                    // an unformatted block will capture all lines until a
+                    // block with the same type is found, which closes the
+                    // unformatted block
+                    lastBlock.appendLine(blocks[i].line);
+                    if (lastBlock.type === blocks[i].type) {
+                        // close the unformatted block
+                        lastBlock = null;
+                    }
+                    // continue with the next line
+                    continue;
+                }
+
+                if (lastBlock.type !== blocks[i].type) {
+                    // different block type, start a new block
+                    if (!this.isIndentable(lastBlock) ||
+                        !this.isIndentable(blocks[i])) {
+                        // indent is not relevant for at least one of the blocks
+                        // -> we create a new block
+                        lastBlock = blocks[i];
+                        merged.push(lastBlock);
+                    }else{
+                        // indent is relevant for both blocks
+                        // -> both blocks must be lists
+                        // -> find the parent
+                        var newBlockParent = this.findParentBlock(lastBlock, blocks[i]);
+                        if (newBlockParent && 
+                            newBlockParent.type === blocks[i].type &&
+                            newBlockParent.indent === blocks[i].indent) {
+                            // continue with the last block's parent
+                            lastBlock = newBlockParent;
+                            lastBlock.appendLine(blocks[i].line);
+                        }else{
+                            // start new block
+                            lastBlock = blocks[i];
+                            lastBlock.appendTo(newBlockParent);
+                            if (!newBlockParent) {
+                                merged.push(lastBlock);
+                            }
+                        }
+                    }
+                }else{
+                    // same block type
+                    if (!this.isIndentable(lastBlock)) {
+                        // if the indent has no relevance for the block,
+                        // we can simply add the current block's line to
+                        // the last block
+                        lastBlock.appendLine(blocks[i].line);
+                    }else{
+                        // the indent is relevant
+                        if (lastBlock.indent === blocks[i].indent) {
+                            // same type and same indent
+                            // -> continue last block
+                            lastBlock.appendLine(blocks[i].line);
+                        }else{
+                            // same types but different indents
+                            // -> search the new parent block
+                            var newBlockParent = this.findParentBlock(lastBlock, blocks[i]);
+                            if (newBlockParent && 
+                                newBlockParent.type === blocks[i].type &&
+                                newBlockParent.indent === blocks[i].indent) {
+                                // continue with the last block's parent
+                                lastBlock = newBlockParent;
+                                lastBlock.appendLine(blocks[i].line);
+                            }else{
+                                // start new block
+                                lastBlock = blocks[i];
+                                lastBlock.appendTo(newBlockParent);
+                                if (!newBlockParent) {
+                                    merged.push(lastBlock);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
+        return merged;
+    }
 
-        return blocks;
+    my.findParentBlock = function(oldBlock, newBlock) {
+        if (oldBlock.indent < newBlock.indent) {
+            // the new block is more indented than the old block
+            // -> new block becomes sub-block of the old block
+            return oldBlock;
+        }else if (oldBlock.indent === newBlock.indent) {
+            // both blocks have the same indent and thus share 
+            // the parent, but if the have the same type we should
+            // continue with the oldBlock instead of creating a 
+            // new one
+            if (oldBlock.type === newBlock.type) {
+                return oldBlock;
+            }
+            return oldBlock.parent;
+        }else{
+            // the old block is more indented than the new block
+            // -> we need to look at the parent of the old block
+            //    and compare it's indent
+            return this.findParentBlock(oldBlock.parent, newBlock);
+        }
+    }
+
+    my.createBlock = function(line, type, indent) {
+        return {
+            line : line,
+            type : type,
+            indent : indent,
+            lines : [line],
+            parent : null,
+
+            appendLine : function(line) {
+                this.lines.push(line);
+            },
+
+            appendTo : function(parent) {
+                this.parent = parent;
+                if (parent) {
+                    parent.appendLine(this);
+                }
+            }
+        }
     }
 
     my.convert = function(blocks) {
@@ -40,130 +195,6 @@ var md2html = (function(my){
         }
 
         return result;
-    }
-
-    my.createBlock = function(type, parent) {
-        return {
-            type : type,
-            lines : [],
-            parent : parent,
-
-            appendLine : function(line) {
-                this.lines.push(line);
-            },
-
-            parseLines : function() {
-                var ln = [];
-                var lastBlock = null;
-                for (var i = 0, ic = this.lines.length; i < ic; i++) {
-                    if (typeof this.lines[i].type === "undefined") {
-                        // this is a string
-                        var trimmedLine = this.lines[i].trim();
-                        if (trimmedLine.indexOf("```") === 0) {
-                            // code block
-                        }else if (trimmedLine.indexOf(" ") > 0) {
-                            // line contains a space
-                            var start = trimmedLine.split(" ", 2)[0];
-                            switch(start) {
-                                case ">":
-                                    // blockquote
-                                    if (!lastBlock || lastBlock.type !== "blockquote") {
-                                        lastBlock = my.createBlock("blockquote", this);
-                                        ln.push(lastBlock);
-                                    }
-                                    // cut off the "> "
-                                    lastBlock.appendLine(trimmedLine.substr(2));
-                                    break;
-                                case "-":
-                                case "*":
-                                case "1.":
-                                    // list
-                                    var listType = start === "1." ? "orderedlist" : "unorderedlist"
-                                    var indent = this.lines[i].indexOf(start);
-                                    if (lastBlock && lastBlock.type === listType) {
-                                        // the last block is of the same type as the current list
-                                        // -> check indent
-                                        if (lastBlock.indent === indent) {
-                                            // same indent
-                                            // -> row belongs to this list
-                                            // cut off the list indicator and the following space
-                                            lastBlock.appendLine(trimmedLine.substr(start.length + 1));
-                                        }else{
-                                            // different indent
-                                            if (indent > lastBlock.indent) {
-                                                // sublist
-                                                var sublist = my.createBlock(listType, lastBlock);
-                                                sublist.appendLine(trimmedLine.substr(start.length + 1));
-                                                sublist.indent = indent;
-                                                lastBlock.appendLine(sublist);
-                                                lastBlock = sublist;
-                                            }else{
-                                                // we left the sublist and continue with the parent
-                                                while (lastBlock.indent !== indent &&
-                                                    lastBlock.parent) {
-                                                    lastBlock = lastBlock.parent;
-                                                }
-                                                if (lastBlock.type === listType) {
-                                                    // continue with the parent list
-                                                    lastBlock.appendLine(trimmedLine.substr(start.length + 1));
-                                                }else{
-                                                    // create a new list
-                                                    if (this === lastBlock) {
-                                                        // new block inside the current block
-                                                        lastBlock = my.createBlock(listType, this);
-                                                        lastBlock.indent = indent;
-                                                        ln.push(lastBlock);
-                                                    }else{
-                                                        // new block in a sub-block
-                                                        var sublist = my.createBlock(listType, lastBlock.parent);
-                                                        sublist.indent = indent;
-                                                        lastBlock.parent.appendLine(sublist);
-                                                        lastBlock = sublist;
-                                                    }
-                                                    lastBlock.appendLine(trimmedLine.substr(start.length + 1));
-                                                }
-                                            }
-                                        }
-                                    }else{       
-                                        // create a completely new list                                 
-                                        lastBlock = my.createBlock(listType, this);
-                                        lastBlock.indent = indent;
-                                        lastBlock.appendLine(trimmedLine.substr(start.length + 1));
-                                        ln.push(lastBlock);
-                                    }
-                                    break;
-                                default:
-                                    // regular line
-                                    if (lastBlock) {
-                                        // previous lines belonged to a block
-                                        // -> check whether the block has ended
-                                        //    or the current line also belong to it
-                                        if (lastBlock.type === "unorderedlist" ||
-                                            lastBlock.type === "orderedlist" ||
-                                            lastBlock.type === "blockquote") {
-                                            // line no longer belongs to the block
-                                            lastBlock = null;
-                                            ln.push(this.lines[i]);
-                                        }else{
-                                            // code block
-                                            // -> continues until next ```
-                                            lastBlock.appendLine(this.lines[i]);
-                                        }
-                                    }else{
-                                        // no open block
-                                        ln.push(this.lines[i]);
-                                    }
-                                    break;
-                            }
-                        }
-                    }else{
-                        // this is actually another block
-                    }
-                }
-
-                this.lines = ln;
-            }
-        }
     }
 
     my.converter = {
@@ -183,14 +214,12 @@ var md2html = (function(my){
                 line = line.substr(1);
             }
             count = Math.min(Math.max(1, count), 6);
-            return "<h" + count + ">" + line.trim() + "</h" + count + ">";
+            line = my.inline.angleBrackets(line.trim());
+            return "<h" + count + ">" + line + "</h" + count + ">";
         },
 
         paragraph : function(block) {
             var r = "<p>";
-
-            // paragraph can contain sub-blocks
-            block.parseLines();
 
             for (var i = 0, ic = block.lines.length; i < ic; i++) {
                 if (typeof block.lines[i].type !== "undefined") {
@@ -198,16 +227,52 @@ var md2html = (function(my){
                     r += this.convert(block.lines[i]);
                 }else{
                     // we re-add the line break to have a whitespace between
-                    // consecutive lines and for the replacements, but it
-                    // will be replaced by an actual <br/> later on
-                    r += block.lines[i] + "\n";
+                    // consecutive lines and for the replacements
+                    r += my.inline.replace(block.lines[i]) + "\n";
                 }
             }
 
-            // inline repalcement here, to get multiline emphasis?
-            r = my.inline.replace(r);
+            r += "</p>";
+            return r;
+        },
+
+        blockquote : function(block) {
+            var r = "<p class=\"blockquote\">";
+
+            for (var i = 0, ic = block.lines.length; i < ic; i++) {
+                if (typeof block.lines[i].type !== "undefined") {
+                    // this is actually another block inside the paragraph
+                    r += this.convert(block.lines[i]);
+                }else{
+                    // we re-add the line break to have a whitespace between
+                    // consecutive lines and for the replacements
+                    // remove the leading "> "
+                    var line = block.lines[i].trim().substr(1).trim();
+                    r += my.inline.replace(line) + "<br/>\n";
+                }
+            }
 
             r += "</p>";
+            return r;
+        },
+
+        codeblock : function(block) {
+            var r = "";
+
+            for (var i = 0, ic = block.lines.length; i < ic; i++) {
+                if (block.lines[i].indexOf("```") === 0) {
+                    // skip start and end line of the codeblock
+                    continue;
+                }
+                // code blocks can't contain other blocks
+                r += block.lines[i] + "\n";
+            }
+
+            r = my.inline.angleBrackets(r);
+            r = my.inline.nbsp(r);
+            r = my.inline.nl2br(r);
+            
+            r = "<div class=\"codeblock\">" + r + "</div>";
             return r;
         },
 
@@ -226,12 +291,11 @@ var md2html = (function(my){
                     r += this.convert(block.lines[i]) + "</li>";
                 }else{
                     // single item
-                    r += "<li>" + block.lines[i] + "</li>";
+                    // remove the leading "1. "
+                    var line = block.lines[i].trim().substr(2).trim();
+                    r += "<li>" + my.inline.replace(line) + "</li>";
                 }
             }
-
-            // inline repalcement here, to get multiline emphasis?
-            r = my.inline.replace(r);
 
             r += "</ol>";
             return r;
@@ -252,12 +316,11 @@ var md2html = (function(my){
                     r += this.convert(block.lines[i]) + "</li>";
                 }else{
                     // single item
-                    r += "<li>" + block.lines[i] + "</li>";
+                    // remove the leading "* " or "- "
+                    var line = block.lines[i].trim().substr(1).trim();
+                    r += "<li>" + my.inline.replace(line) + "</li>";
                 }
             }
-
-            // inline repalcement here, to get multiline emphasis?
-            r = my.inline.replace(r);
 
             r += "</ul>";
             return r;
@@ -271,10 +334,10 @@ var md2html = (function(my){
 
     my.inline = {
         replace : function(string) {
+            string = this.angleBrackets(string);
             string = this.link(string);
             string = this.emphasis(string);
             string = this.inlineCode(string);
-            string = this.nl2br(string);
             return string;
         },
 
@@ -317,7 +380,79 @@ var md2html = (function(my){
         nl2br : function(string) {
             string = string.replace(/\n/gm, "<br/>");
             return string;
+        },
+
+        nbsp : function(string) {
+            string = string.replace(/ /gm, "&nbsp;");
+            return string;
+        },
+
+        angleBrackets : function(string) {
+            string = string.replace(/</gm, "&lt;");
+            string = string.replace(/>/gm, "&gt;");
+            return string;
+        },
+    }
+
+    my.detectBlockType = function(line) {
+        line = (line || "").trim();
+        if (line.indexOf(" ") > 0) {
+            // line might contain a start symbol
+            var start = line.split(" ", 2)[0];
+            switch(start) {
+                case "#":
+                case "##":
+                case "###":
+                case "####":
+                case "#####":
+                case "######":
+                    return "heading";
+                case "*":
+                case "-":
+                    return "unorderedlist";
+                case "1.":
+                    return "orderedlist";
+                case ">":
+                    return "blockquote";
+                case "```":
+                    return "codeblock";
+                default:
+                    break;
+            }
         }
+
+        // some line contain start symbols without containing a space
+        if (line.indexOf("```") === 0) {
+            return "codeblock";
+        }
+
+        // everything that has no explicit block type could be a paragraph
+        return "paragraph";
+    }
+
+    my.getIndent = function(line) {
+        var i = 0;
+        while(line.indexOf(" ") === 0) {
+            i++;
+            line = line.substr(1);
+        }
+        return i;
+    }
+
+    my.isIndentable = function(block) {
+        return this.settings.indentableBlocks.indexOf(block.type) >= 0;
+    }
+
+    my.isMultiline = function(block) {
+        return this.settings.multilineBlocks.indexOf(block.type) >= 0;
+    }
+
+    my.isMultiParagraph = function(block) {
+        return this.settings.multiparagraphBlocks.indexOf(block.type) >= 0;
+    }
+
+    my.isUnformatted = function(block) {
+        return this.settings.unformattedBlocks.indexOf(block.type) >= 0;
     }
 
     return my;
