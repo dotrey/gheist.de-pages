@@ -33,7 +33,7 @@ var site = (function(my) {
     }
 
     my.loadContent = function(loc) {
-        this.ajax(loc).done(function(data) {
+        this.ajax(loc + this.noCache()).done(function(data) {
             this.displayContent(data);
         }.bind(this));
     }
@@ -166,6 +166,10 @@ var site = (function(my) {
             }
         }
         return new HTMLCollection();
+    }
+
+    my.noCache = function() {
+        return "?nc=" + Date.now();
     }
 
     my.log = function(msg, o) {
