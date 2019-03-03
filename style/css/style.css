@@ -190,8 +190,15 @@ a:hover {
     margin-top: 0;
 }
 
-.layout-container .content p {
+.layout-container .content p,
+.layout-container .content ol,
+.layout-container .content ul {
     margin: 0.75em 0;
+}
+
+.layout-container .content li>ol,
+.layout-container .content li>ul {
+    margin: 0;
 }
 
 .layout-container .content blockquote {
