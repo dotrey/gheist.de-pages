@@ -1,90 +1,61 @@
-# md2html.js
-This is a js lib with the intention to parse given markdown syntax and return
+# Markdown to HTML
+md2html.js is a lib with the intention to parse given markdown syntax and return
 matching HTML. The HTML can be further styled using CSS, and some special cases
-like code blocks require CSS, to be distinguishable from the regular text. The
-library will convert them into usable HTML-elements with pre-defined classes.
-Since this lib is intended to be used with github pages, it focuses on the MD
+like code blocks require CSS to be distinguishable from the regular text. The
+library will convert them into usable HTML elements with predefined classes.
+Since this lib is intended to be used with github pages, it focuses on the Markdown
 syntax as described here: https://guides.github.com/features/mastering-markdown/
 
-## Useful Links
-* great regex tester: https://regex101.com/
+# Supported Features
+Based on the github Markdown syntax:
+* [x] Headings
+* [x] Paragraphs
+* [x] Blockquotes
+* [x] Ordered lists (with "1.")
+* [x] Unordered lists (with "*" or "-")
+* [x] Codeblocks
+  * [x] Inline code
+* [ ] Code highlighting for 
+  * [ ] JavaScript
+* [~] Emphasis
+  * [x] bold
+  * [x] italic
+  * [ ] strike through
+* [~] Links
+  * [x] explicit links
+  * [ ] automatic url replacement
+* [ ] Images
+* [ ] Tasks
 
-# Parsing Structure
-To create the HTML, the MD needs to be parsed in a way, that the larger HTML
-structures can be created before the smaller structures, e.g. the paragraph before
-the contained bold text or links.
+Additional features:
+* [ ] Forced `<br/>`
 
-## Parsing Order
-The parser will work from the large to the small in the following order:
-1. Split into headers and paragraphs
-1. Extract blocks from the paragraphs, which can be either
-  1. Lists
-  1. Blockquotes
-  1. Code blocks
-  1. Simple text
-1. For each block, replace all inline MD like emphasis or links
+Support for the following features is currently not planned:
+* Tables
 
-# Test Area
-This section contains various formats for testing
+# Parsing
+For parsing, the entire markdown is split into its lines. For each line is checked,
+whether it is a special line like a heading, list, etc. and a new block is created
+for every line with the matching block type. Normal lines are converted into paragraphs.
+The following block types are available:
+* `heading`
+* `paragraph`
+* `orderedlist`
+* `unorderedlist`
+* `blockquote`
+* `codeblock`
+Once all lines have been converted into blocks, this list of blocks is traversed and
+adjacent blocks of the same types are merged into one larger block. For lists there is
+the added complication of indents, which have to be respected together with the block
+type when deciding whether to merge or to keep a block.
+Indents are also used to determine the parent of a block, which might be another block.
 
-# H1
-Main Heading
+Another special case are codeblocks, which are the only blocks that can contain empty
+lines. For all other blocks, an empty line would trigger the start of a new block.
 
-Second paragraph - just for the show.
-## H2
-Sub Heading
-### H3
-SubSub Heading
-#### H4
-SubSubSub Heading
-##### H5
-Does someone even use this?
-###### H6
-Really, who need 5 sub-headings?
-
-# Lists
-
-## Unordered
-* Item 1
-* Item 2
-  * Item 2a
-  * Item 2b
-
-## Ordered
-1. Item 1
-1. Item 2
-1. Item 3
-    1. Item 3a
-    1. Item 3b
-
-# Links
-[GitHub](http://github.com)
-
-# Emphasis
-*This text will be italic*
-_This will also be italic_
-
-**This text will be bold**
-__This will also be bold__
-
-_You **can** combine them_
-__You *can* combine them__
-
-# Blockquotes
-As Kanye West said:
-
-> We're living the future so
-> the present is our past.
-
-# Inline Code
-I think you should use an `<addr>` element here instead.
-
-# Code Block
-Here comes my favourity JS
-```javascript
-function fancyAlert(arg) {
-  if(arg) {
-    $.facebox({div:'#foo'})
-  }
-}
-```
+# Conversion
+Once all blocks are merged, the blocks are rendered as HTML. This step is pretty straight
+forward, as simply a surrounding HTML element is created for each block (like `<p></p>`
+for paragraphs) and all line of the block are added to this element. If one line is not a
+string but another block (e.g. for a nested list), the sub-block is rendered and then added
+to the parent block's HTML.
