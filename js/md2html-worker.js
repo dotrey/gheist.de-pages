@@ -1,3 +1,9 @@
+/* this is based on /playground/md2html/md2html.js */
+onmessage = function(e) {
+    postMessage(md2html.html(e.data));
+}
+
+/* insert md2html.js below, followed by customizations */
 var md2html = (function(my) {
 
     my.settings = {
@@ -453,3 +459,13 @@ var md2html = (function(my) {
 
     return my;
 })(md2html || {});
+
+/* customizations */
+
+/* adjust link replacement to rewrite relative links into #!.. hash links */
+md2html.inline.link = function(string) {
+    string = string.replace(/\[([^\]]*?)\]\(\/([^)]*?)\)/gm, "<a href=\"#!$2\">$1</a>");
+    string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)/gm, "<a href=\"$2\">$1</a>");
+
+    return string;
+}

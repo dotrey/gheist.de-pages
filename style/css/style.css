@@ -12,6 +12,8 @@
     --main-bg-color: #2B2B2B;
     --content-bg-color: #333333;
     --content-border-color: #303030;
+    --content-box-bg-color: #3F3F3F;
+    --content-box-border-color: #484848;
     --main-color: #EEEEEE;
     --main-link-color:#589DF6;
 }
@@ -119,6 +121,7 @@ a:hover {
     margin-bottom: 0.5em;
     cursor: pointer;
     transition: color 0.25s linear;
+    text-decoration: none;
 }
 
 .layout-container .menu .link:before {
@@ -154,9 +157,84 @@ a:hover {
 }
 
 /* content design */
+.layout-container .content {
+    line-height: 1.5;
+}
+
 .layout-container .content:not(:empty) {
     border: 0.5em solid var(--content-border-color);
     background-color: var(--content-bg-color);
+}
+
+.layout-container .content h1 {
+    margin: 1em 0 0.25em 0;
+    font-weight: normal;
+    font-size: 2em;
+}
+
+.layout-container .content h2 {
+    margin: 1em 0 0.25em 0;
+    font-weight: normal;
+    font-size: 1.6em;
+}
+
+.layout-container .content h3 {
+    margin: 1em 0 0.25em 0;
+    font-weight: normal;
+    font-size: 1.3em;
+}
+
+.layout-container .content h1:first-child,
+.layout-container .content h2:first-child,
+.layout-container .content h3:first-child {
+    margin-top: 0;
+}
+
+.layout-container .content p {
+    margin: 0.75em 0;
+}
+
+.layout-container .content blockquote {
+    box-sizing: border-box;
+    margin: 0.5em;
+    padding: 0.5em 1em;
+    background-color: var(--content-box-bg-color);
+    border-left: 0.5em solid var(--main-color);
+}
+
+.layout-container .content ol.codeblock {
+    box-sizing: border-box;
+    margin: 0.5em;
+    padding: 0.5em 1em 0.5em 0.5em;
+    background-color: var(--content-box-bg-color);    
+    font-family: "Roboto Mono Regular", monospace;
+    list-style: none;
+    counter-reset: item;
+    border-left: 2em solid var(--content-box-border-color);
+}
+
+.layout-container .content ol.codeblock li {
+    font-size: 0.8em;
+    counter-increment: item;
+}
+
+.layout-container .content ol.codeblock li::before {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 2.5em;
+    text-align: right;
+    content: counter(item);
+    margin: 0 1em 0 -3.125em;
+    padding-right: 0.5em;
+}
+
+.layout-container .content span.inline-code {
+    display: inline-block;
+    font-size: 0.8em;
+    padding: 0 0.5em;
+    font-family: "Roboto Mono Regular", monospace;
+    background-color: var(--content-box-bg-color);    
 }
 
 /* GH */
