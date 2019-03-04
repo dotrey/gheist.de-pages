@@ -10,7 +10,7 @@ var site = (function(my) {
 
     my.onHashChange = function() {
         this.log(window.location.hash);
-        var hash = window.location.hash || "#";
+        var hash = window.location.hash || "#!/";
         hash = hash.substr(1);
         var parts = hash.split("|");
         for(var i = 0, ic = parts.length; i < ic; i++) {

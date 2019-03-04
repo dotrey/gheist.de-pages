@@ -51,14 +51,14 @@ a:hover {
     max-width: 60em;
     margin: 0 auto;
 
-    grid-template-columns: 1em 1fr 2em 14em 1em;
+    grid-template-columns: 1em 1fr 14em 1em;
     grid-template-rows: 2em calc(50vh - 7em) 10em 1fr 2em;
     grid-template-areas: 
-        ". . . . ."
-        ". content . . ."
-        ". content dot menumiddle ."
-        ". content . menu ."
-        ". . . . .";
+        ". . . ."
+        ". content menutop ."
+        ". content menumiddle ."
+        ". content menubottom ."
+        ". . . .";
 }
 
 .layout-container .logo-de {
@@ -67,6 +67,19 @@ a:hover {
     font-size: 10em;
     line-height: 1;
     user-select: none;
+    text-align: center
+}
+
+.layout-container .logo-de::before {
+    position: absolute;
+    display: block;
+    bottom: 0.1em;
+    left: 0.05em;
+    width: 0.1em;
+    height: 0.1em;
+    content: " ";
+    background-color: var(--main-color);
+    border-radius: 50%;
 }
 
 .layout-container .logo-gheist {
@@ -85,33 +98,22 @@ a:hover {
     bottom: -3.5em;
     font-size: 0.1em;
     line-height: 1.9;
-    width: 20em;
+    width: 20.55em;
     text-align: left;
-}
-
-.layout-container .logo-dot {
-    position: relative;
-    grid-area: dot;
-    font-size: 10em;
-    line-height: 1;
-    color: var(--main-color);
-    align-self: end;
-    user-select: none;
 }
 
 .layout-container .logo-gh {
     position: relative;
-    grid-area: menumiddle;
     width: 10.5em;
     height: 7.5em;
     justify-self: center;
     align-self: center;
-    display: none;
+    margin: 1em 0 1em -1.5em;
 }
 
 .layout-container .menu {
     position: relative;
-    grid-area: menu;
+    grid-area: menutop;
     margin: 0 0 0 3.5em;
 }
 
@@ -147,13 +149,17 @@ a:hover {
 }
 
 .content:not(:empty) ~ .logo-gheist,
-.content:not(:empty) ~ .logo-dot,
 .content:not(:empty) ~ .logo-de {
     display: none;
 }
 
-.content:not(:empty) ~ .logo-gh {
-    display: block;
+.content:empty ~ .menu>.gh>.colors>.color {
+    /* display: none; */
+    visibility: hidden;
+}
+
+.content:empty ~ .menu>.gh>.colors {
+    background-color: var(--content-bg-color);
 }
 
 /* content design */
