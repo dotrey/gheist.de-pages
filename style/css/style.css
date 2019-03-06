@@ -126,6 +126,10 @@ a:hover {
     text-decoration: none;
 }
 
+.layout-container .menu .link.mobile-only {
+    display: none;
+}
+
 .layout-container .menu .link:before {
     position: absolute;
     display: block;
@@ -153,13 +157,111 @@ a:hover {
     display: none;
 }
 
-.content:empty ~ .menu>.gh>.colors>.color {
-    /* display: none; */
-    visibility: hidden;
+@media screen and (min-width: 551px) {
+    .content:empty ~ .menu>.gh>.colors {
+        background-color: var(--content-bg-color);
+    }
+
+    .content:empty ~ .menu>.gh>.colors>.color {
+        visibility: hidden;
+    }
 }
 
-.content:empty ~ .menu>.gh>.colors {
-    background-color: var(--content-bg-color);
+/* mobile and small screens */
+@media screen and (max-width: 856px) {
+    body {
+        font-size: 2.2vw;
+    }
+}
+@media screen and (max-width: 550px) {
+    body {
+        font-size: 12pt;
+    }
+
+    .layout-container {    
+        grid-template-columns: 1em 1fr 1em;
+        grid-template-rows: 1em 1fr 1em;
+        grid-template-areas: 
+            ". . menu"
+            ". content ."
+            ". . .";
+    }
+
+    .layout-container .logo-gheist {
+        grid-area: content;
+        align-self: center;
+        justify-self: center;
+    }
+
+    .layout-container .logo-de {
+        display: none;
+    }
+
+    .layout-container .menu {
+        position: absolute;
+        width: 0;
+        height: 0;
+        grid-area: menu;
+        margin: 0;
+    }
+
+    .layout-container .menu .logo-gh {
+        position: absolute;
+        top: 1em;
+        right: 0;
+        width: 3.5em;
+        height: 2.5em;
+        margin: 0;
+        background-color: var(--content-bg-color);
+        /* pointer-events: none;
+        touch-action: none; */
+    }
+
+    .layout-container .menu::after {
+        position: absolute;
+        display: block;
+        top: 1em;
+        right: 3.5em;
+        height: 2.5em;
+        line-height: 2.5em;
+        background-color: var(--content-bg-color);
+        content: "menu";
+        padding: 0 1em;
+    }
+
+    .layout-container .menu::before {
+        position: absolute;
+        top: 1em;
+        right: 0;
+        width: 3.5em;
+        height: 2.5em;
+        display: block;
+        content: " ";
+        z-index: 11;
+    }
+
+    .layout-container .menu .links {
+        position: absolute;
+        box-sizing: border-box;
+        right: -0.5em;
+        top: 0.5em;
+        padding: 3.5em 1em 1em 2.4em;
+        background-color: var(--content-bg-color);
+        border: 0.5em solid var(--content-border-color);
+        display: none;
+    }
+
+    .layout-container .menu:hover .links {
+        display: block;
+    }
+
+    .layout-container .menu .link.mobile-only {
+        display: block;
+    }
+
+    .layout-container .content {
+        margin-top: 3.5em;
+    }
 }
 
 /* content design */
