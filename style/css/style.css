@@ -175,7 +175,7 @@ a:hover {
 }
 @media screen and (max-width: 550px) {
     body {
-        font-size: 12pt;
+        font-size: 3.14159vw;
     }
 
     .layout-container {    
@@ -213,8 +213,6 @@ a:hover {
         height: 2.5em;
         margin: 0;
         background-color: var(--content-bg-color);
-        /* pointer-events: none;
-        touch-action: none; */
     }
 
     .layout-container .menu::after {
@@ -331,6 +329,7 @@ a:hover {
 .layout-container .content ol.codeblock li {
     font-size: 0.8em;
     counter-increment: item;
+    word-break: break-all;
 }
 
 .layout-container .content ol.codeblock li::before {
