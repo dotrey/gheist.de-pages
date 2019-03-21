@@ -322,6 +322,14 @@ var md2html = (function(my) {
             return r;
         },
 
+        horizontalline : function(block) {
+            return "<hr/>";
+        },
+
+        horizontalbreak : function(block) {
+            return "<hr class=\"horizontal-break\" />"
+        },
+
         unknown : function(block) {
             return "<i>unknown block type: " + block.type + "</i>" + 
                 this.paragraph(block);
@@ -412,6 +420,10 @@ var md2html = (function(my) {
                     return "blockquote";
                 case "```":
                     return "codeblock";
+                case "----":
+                    return "horizontalline";
+                case "====":
+                    return "horizontalbreak";
                 default:
                     break;
             }
@@ -420,6 +432,10 @@ var md2html = (function(my) {
         // some line contain start symbols without containing a space
         if (line.indexOf("```") === 0) {
             return "codeblock";
+        }else if(line.indexOf("----") === 0) {
+            return "horizontalline";
+        }else if(line.indexOf("====") === 0) {
+            return "horizontalbreak";
         }
 
         // everything that has no explicit block type could be a paragraph

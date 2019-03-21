@@ -102,6 +102,25 @@ a:hover {
     text-align: left;
 }
 
+.layout-container .logo-gheist .subtitle .rotator {
+    position: absolute;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.layout-container .logo-gheist .subtitle .rotator span {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    transition: opacity 0.75s ease;
+    opacity: 0;
+}
+
+.layout-container .logo-gheist .subtitle .rotator span.visible {
+    opacity: 1;
+}
+
 .layout-container .logo-gh {
     position: relative;
     width: 10.5em;
@@ -175,7 +194,7 @@ a:hover {
 }
 @media screen and (max-width: 550px) {
     body {
-        font-size: 3.14159vw;
+        font-size: 12pt;
     }
 
     .layout-container {    
@@ -191,6 +210,7 @@ a:hover {
         grid-area: content;
         align-self: center;
         justify-self: center;
+        font-size: 31.4159vw;
     }
 
     .layout-container .logo-de {
@@ -349,6 +369,28 @@ a:hover {
     padding: 0 0.5em;
     font-family: "Roboto Mono Regular", monospace;
     background-color: var(--content-box-bg-color);    
+}
+
+.layout-container .content hr {
+    border-color: var(--main-color);
+}
+
+.layout-container .content hr.horizontal-break {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0.5em -1em;
+    border: 0;
+    border-top: 0.5em solid var(--content-border-color);
+    border-bottom: 0.5em solid var(--content-border-color);
+    background-color: var(--main-bg-color);
+    height: 2.5em;
+}
+
+.layout-container .content hr.horizontal-break + h1,
+.layout-container .content hr.horizontal-break + h2,
+.layout-container .content hr.horizontal-break + h3 {
+    margin-top: 0;
 }
 
 /* GH */

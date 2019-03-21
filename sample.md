@@ -64,6 +64,12 @@ Test quote
 > there was a large planet
 > and some guys with light sabers
 
+# Horizontal Lines and Breaks
+Here we have a horizontal line
+----
+And this will be a horizontal break
+====
+
 # Navigation Link
 [playground](/playground/)
 [about](/about/)

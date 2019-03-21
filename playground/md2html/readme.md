@@ -29,6 +29,8 @@ Based on the github Markdown syntax:
 
 Additional features:
 * [ ] Forced `<br/>`
+* [x] Horizontal line on `----`
+* [x] Horizontal 'break' on `====`
 
 Support for the following features is currently not planned:
 * Tables

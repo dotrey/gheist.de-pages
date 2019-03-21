@@ -3,7 +3,8 @@ var site = (function(my) {
     my.debug = true;
 
     my.config = {
-        md2htmlWorker : null
+        md2htmlWorker : null,
+        rotationInterval : 5000
     };
 
     /* navigation and content */
@@ -46,6 +47,25 @@ var site = (function(my) {
         this.e("#content").innerHTML = html;
     }
 
+    /* main page subtitle rotator */
+
+    my.rotate = function() {
+        if (this.e("#content").innerHTML) {
+            return;
+        }
+
+        var container = this.e("#logo-rotator");
+        var current = 0;
+        for (var i = 0, ic = container.children.length; i < ic; i++) {
+            if (container.children[i].getAttribute("class") === "visible") {
+                current = i;
+            }
+            container.children[i].setAttribute("class", "");
+        }
+        var next = (current + 1) % ic;
+        container.children[next].setAttribute("class", "visible");
+    }
+
     /* setup */
 
     my.initialize = function() {
@@ -53,6 +73,8 @@ var site = (function(my) {
         window.addEventListener("hashchange", this.onHashChange.bind(this), true);
         this.log("initialized site v" + this.version);
         this.onHashChange();
+
+        window.setInterval(this.rotate.bind(this), this.config.rotationInterval);
     }
 
     my.setupMd2Html = function() {
