@@ -4,7 +4,8 @@ var site = (function(my) {
 
     my.config = {
         md2htmlWorker : null,
-        rotationInterval : 5000
+        rotationInterval : 5000,
+        rotationRandom : false
     };
 
     /* navigation and content */
@@ -63,6 +64,11 @@ var site = (function(my) {
             container.children[i].setAttribute("class", "");
         }
         var next = (current + 1) % ic;
+        if (this.config.rotationRandom ) {
+            do {
+                next = Math.floor(ic * Math.random());
+            }while(next === current);
+        } 
         container.children[next].setAttribute("class", "visible");
     }
 
