@@ -11,3 +11,4 @@ List of features and things to implement for v6:
 ## nice to have
 - [ ] light theme
   - [ ] automated switch to light theme for mobile devices in bright surroundings (or best guess via daytime)
+- [ ] close menu (on mobile) after navigation
