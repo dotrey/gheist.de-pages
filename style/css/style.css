@@ -285,6 +285,8 @@ a:hover {
 /* content design */
 .layout-container .content {
     line-height: 1.5;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .layout-container .content:not(:empty) {
