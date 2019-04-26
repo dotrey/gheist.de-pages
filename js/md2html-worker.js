@@ -345,9 +345,27 @@ var md2html = (function(my) {
     my.inline = {
         replace : function(string) {
             string = this.angleBrackets(string);
-            string = this.link(string);
-            string = this.emphasis(string);
+            // inline code will replace [ with the html entity, preventing further
+            // replacements of [...] inside the inline code
             string = this.inlineCode(string);
+            // since link with "[abc](http://...)" is close to image with "![abc](http://...)"
+            // we have to replace image before link
+            string = this.image(string);
+            string = this.link(string);
+            string = this.task(string);
+            string = this.emphasis(string);
+            return string;
+        },
+
+        task : function(string) {
+            string = string.replace(/(^|\s)\[([ x~])\]\s/gm, "<span class=\"task\" data-value=\"$2\"></span>");
+
+            return string;
+        },
+
+        image : function(string) {
+            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<img src=\"$2\" alt=\"$1\" class=\"$4\"/>");
+
             return string;
         },
 
@@ -361,7 +379,7 @@ var md2html = (function(my) {
             function codeSpan(value) {
                 value = value.substr(1, value.length - 2);
                 return "<span class=\"inline-code\">" + 
-                    value.replace("<", "&lt;").replace(">", "&gt;") +
+                    value.replace("<", "&lt;").replace(">", "&gt;").replace("[", "&#91;") +
                     "</span>";
             }
             string = string.replace(/`[^`\n]+?`/gm, codeSpan);

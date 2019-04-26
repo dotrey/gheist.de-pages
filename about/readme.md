@@ -1,2 +1,2 @@
-# About
+# about
 [home](/sample.md)

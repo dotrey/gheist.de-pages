@@ -24,13 +24,15 @@ Based on the github Markdown syntax:
 * [~] Links
   * [x] explicit links
   * [ ] automatic url replacement
-* [ ] Images
+* [x] Images
+  * [ ] extended syntax `[title](http://){css classes}`
 * [ ] Tasks
 
 Additional features:
 * [ ] Forced `<br/>`
 * [x] Horizontal line on `----`
 * [x] Horizontal 'break' on `====`
+* [ ] Annotations in `@class="abc"` style, allowing to set attributes on generated elements
 
 Support for the following features is currently not planned:
 * Tables

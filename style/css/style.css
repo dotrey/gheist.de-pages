@@ -373,6 +373,60 @@ a:hover {
     background-color: var(--content-box-bg-color);    
 }
 
+.layout-container .content span.task {
+    position: relative;
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    margin: 0 0.5em;
+    box-sizing: border-box;
+    border: 0.1em solid var(--content-box-border-color);
+}
+
+.layout-container .content span.task:first-child {
+    margin-left: 0;
+}
+
+.layout-container .content span.task[data-value='x']::before {
+    position: relative;
+    display: block;
+    content: " ";
+    width: 0.4em;
+    height: 0.8em;
+    top: -0.5em;
+    left: 0.15em;
+    border-right: 0.1em solid var(--main-color);
+    border-bottom: 0.1em solid var(--main-color);
+    transform: rotate(45deg);
+}
+
+.layout-container .content span.task[data-value='~']::before {
+    position: relative;
+    display: block;
+    content: " ";
+    width: 0.4em;
+    height: 0.8em;
+    top: -0.5em;
+    left: 0.15em;
+    border-right: 0.1em dotted var(--main-color);
+    border-bottom: 0.1em dotted var(--main-color);
+    transform: rotate(45deg);
+}
+
+/* .layout-container .content span.task[data-value='~']::before {
+    position: relative;
+    display: block;
+    content: " ";
+    width: 0;
+    height: 0;
+    top: 0.2em;
+    left: 0;
+    border-left: 0.375em solid transparent;
+    border-right: 0.375em solid transparent;
+    border-bottom: 0.375em solid var(--main-color);
+    transform: rotate(135deg);
+} */
+
 .layout-container .content hr {
     border-color: var(--main-color);
 }
