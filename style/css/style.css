@@ -413,20 +413,6 @@ a:hover {
     transform: rotate(45deg);
 }
 
-/* .layout-container .content span.task[data-value='~']::before {
-    position: relative;
-    display: block;
-    content: " ";
-    width: 0;
-    height: 0;
-    top: 0.2em;
-    left: 0;
-    border-left: 0.375em solid transparent;
-    border-right: 0.375em solid transparent;
-    border-bottom: 0.375em solid var(--main-color);
-    transform: rotate(135deg);
-} */
-
 .layout-container .content hr {
     border-color: var(--main-color);
 }
@@ -447,6 +433,52 @@ a:hover {
 .layout-container .content hr.horizontal-break + h2,
 .layout-container .content hr.horizontal-break + h3 {
     margin-top: 0;
+}
+
+.layout-container .content div.img {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 80%;
+    height: 10em;
+    margin: 1em 10%;
+    background-color: var(--content-border-color);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.layout-container .content div.img.no-bg {
+    background-color: transparent;
+}
+
+.layout-container .content div.img.contain {
+    background-size: contain;
+}
+
+.layout-container .content div.img.cover {
+    background-size: cover;
+}
+
+.layout-container .content div.img.float-left {
+    width: 45%;
+    height: initial;
+    float: left;
+    margin: 0.25em 1em 0.5em 0;
+}
+
+.layout-container .content div.img.float-right {
+    width: 45%;
+    height: initial;
+    float: right;
+    margin: 0.25em 0 0.5em 1em;
+}
+
+.layout-container .content div.img.float-left::before,
+.layout-container .content div.img.float-right::before {
+    position: relative;
+    display: block;
+    content: " ";
+    padding-top: 100%;
 }
 
 /* GH */
