@@ -25,8 +25,8 @@ Based on the github Markdown syntax:
   * [x] explicit links
   * [ ] automatic url replacement
 * [x] Images
-  * [ ] extended syntax `[title](http://){css classes}`
-* [ ] Tasks
+  * [x] extended syntax `[title](http://){css classes}`
+* [x] Tasks
 
 Additional features:
 * [ ] Forced `<br/>`
