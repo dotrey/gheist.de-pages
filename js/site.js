@@ -48,6 +48,21 @@ var site = (function(my) {
         this.e("#content").innerHTML = html;
     }
 
+    /* image enlargment */
+
+    my.enlargeImage = function(element) {
+        var l = document.createElement("div");
+        l.setAttribute("class", "large");
+        l.setAttribute("title", element.getAttribute("title"));
+        l.onclick = function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+            l.parentNode.removeChild(l);
+        }
+        element.appendChild(l);
+        return false;
+    }
+
     /* main page subtitle rotator */
 
     my.rotate = function() {

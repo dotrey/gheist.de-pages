@@ -358,7 +358,7 @@ var md2html = (function(my) {
         },
 
         image : function(string) {
-            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<div class=\"img $4\" style=\"background-image:url('$2');\" title=\"$1\"></div>");
+            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<div class=\"img $4\" style=\"background-image:url('$2');\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></div>");
 
             return string;
         },

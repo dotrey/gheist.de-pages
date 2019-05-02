@@ -481,6 +481,58 @@ a:hover {
     padding-top: 100%;
 }
 
+.layout-container .content div.img .large {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-image: inherit;
+    background-size: 0%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.layout-container .content div.img .large::before {
+    position: absolute;
+    display: block;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+    content: " ";
+    background-image: inherit;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.layout-container .content div.img .large::after {
+    position: absolute;
+    display: block;
+    top: 5%;
+    left: 5%;
+    max-width: 80%;
+    content: attr(title);
+    background-color: var(--main-bg-color);
+    color: var(--main-color);
+    padding: 0.5em;
+}
+
+.layout-container .content div.img:not(:empty)::before {
+    position: fixed;
+    display: block;
+    content: " ";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color: var(--main-bg-color);
+    opacity: 0.95;
+}
+
 /* GH */
 .gh {
     position: relative;
