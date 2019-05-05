@@ -364,7 +364,7 @@ var md2html = (function(my) {
         },
 
         image : function(string) {
-            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<div class=\"img $4\" style=\"background-image:url('$2');\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></div>");
+            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)/gm, "<img src=\"$2\" title=\"$1\" />");
 
             return string;
         },
@@ -500,6 +500,13 @@ var md2html = (function(my) {
 md2html.inline.link = function(string) {
     string = string.replace(/\[([^\]]*?)\]\(\/([^)]*?)\)/gm, "<a href=\"#!$2\">$1</a>");
     string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)/gm, "<a href=\"$2\">$1</a>");
+
+    return string;
+}
+
+/* adjust image replacement with version supporting enlargement and lazy loading */
+md2html.inline.image = function(string) {
+    string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<div class=\"img $4\" style=\"background-image:url('$2');\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></div>");
 
     return string;
 }
