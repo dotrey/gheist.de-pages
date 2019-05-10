@@ -5,7 +5,7 @@ List of features and things to implement for v6:
 - [ ] mechanism that forces refresh of the scripts after they are updated
 - [ ] updated version of journey
 - [x] image enlargment
-- [ ] image lazy loading
+- [x] image lazy loading
 - [ ] "hard" 404 page with redirection for links of older version
 - [ ] "soft" 404 page for current version links (e.g. #!/unknown.md)
 - [~] markdown support as specified [here](/playground/md2html/)
