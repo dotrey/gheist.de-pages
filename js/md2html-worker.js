@@ -352,6 +352,7 @@ var md2html = (function(my) {
             // we have to replace image before link
             string = this.image(string);
             string = this.link(string);
+            string = this.url(string);
             string = this.task(string);
             string = this.emphasis(string);
             return string;
@@ -364,13 +365,19 @@ var md2html = (function(my) {
         },
 
         image : function(string) {
-            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)/gm, "<img src=\"$2\" title=\"$1\" />");
+            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<img src=\"$2\" title=\"$1\" class=\"$3\" />");
 
             return string;
         },
 
         link : function(string) {
             string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)/gm, "<a href=\"$2\">$1</a>");
+
+            return string;
+        },
+
+        url : function(string) {
+            string = string.replace(/(https?:\/\/[^\s]+)/gm, "<a href=\"$1\">$1</a>");
 
             return string;
         },
@@ -506,7 +513,7 @@ md2html.inline.link = function(string) {
 
 /* adjust image replacement with version supporting enlargement and lazy loading */
 md2html.inline.image = function(string) {
-    string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<div class=\"img $4\" style=\"background-image:url('$2');\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></div>");
+    string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<div class=\"img $4\" data-src=\"$2\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></div>");
 
     return string;
 }

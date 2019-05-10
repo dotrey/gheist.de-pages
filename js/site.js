@@ -5,7 +5,8 @@ var site = (function(my) {
     my.config = {
         md2htmlWorker : null,
         rotationInterval : 5000,
-        rotationRandom : false
+        rotationRandom : false,
+        lazyImageObserver : null
     };
 
     /* navigation and content */
@@ -46,9 +47,40 @@ var site = (function(my) {
 
     my.setContent = function(html) {
         this.e("#content").innerHTML = html;
+        this.injectImageLazyLoading();
     }
 
-    /* image enlargment */
+    /* image enlargment and lazy loading */
+
+    my.injectImageLazyLoading = function() {
+        var images = this.e("#content .img");
+        if (this.config.lazyImageObserver === null &&
+            typeof IntersectionObserver !== "undefined") {
+            var options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0
+            }
+
+            this.config.lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.style.backgroundImage = "url('" + entry.target.getAttribute("data-src") + "')";
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }.bind(this), options);
+        }
+        for (var i = 0, ic = images.length; i < ic; i++) {
+            if (this.config.lazyImageObserver) {
+                this.config.lazyImageObserver.observe(images[i]);
+            }else{
+                // no intersection observer available,
+                // directly show the images
+                images[i].style.backgroundImage = "url('" + images[i].getAttribute("data-src") + "')";
+            }
+        }
+    }
 
     my.enlargeImage = function(element) {
         var l = document.createElement("div");
@@ -199,16 +231,23 @@ var site = (function(my) {
         return ajax;
     }
 
-    my.e = function(selector) {
-        if (typeof selector.substr === "function" &&
-            selector.length) {
-            if (selector.substr(0, 1) === "#") {
-                return document.getElementById(selector.substr(1));
-            }else if (selector.substr(0, 1) === "."){
-                return document.getElementsByClassName(selector.substr(1));
-            }
+    my.e = function(selector, parent) {
+        selector = ("" + selector).trim();
+        parent = parent || document;
+
+        if (selector.indexOf(" ") > 0) {
+            var tmp = selector.split(" ");
+            parent = this.e(tmp.shift(), parent);
+            return this.e(tmp.join(" "), parent);
         }
-        return new HTMLCollection();
+
+        if (selector.substr(0, 1) === "#") {
+            return parent.getElementById(selector.substr(1));
+        }else if (selector.substr(0, 1) === "."){
+            return parent.getElementsByClassName(selector.substr(1));
+        }else{
+            return parent.getElementsByClassName(selector);
+        }
     }
 
     my.noCache = function() {

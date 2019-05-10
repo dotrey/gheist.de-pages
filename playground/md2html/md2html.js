@@ -346,6 +346,7 @@ var md2html = (function(my) {
             // we have to replace image before link
             string = this.image(string);
             string = this.link(string);
+            string = this.url(string);
             string = this.task(string);
             string = this.emphasis(string);
             return string;
@@ -358,13 +359,19 @@ var md2html = (function(my) {
         },
 
         image : function(string) {
-            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)/gm, "<img src=\"$2\" title=\"$1\" />");
+            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<img src=\"$2\" title=\"$1\" class=\"$3\" />");
 
             return string;
         },
 
         link : function(string) {
             string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)/gm, "<a href=\"$2\">$1</a>");
+
+            return string;
+        },
+
+        url : function(string) {
+            string = string.replace(/(https?:\/\/[^\s]+)/gm, "<a href=\"$1\">$1</a>");
 
             return string;
         },

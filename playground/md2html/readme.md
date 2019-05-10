@@ -21,9 +21,9 @@ Based on the github Markdown syntax:
   * [x] bold
   * [x] italic
   * [ ] strike through
-* [~] Links
+* [x] Links
   * [x] explicit links
-  * [ ] automatic url replacement
+  * [x] automatic url replacement
 * [x] Images
   * [x] extended syntax `[title](http://){css classes}`
 * [x] Tasks
@@ -32,7 +32,7 @@ Additional features:
 * [ ] Forced `<br/>`
 * [x] Horizontal line on `----`
 * [x] Horizontal 'break' on `====`
-* [ ] Annotations in `@class="abc"` style, allowing to set attributes on generated elements
+* [ ] (nth) Annotations in `@class="abc"` style, allowing to set attributes on generated elements
 
 Support for the following features is currently not planned:
 * Tables

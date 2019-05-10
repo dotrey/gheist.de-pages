@@ -16,6 +16,7 @@
     --content-box-border-color: #484848;
     --main-color: #EEEEEE;
     --main-link-color:#589DF6;
+    --image-overlay-bg-color: rgba(0, 0, 0, 0.8);
 }
 
 body, html {
@@ -515,7 +516,7 @@ a:hover {
     left: 5%;
     max-width: 80%;
     content: attr(title);
-    background-color: var(--main-bg-color);
+    background-color: var(--image-overlay-bg-color);
     color: var(--main-color);
     padding: 0.5em;
 }
@@ -529,8 +530,7 @@ a:hover {
     right: 0;
     bottom: 0;
     z-index: 999;
-    background-color: var(--main-bg-color);
-    opacity: 0.95;
+    background-color: var(--image-overlay-bg-color);
 }
 
 /* GH */
