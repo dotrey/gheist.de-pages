@@ -446,10 +446,12 @@ a:hover {
     background-color: var(--content-border-color);
     background-position: center;
     background-repeat: no-repeat;
+    background-image: url('/style/img/gheist-loading-64-303030.gif');
 }
 
 .layout-container .content div.img.no-bg {
     background-color: transparent;
+    background-image: url('/style/img/gheist-loading-64-333333.gif');
 }
 
 .layout-container .content div.img.contain {
