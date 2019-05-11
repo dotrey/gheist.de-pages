@@ -33,6 +33,8 @@ var site = (function(my) {
             }
             this.loadContent(loc);
         }
+        // for mobile, close the menu after navigation was triggered
+        this.menuClose();
     }
 
     my.loadContent = function(loc) {
@@ -93,6 +95,15 @@ var site = (function(my) {
         }
         element.appendChild(l);
         return false;
+    }
+
+    /* menu enhancements */
+
+    my.menuClose = function() {
+        var checkbox = this.e("#checkbox-menu-open");
+        if (checkbox) {
+            checkbox.checked = false;
+        }
     }
 
     /* main page subtitle rotator */
@@ -246,7 +257,7 @@ var site = (function(my) {
         }else if (selector.substr(0, 1) === "."){
             return parent.getElementsByClassName(selector.substr(1));
         }else{
-            return parent.getElementsByClassName(selector);
+            return parent.getElementsByTagName(selector);
         }
     }
 

@@ -10,7 +10,7 @@
 </head>
 <body>    
     <div class="layout-container">
-        <div class="content" id="content"></div>
+        <main class="content" id="content"></main>
         <div class="logo-gheist">gheist<div class="subtitle">Geoffrey-Alexeij Heinze | 
             <div class="rotator" id="logo-rotator">
                 <span class="visible">software engineer</span>
@@ -26,8 +26,9 @@
             <br/>mail@mail.mail</div>
         </div>
         <div class="logo-de">de</div>        
-        <div class="menu">
-            <div class="gh logo-gh" onclick="location.href=('#!/');">
+        <label class="menu">
+            <input type="checkbox" id="checkbox-menu-open" />
+            <div class="gh logo-gh" onclick="location.href=('#!/');" data-group="x">
                 <div class="colors">
                     <div class="color" data-color="1"></div>
                     <div class="color" data-color="2"></div>
@@ -36,20 +37,26 @@
                     <div class="color" data-color="5"></div>
                     <div class="color" data-color="6"></div>
                 </div>
-                <div class="block b1"></div>
-                <div class="block b2"></div>
-                <div class="block b3"></div>
-                <div class="block b4"></div>
-                <div class="block b5"></div>
+                <div class="block group-gh gh1"></div>
+                <div class="block group-gh gh2"></div>
+                <div class="block group-gh gh3"></div>
+                <div class="block group-gh gh4"></div>
+                <div class="block group-gh gh5"></div>
+
+                <div class="block group-x x1"></div>
+                <div class="block group-x x2"></div>
+                <div class="block group-x x3"></div>
+                <div class="block group-x x4"></div>
+                <div class="block group-x x5"></div>
             </div>
-            <div class="links">
+            <nav class="links">
                 <a class="link mobile-only" href="#!/">home</a>
                 <a class="link" href="#!/about/">about</a>
                 <a class="link" href="#!/playground/">playground</a>
                 <a class="link" href="#!/pixel/">pixel</a>
                 <a class="link" href="#!/todo.md">todo list</a>
-            </div>
-        </div>
+            </nav>
+        </label>
     </div>
 
     <script src="/js/site.js"></script>

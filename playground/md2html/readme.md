@@ -29,7 +29,7 @@ Based on the github Markdown syntax:
 * [x] Tasks
 
 Additional features:
-* [ ] Forced `<br/>` on `!!br`
+* [x] Forced `<br/>` on `!!br`
 * [x] Horizontal line on `----`
 * [x] Horizontal 'break' on `====`
 
