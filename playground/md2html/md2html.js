@@ -348,6 +348,7 @@ var md2html = (function(my) {
             string = this.link(string);
             string = this.url(string);
             string = this.task(string);
+            string = this.forcedLineBreak(string);
             string = this.emphasis(string);
             return string;
         },
@@ -359,19 +360,25 @@ var md2html = (function(my) {
         },
 
         image : function(string) {
-            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<img src=\"$2\" title=\"$1\" class=\"$3\" />");
+            string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/g, "<img src=\"$2\" title=\"$1\" class=\"$3\" />");
 
             return string;
         },
 
         link : function(string) {
-            string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)/gm, "<a href=\"$2\">$1</a>");
+            string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)/g, "<a href=\"$2\">$1</a>");
 
             return string;
         },
 
         url : function(string) {
-            string = string.replace(/(https?:\/\/[^\s]+)/gm, "<a href=\"$1\">$1</a>");
+            string = string.replace(/(\s)(https?:\/\/[^\s]+)/g, "$1<a href=\"$2\">$2</a>");
+
+            return string;
+        },
+
+        forcedLineBreak : function(string) {
+            string = string.replace(/(^|\s)!!br(\s|$)/gm, "<br/>")
 
             return string;
         },
@@ -383,7 +390,7 @@ var md2html = (function(my) {
                     value.replace("<", "&lt;").replace(">", "&gt;").replace("[", "&#91;") +
                     "</span>";
             }
-            string = string.replace(/`[^`\n]+?`/gm, codeSpan);
+            string = string.replace(/`[^`\n]+?`/g, codeSpan);
 
             return string;
         },
@@ -391,34 +398,40 @@ var md2html = (function(my) {
         emphasis : function(string) {
             string = this.bold(string);
             string = this.italic(string);
+            string = this.strike(string);
             return string;
         },
 
         bold : function(string) {
-            string = string.replace(/\*\*([\S].*[\S])\*\*/gm, "<b>$1</b>");
-            string = string.replace(/__([\S].*[\S])__/gm, "<b>$1</b>");
+            string = string.replace(/\*\*([\S].*[\S])\*\*/g, "<b>$1</b>");
+            string = string.replace(/__([\S].*[\S])__/g, "<b>$1</b>");
+            return string;
+        },
+
+        strike : function(string) {
+            string = string.replace(/~~([\S].*[\S])~~/g, "<s>$1</s>");
             return string;
         },
 
         italic : function(string) {
-            string = string.replace(/\*([^\s*].*[^\s*])\*/gm, "<i>$1</i>");
-            string = string.replace(/_([^\s_].*[^\s_])_/gm, "<i>$1</i>");
+            string = string.replace(/\*([^\s*].*[^\s*])\*/g, "<i>$1</i>");
+            string = string.replace(/_([^\s_].*[^\s_])_/g, "<i>$1</i>");
             return string;
         },
 
         nl2br : function(string) {
-            string = string.replace(/\n/gm, "<br/>");
+            string = string.replace(/\n/g, "<br/>");
             return string;
         },
 
         nbsp : function(string) {
-            string = string.replace(/ /gm, "&nbsp;");
+            string = string.replace(/ /g, "&nbsp;");
             return string;
         },
 
         angleBrackets : function(string) {
-            string = string.replace(/</gm, "&lt;");
-            string = string.replace(/>/gm, "&gt;");
+            string = string.replace(/</g, "&lt;");
+            string = string.replace(/>/g, "&gt;");
             return string;
         },
     }

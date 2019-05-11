@@ -17,10 +17,10 @@ Based on the github Markdown syntax:
   * [x] Inline code
 * [ ] Code highlighting for 
   * [ ] JavaScript
-* [~] Emphasis
+* [x] Emphasis
   * [x] bold
   * [x] italic
-  * [ ] strike through
+  * [x] strike through
 * [x] Links
   * [x] explicit links
   * [x] automatic url replacement
@@ -29,10 +29,12 @@ Based on the github Markdown syntax:
 * [x] Tasks
 
 Additional features:
-* [ ] Forced `<br/>`
+* [ ] Forced `<br/>` on `!!br`
 * [x] Horizontal line on `----`
 * [x] Horizontal 'break' on `====`
-* [ ] (nth) Annotations in `@class="abc"` style, allowing to set attributes on generated elements
+
+Nice to have:
+* [ ] Annotations in `@class="abc"` style, allowing to set attributes on generated elements
 
 Support for the following features is currently not planned:
 * Tables
