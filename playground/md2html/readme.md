@@ -27,6 +27,7 @@ Based on the github Markdown syntax:
 * [x] Images
   * [x] extended syntax `[title](http://){css classes}`
 * [x] Tasks
+  * [x] partially complete Tasks with `[~]`
 
 Additional features:
 * [x] Forced `<br/>` on `!!br`

@@ -48,7 +48,15 @@ var site = (function(my) {
     }
 
     my.setContent = function(html) {
-        this.e("#content").innerHTML = html;
+        // MS Edge repaint bug requires removing and re-adding
+        // the content, or the CSS rules will not be correctly
+        // executed
+        var content = this.e("#content");
+        var parent = content.parentElement;
+        parent.removeChild(content);
+        content.innerHTML = html;
+        parent.insertBefore(content, parent.firstChild);
+
         // scroll to top
         document.body.scrollIntoView(true);
         this.injectImageLazyLoading();

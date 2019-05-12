@@ -525,15 +525,15 @@ var md2html = (function(my) {
 
 /* adjust link replacement to rewrite relative links into #!.. hash links */
 md2html.inline.link = function(string) {
-    string = string.replace(/\[([^\]]*?)\]\(\/([^)]*?)\)/gm, "<a href=\"#!$2\">$1</a>");
-    string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)/gm, "<a href=\"$2\">$1</a>");
+    string = string.replace(/\[([^\]]*?)\]\(\/([^)]*?)\)(\{([^}]*?)\})?/g, "<a href=\"#!$2\" class=\"$4\">$1</a>");
+    string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/g, "<a href=\"$2\" class=\"$4\">$1</a>");
 
     return string;
 }
 
 /* adjust image replacement with version supporting enlargement and lazy loading */
 md2html.inline.image = function(string) {
-    string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/gm, "<div class=\"img $4\" data-src=\"$2\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></div>");
+    string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/g, "<div class=\"img $4\" data-src=\"$2\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></div>");
 
     return string;
 }

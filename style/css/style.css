@@ -45,6 +45,13 @@ a:hover {
     color: var(--main-link-color);
 }
 
+a.arrow:before {
+    position: relative;
+    display: inline-block;
+    margin: 0 0.25em;
+    content: "\2192";
+}
+
 /* layout */
 .layout-container {
     position: relative;
@@ -173,6 +180,7 @@ a:hover {
     position: relative;
     grid-area: content;
     justify-self: center;
+    align-self: start;
     max-width: 42em;
     width: 100%;
     box-sizing: border-box;
