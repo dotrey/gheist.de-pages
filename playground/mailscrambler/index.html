@@ -9,26 +9,18 @@
 <body>
     <div>
         <h2>input:</h2>
-        <input type="text" id="input" style="width:500px;" />
+        <input type="text" id="input" style="width: 100%;max-width:500px;" />
     </div>
     <div>
         <h2>output:</h2>
-        <textarea id="output" style="width:500px;height:100px;"></textarea>
+        <textarea id="output" style="width: 100%;max-width:500px;height:100px;"></textarea>
     </div>
     <div>
         <h2>preview:</h2>
-        <div id="preview"></div>
-    </div>
-    <br/><br/>
-    <div style="position:relative;display:inline-block;">
-        <span style="">2</span>
-        <span style="float:left">1</span>
-        <span style="float:right">4</span>
-        <span style="">3</span>
-        <span style="position:absolute;visibility:hidden;">5</span>
+        <div id="preview">...</div>
     </div>
 
-    <script src="mailscramble.js"></script>
+    <script src="mailscrambler.js"></script>
     <script>
         var input = document.getElementById("input");
         var output = document.getElementById("output");

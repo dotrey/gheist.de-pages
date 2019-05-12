@@ -70,6 +70,5 @@ Here we have a horizontal line
 And this will be a horizontal break
 ====
 
-# Navigation Link
-[playground](/playground/)
-[about](/about/)
+# Images
+The image demo can be found on a separate site [here](/pixel/demo-images/).

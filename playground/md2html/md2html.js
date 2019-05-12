@@ -246,7 +246,7 @@ var md2html = (function(my) {
                     // consecutive lines and for the replacements
                     // remove the leading "> "
                     var line = block.lines[i].trim().substr(1).trim();
-                    r += my.inline.replace(line) + "<br/>\n";
+                    r += my.inline.replace(line) + "\n";
                 }
             }
 
@@ -348,6 +348,7 @@ var md2html = (function(my) {
             string = this.link(string);
             string = this.url(string);
             string = this.task(string);
+            string = this.iframe(string);
             string = this.forcedLineBreak(string);
             string = this.emphasis(string);
             return string;
@@ -373,6 +374,12 @@ var md2html = (function(my) {
 
         url : function(string) {
             string = string.replace(/(\s)(https?:\/\/[^\s]+)/g, "$1<a href=\"$2\">$2</a>");
+
+            return string;
+        },
+
+        iframe : function(string) {
+            string = string.replace(/\[\[\[(.*?)\]\]\]/g, "<iframe src=\"$1\"></iframe>");
 
             return string;
         },

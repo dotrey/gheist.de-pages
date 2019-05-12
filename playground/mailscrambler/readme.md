@@ -1,4 +1,19 @@
 # Mail Scrambler
+The mail scrambler is an attempt to obfuscate an email address and hide it from all those
+pesky webcrawlers out there, while still allowing a human to be able to recognize the
+email address. The idea of this arose when I stumbled over a Facebook ad and how they
+obfuscate the word "Advertisement" to prevent the ad from being filtered by an ad blocker.
+
+The mail scrambler takes an email address (or any other string) and splits it into smaller
+parts. The order of those smaller parts is altered in the HTML, resulting in some gibberish.
+To make it readable (preferably only for humans), we add various CSS rules that alter the
+order of the parts when rendered inside a browser, such that the gibberish resolves to
+the actual email address again. This should prevent crawlers that only download and parse
+the HTML from being able to extract the email address. Actually, even if the `innerText` of
+the DOM element containing the scrambled text resolves to the gibberish, thus even if the
+crawler renders the website's HTML it would be non-trivial to search for the email address.
+
+[[[/playground/mailscrambler/]]]{autosize}
 
 ## reorder
 With the `reorder` option, the scrambler will mix up the order of the elements that
@@ -6,7 +21,7 @@ form the visible word inside the code, while the visible order of the elements r
 correct. So a word like "hello" will still look like "hello", but the elements in the
 code might be ordered like "olleh".
 
-The scrambler does so by first splitting the given string into three parts, like so:
+The scrambler does so by first splitting the given string into three parts, like this:
 ```
 "this is a text!" => "this " + "is a " + "text!"
 ```
@@ -30,7 +45,7 @@ reverse order and fix this visually by reversing the reading direction with `dir
 > `print)"hello world"(`. The `options` therefore now contain a `rtlReplacements` object that
 > defines characters to be replaced when modifying the direction.
 
-### Pros and Cons
+### reorder - Pros and Cons
 Reordering the elements in code and using CSS to fix the visual result also alters the value
 of the container's `innerText` to the mixed up value, and thus prevents reading the actual
 value direct from the DOM tree.
@@ -40,11 +55,16 @@ of the `innerText`. Because of this, the scrambler will automatically add a `use
 to the container (of course this can be bypassed, but it is a first indicator for the user that
 copy might not work here).
 
+The `float:left` and `float:right` elements also get messed up, if the container holding the
+elements is to small and causes a line-break. This can't be fixed with a `white-space: nowrap`,
+as the floats will then overlapp with the other text. The container therefore must be always
+large enough to hold the complete content in one line.
+
 ## nonsense
 With the `nonsense` option, the scrambler will add additional elements into the container, that
 will not be visible to the user.
 
-### Pros and Cons
+### nonsense - Pros and Cons
 The added elements will make it a bit more difficult to retrieve the container's content by
 stripping all HTML tags.
 

@@ -49,6 +49,8 @@ var site = (function(my) {
 
     my.setContent = function(html) {
         this.e("#content").innerHTML = html;
+        // scroll to top
+        document.body.scrollIntoView(true);
         this.injectImageLazyLoading();
     }
 
@@ -95,6 +97,18 @@ var site = (function(my) {
         }
         element.appendChild(l);
         return false;
+    }
+
+    /* iframe adjust height to content */
+    my.iframeSizeToContent = function(iframe) {
+        try {
+            // get the height of the html-element
+            iframe.style.height = (5 + Math.ceil(iframe.contentDocument.body.parentElement.offsetHeight)) + "px";
+        }catch(e) {
+            // ignore, as there will be an exception if we try to access
+            // third party content
+            console.log(e);
+        }
     }
 
     /* menu enhancements */

@@ -1,2 +1,3 @@
 # Playground
-[about](/about/)
+[md2html](/playground/md2html/) !!br
+[mail scrambler](/playground/mailscrambler/)

@@ -32,6 +32,7 @@ Additional features:
 * [x] Forced `<br/>` on `!!br`
 * [x] Horizontal line on `----`
 * [x] Horizontal 'break' on `====`
+* [x] Embedding via iframe with `[[[http://]]]`
 
 Nice to have:
 * [ ] Annotations in `@class="abc"` style, allowing to set attributes on generated elements
@@ -50,6 +51,8 @@ The following block types are available:
 * `unorderedlist`
 * `blockquote`
 * `codeblock`
+* `horizontalline`
+* `horizontalbreak`
 Once all lines have been converted into blocks, this list of blocks is traversed and
 adjacent blocks of the same types are merged into one larger block. For lists there is
 the added complication of indents, which have to be respected together with the block
@@ -61,7 +64,17 @@ lines. For all other blocks, an empty line would trigger the start of a new bloc
 
 # Conversion
 Once all blocks are merged, the blocks are rendered as HTML. This step is pretty straight
-forward, as simply a surrounding HTML element is created for each block (like `<p></p>`
-for paragraphs) and all line of the block are added to this element. If one line is not a
-string but another block (e.g. for a nested list), the sub-block is rendered and then added
-to the parent block's HTML.
+forward for most blocks, as simply a surrounding HTML element is created for each block
+(like `<p></p>` for paragraphs) and all line of the block are added to this element. If one
+line is not a string but another block (e.g. for a nested list), the sub-block is rendered
+and then added to the parent block's HTML.
+
+The code block is the only block with a bit more complex rendering, as it is rendered as an
+ordered list where each line is one list item. This allows to easily display line numbers
+that will stay correct, when there are long lines that break once or more often.
+
+# Demo
+Embedded below is a demo page (without any styling). Try playing around with the markdown
+on the left and see how it affects the generated HTML.
+[[[/playground/md2html/index.html]]]
+To see how this looks with this site's styling applied, check out the [sample page](/playground/md2html/sample.md).

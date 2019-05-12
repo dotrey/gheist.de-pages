@@ -16,6 +16,7 @@
     --content-box-border-color: #484848;
     --main-color: #EEEEEE;
     --main-link-color:#589DF6;
+    --low-contrast-color: #878787;
     --image-overlay-bg-color: rgba(0, 0, 0, 0.8);
 }
 
@@ -59,7 +60,7 @@ a:hover {
         ". content menutop ."
         ". content menumiddle ."
         ". content menubottom ."
-        ". . . .";
+        ". footer footer .";
 }
 
 .layout-container .logo-de {
@@ -184,6 +185,17 @@ a:hover {
     display: none;
 }
 
+.layout-container .footer {
+    position: relative;
+    grid-area: footer;
+    justify-self: center;
+    align-self: end;
+    box-sizing: border-box;
+    font-size: 50%;
+    padding: 0.5em;
+    color: var(--low-contrast-color);
+}
+
 @media screen and (min-width: 551px) {
     .content:empty ~ .menu>.gh>.colors {
         background-color: var(--content-bg-color);
@@ -207,11 +219,11 @@ a:hover {
 
     .layout-container {    
         grid-template-columns: 1em 1fr 1em;
-        grid-template-rows: 1em 1fr 1em;
+        grid-template-rows: 1em 1fr 2em;
         grid-template-areas: 
             ". . menu"
             ". content ."
-            ". . .";
+            ". footer .";
     }
 
     .layout-container .logo-gheist {
@@ -540,6 +552,16 @@ a:hover {
     bottom: 0;
     z-index: 999;
     background-color: var(--image-overlay-bg-color);
+}
+
+.layout-container .content iframe {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(100vh * 0.5625);
+    border: 0.1em solid var(--main-color);
+    background-color: #FFFFFF;
+    margin: 0.5em 0;
 }
 
 /* GH */

@@ -16,24 +16,6 @@ library will convert them into usable HTML-elements with pre-defined classes.
 Since this lib is intended to be used with github pages, it focuses on the MD
 syntax as described here: https://guides.github.com/features/mastering-markdown/
 
-## Useful Links
-* great regex tester: https://regex101.com/
-
-# Parsing Structure
-To create the HTML, the MD needs to be parsed in a way, that the larger HTML
-structures can be created before the smaller structures, e.g. the paragraph before
-the contained bold text or links.
-
-## Parsing Order
-The parser will work from the large to the small in the following order:
-1. Split into headers and paragraphs
-1. Extract blocks from the paragraphs, which can be either
-  1. Lists
-  1. Blockquotes
-  1. Code blocks
-  1. Simple text
-1. For each block, replace all inline MD like emphasis or links
-
 # Test Area
 This section contains various formats for testing
 
@@ -50,7 +32,7 @@ SubSubSub Heading
 ##### H5
 Does someone even use this?
 ###### H6
-Really, who need 5 sub-headings?
+Really, who needs 5 sub-headings?
 
 # Image
 ![image test](../../pixel/demo-images/256.png)
