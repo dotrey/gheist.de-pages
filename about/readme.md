@@ -1,6 +1,6 @@
 # Hi, I'm Geoffrey!
 ![That's me!](/about/me-20190518.jpg){cover float-right circle no-large}
-I am currently working at [storytile](https://storytile.net), a startup based in Munich and aiming to provide the best live blogging solution. Here I am coordinating the development, coding and managing a large part of our server infrastructure.
+I am currently working at [storytile](https://storytile.net), a startup based in Munich that aims to provide the best live blogging solution. Here I am coordinating the development, coding and managing a large part of our server infrastructure.
 
 Before an old friend called me over to Munich, I was travelling the south-west of Germany as an IT consultant for a medium-sized company, working with the IT departments of some large insurance and mobility related companies.
 
