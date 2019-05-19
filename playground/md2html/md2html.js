@@ -239,7 +239,7 @@ var md2html = (function(my) {
 
             for (var i = 0, ic = block.lines.length; i < ic; i++) {
                 if (typeof block.lines[i].type !== "undefined") {
-                    // this is actually another block inside the paragraph
+                    // this is actually another block inside the blockquote
                     r += this.convert(block.lines[i]);
                 }else{
                     // we re-add the line break to have a whitespace between
@@ -328,6 +328,19 @@ var md2html = (function(my) {
 
         horizontalbreak : function(block) {
             return "<hr class=\"horizontal-break\" />"
+        },
+
+        rawhtml : function(block) {
+            var r = "";
+
+            for (var i = 0, ic = block.lines.length; i < ic; i++) {
+                // we re-add the line break to have a whitespace between
+                // consecutive lines and for the replacements
+                // remove the leading "!!>> "
+                r += block.lines[i].trim().substr(4).trim() + "\n";
+            }
+
+            return r;
         },
 
         unknown : function(block) {
@@ -469,6 +482,8 @@ var md2html = (function(my) {
                     return "horizontalline";
                 case "====":
                     return "horizontalbreak";
+                case "!!>>":
+                    return "rawhtml";
                 default:
                     break;
             }

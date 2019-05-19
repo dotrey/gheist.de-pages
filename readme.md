@@ -1,3 +1,7 @@
+# gheist.de
+This is v6 of gheist.de, my personal website. Visit https://v6.gheist.de for a styled version,
+or look around this repository.
+
 # TODO List
 List of features and things to implement for v6:
 

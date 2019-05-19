@@ -204,6 +204,10 @@ a.arrow:before {
     color: var(--low-contrast-color);
 }
 
+.layout-container .footer a {
+    color: var(--low-contrast-color);
+}
+
 @media screen and (min-width: 551px) {
     .content:empty ~ .menu>.gh>.colors {
         background-color: var(--content-bg-color);
@@ -307,6 +311,11 @@ a.arrow:before {
 
     .layout-container .content {
         margin-top: 3.5em;
+    }
+}
+@media screen and (max-height: 800px) {
+    .layout-container .logo-de {
+        display: none;
     }
 }
 
@@ -687,13 +696,23 @@ a.arrow:before {
     transform: rotate(45deg);
 }
 
-.layout-container .menu input[type="checkbox"]:checked ~ .gh .block.group-gh {
-    left: -100%;
+@media screen and (max-width: 550px) {
+    .layout-container .menu input[type="checkbox"]:checked ~ .gh .block.group-gh {
+        left: -100%;
+    }
+
+    .layout-container .menu input[type="checkbox"]:not(:checked) ~ .gh .block.group-x {
+        left: 100%;
+        transform: rotate(0deg);
+    }
 }
 
-.layout-container .menu input[type="checkbox"]:not(:checked) ~ .gh .block.group-x {
-    left: 100%;
-    transform: rotate(0deg);
+
+@media screen and (min-width: 550px) {
+    .gh .block.group-x {
+        left: 100%;
+        transform: rotate(0deg);
+    }
 }
 
 .gh .colors {

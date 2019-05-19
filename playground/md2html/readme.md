@@ -34,6 +34,7 @@ Additional features:
 * [x] Horizontal line on `----`
 * [x] Horizontal 'break' on `====`
 * [x] Embedding via iframe with `[[[http://]]]`
+* [x] Adding raw HTML lines with `!!>>`
 
 Nice to have:
 * [ ] Annotations in `@class="abc"` style, allowing to set attributes on generated elements
@@ -54,6 +55,7 @@ The following block types are available:
 * `codeblock`
 * `horizontalline`
 * `horizontalbreak`
+* `rawhtml`
 Once all lines have been converted into blocks, this list of blocks is traversed and
 adjacent blocks of the same types are merged into one larger block. For lists there is
 the added complication of indents, which have to be respected together with the block
