@@ -416,19 +416,19 @@ var md2html = (function(my) {
         },
 
         bold : function(string) {
-            string = string.replace(/\*\*([\S].*[\S])\*\*/g, "<b>$1</b>");
-            string = string.replace(/__([\S].*[\S])__/g, "<b>$1</b>");
+            string = string.replace(/\*\*([\S].*?[\S])\*\*/g, "<b>$1</b>");
+            string = string.replace(/__([\S].*?[\S])__/g, "<b>$1</b>");
             return string;
         },
 
         strike : function(string) {
-            string = string.replace(/~~([\S].*[\S])~~/g, "<s>$1</s>");
+            string = string.replace(/~~([\S].*?[\S])~~/g, "<s>$1</s>");
             return string;
         },
 
         italic : function(string) {
-            string = string.replace(/\*([^\s*].*[^\s*])\*/g, "<i>$1</i>");
-            string = string.replace(/_([^\s_].*[^\s_])_/g, "<i>$1</i>");
+            string = string.replace(/\*([^\s*].*?[^\s*])\*/g, "<i>$1</i>");
+            string = string.replace(/_([^\s_].*?[^\s_])_/g, "<i>$1</i>");
             return string;
         },
 

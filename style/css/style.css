@@ -489,6 +489,14 @@ a.arrow:before {
     background-size: cover;
 }
 
+.layout-container .content div.img.image-top {
+    background-position: center top;
+}
+
+.layout-container .content div.img.circle { 
+    border-radius: 50%;
+}
+
 .layout-container .content div.img.float-left {
     width: 45%;
     height: initial;
@@ -550,7 +558,7 @@ a.arrow:before {
     padding: 0.5em;
 }
 
-.layout-container .content div.img:not(:empty)::before {
+.layout-container .content div.img:not(:empty)::after {
     position: fixed;
     display: block;
     content: " ";
@@ -560,6 +568,11 @@ a.arrow:before {
     bottom: 0;
     z-index: 999;
     background-color: var(--image-overlay-bg-color);
+}
+
+.layout-container .content div.img.no-large .large,
+.layout-container .content div.img.no-large:not(:empty)::after {
+    display: none;
 }
 
 .layout-container .content iframe {
