@@ -17,7 +17,7 @@
     --main-color: #EEEEEE;
     --main-link-color:#589DF6;
     --low-contrast-color: #878787;
-    --image-overlay-bg-color: rgba(0, 0, 0, 0.8);
+    --image-overlay-bg-color: rgba(0, 0, 0, 0.95);
 }
 
 body, html {
@@ -355,6 +355,18 @@ a.arrow:before {
     margin-top: 0;
 }
 
+.layout-container .content h1[data-date]::before,
+.layout-container .content h2[data-date]::before,
+.layout-container .content h3[data-date]::before {
+    position: relative;
+    display: block;
+    font-size: 75%;
+    line-height: 1;
+    color: var(--low-contrast-color);
+    content: attr(data-date);
+    padding: 1em 0 0 0;
+}
+
 .layout-container .content p,
 .layout-container .content ol,
 .layout-container .content ul {
@@ -483,6 +495,10 @@ a.arrow:before {
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('/style/img/gheist-loading-64-303030.gif');
+}
+
+.layout-container .content div.img.bg-bright {
+    background-color: #FFFFFF;
 }
 
 .layout-container .content div.img.no-bg {

@@ -553,9 +553,29 @@ md2html.inline.image = function(string) {
     return string;
 }
 
+/* adjust iframe with dynamic resizer */
 md2html.inline.iframe = function(string) {
     string = string.replace(/\[\[\[(.*?)\]\]\]\{autosize\}/g, "<iframe src=\"$1\" onload=\"site.iframeSizeToContent(this)\"></iframe>");
     string = string.replace(/\[\[\[(.*?)\]\]\]/g, "<iframe src=\"$1\"></iframe>");
 
     return string;
+}
+
+/* adjust heading to allow prepended date or category */
+md2html.converter.heading = function(block) {
+    var count = 0;
+    var line = block.lines[0];
+    while(line.length && line.indexOf("#") === 0) {
+        count++;
+        line = line.substr(1);
+    }
+    count = Math.min(Math.max(1, count), 6);
+    line = md2html.inline.angleBrackets(line.trim());
+    var attr = "";
+    if (line.match(/^\([^)]+?\).+/)) {
+        // line starts with a date or category
+        attr = " data-date=\"" + line.substr(1, line.indexOf(")") - 1) + "\""
+        line = line.substr(line.indexOf(")") + 1).trim();
+    }
+    return "<h" + count + attr + ">" + line + "</h" + count + ">";
 }
