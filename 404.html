@@ -14,12 +14,16 @@ permalink: /404.html
     <style type="text/css">
         .container {
             position: relative;
-            margin: 10% auto;
+            margin: 2em auto 0;
             width: 20em;
             border: 0.5em solid #303030;
             background-color: #333333;
             padding: 0.5em;
             text-align: center;
+        }
+
+        .container:empty {
+            display: none;
         }
 
         .container h1 {
@@ -39,5 +43,15 @@ permalink: /404.html
         <h1>404 - page not found</h1>
         gheist.de has moved <a href="/" class="arrow">goto: start</a>
     </main>
+
+    <script>
+        if (window.location.pathname) {
+            var d = document.createElement("div");
+            d.setAttribute("class", "container");
+            d.innerHTML = 'It looks like you were looking for content from the <a href="http://v4.gheist.de' +
+                window.location.pathname + '" class="arrow">old page</a>?';
+            document.body.append(d);
+        }
+    </script>
 </body>
 </html>
