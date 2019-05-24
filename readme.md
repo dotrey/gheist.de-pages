@@ -10,7 +10,7 @@ List of features and things to implement for v6:
 - [ ] updated version of journey
 - [x] image enlargment
 - [x] image lazy loading
-- [ ] "hard" 404 page with redirection for links of older version
+- [x] "hard" 404 page with redirection for links of older version
 - [ ] "soft" 404 page for current version links (e.g. #!/unknown.md)
 - [~] markdown support as specified [here](/playground/md2html/)
 - [ ] graceful fallback for IE which lacks support for some of the CSS features used

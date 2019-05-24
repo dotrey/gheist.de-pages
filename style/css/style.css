@@ -501,6 +501,7 @@ a.arrow:before {
 
 .layout-container .content div.img.bg-bright {
     background-color: #FFFFFF;
+    background-image: url('/style/img/gheist-loading-64-ffffff.gif');
 }
 
 .layout-container .content div.img.no-bg {
