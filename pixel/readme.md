@@ -1,5 +1,8 @@
 # pixel
 
+### (30.05.2019) Dwarves VI
+![Dwarf](/pixel/dwarves/2019-05-30-animated-walk.gif){contain bg-bright}
+
 ### (02.02.2019) Dwarves V
 ![Dwarf](/pixel/dwarves/2019-02-02-animated-run.gif){contain bg-bright}
 
