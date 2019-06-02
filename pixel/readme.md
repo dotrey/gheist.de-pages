@@ -1,5 +1,9 @@
 # pixel
 
+### (02.06.2019) Dwarves VI b
+![Dwarf](/pixel/dwarves/2019-06-02-animated-walk.gif){contain bg-bright}
+Improved the walk up/down animations, way happier with this version.
+
 ### (30.05.2019) Dwarves VI
 ![Dwarf](/pixel/dwarves/2019-05-30-animated-walk.gif){contain bg-bright}
 
