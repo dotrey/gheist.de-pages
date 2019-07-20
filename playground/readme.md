@@ -1,6 +1,9 @@
 # playground
 This is my personal playground, where I try out all the whimsical ideas I pick up here and there. Some of them might work, others will fail.
 ====
+## Kanjiland 
+A game that helps learning kanji? This will take some time... [more](/playground/kanjiland/){arrow}
+====
 ## Changing Background-Color for Headings 
 For my wife's website, she asked me how to create headings that change color based on the scroll position [more](/playground/staticbgheading/){arrow}
 ====

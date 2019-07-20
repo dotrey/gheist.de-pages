@@ -1,5 +1,9 @@
 # pixel
 
+### (14.07.2019) Dwarves VII
+![Dwarf](/pixel/dwarves/2019-07-14.png){contain bg-bright}
+Adding a few more pixels to give the dwarf more details.
+
 ### (02.06.2019) Dwarves VI b
 ![Dwarf](/pixel/dwarves/2019-06-02-animated-walk.gif){contain bg-bright}
 Improved the walk up/down animations, way happier with this version.
