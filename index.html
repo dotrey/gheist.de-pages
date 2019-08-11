@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script>
+        if (navigator.serviceWorker) {
+            console.log("register service worker");
+            navigator.serviceWorker.register("/service-worker.js", {
+                scope : "/"
+            });
+        }else{
+            console.log("no service worker support");
+        }
+    </script>
+
     <link rel="icon" href="/style/img/gheist.ico">
     <title>Geoffrey Heinze | gheist.de</title>
 
