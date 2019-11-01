@@ -210,7 +210,7 @@ a.arrow:before {
     color: var(--low-contrast-color);
 }
 
-@media screen and (min-width: 551px) {
+/* @media screen and (min-width: 551px) {
     .content:empty ~ .menu>.gh>.colors {
         background-color: var(--content-bg-color);
     }
@@ -218,7 +218,7 @@ a.arrow:before {
     .content:empty ~ .menu>.gh>.colors>.color {
         visibility: hidden;
     }
-}
+} */
 
 /* mobile and small screens */
 @media screen and (max-width: 856px) {
