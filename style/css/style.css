@@ -486,7 +486,7 @@ a.arrow:before {
     margin-top: 0;
 }
 
-.layout-container .content div.img {
+.layout-container .content span.img {
     position: relative;
     display: block;
     box-sizing: border-box;
@@ -499,55 +499,55 @@ a.arrow:before {
     background-image: url('/style/img/gheist-loading-64-303030.gif');
 }
 
-.layout-container .content div.img.bg-bright {
+.layout-container .content span.img.bg-bright {
     background-color: #FFFFFF;
     background-image: url('/style/img/gheist-loading-64-ffffff.gif');
 }
 
-.layout-container .content div.img.no-bg {
+.layout-container .content span.img.no-bg {
     background-color: transparent;
     background-image: url('/style/img/gheist-loading-64-333333.gif');
 }
 
-.layout-container .content div.img.contain {
+.layout-container .content span.img.contain {
     background-size: contain;
 }
 
-.layout-container .content div.img.cover {
+.layout-container .content span.img.cover {
     background-size: cover;
 }
 
-.layout-container .content div.img.image-top {
+.layout-container .content span.img.image-top {
     background-position: center top;
 }
 
-.layout-container .content div.img.circle { 
+.layout-container .content span.img.circle { 
     border-radius: 50%;
 }
 
-.layout-container .content div.img.float-left {
+.layout-container .content span.img.float-left {
     width: 45%;
     height: initial;
     float: left;
     margin: 0.25em 1em 0.5em 0;
 }
 
-.layout-container .content div.img.float-right {
+.layout-container .content span.img.float-right {
     width: 45%;
     height: initial;
     float: right;
     margin: 0.25em 0 0.5em 1em;
 }
 
-.layout-container .content div.img.float-left::before,
-.layout-container .content div.img.float-right::before {
+.layout-container .content span.img.float-left::before,
+.layout-container .content span.img.float-right::before {
     position: relative;
     display: block;
     content: " ";
     padding-top: 100%;
 }
 
-.layout-container .content div.img .large {
+.layout-container .content span.img .large {
     position: fixed;
     top: 0;
     left: 0;
@@ -560,7 +560,7 @@ a.arrow:before {
     background-position: center;
 }
 
-.layout-container .content div.img .large::before {
+.layout-container .content span.img .large::before {
     position: absolute;
     display: block;
     top: 10%;
@@ -574,7 +574,7 @@ a.arrow:before {
     background-position: center;
 }
 
-.layout-container .content div.img .large::after {
+.layout-container .content span.img .large::after {
     position: absolute;
     display: block;
     top: 5%;
@@ -586,7 +586,7 @@ a.arrow:before {
     padding: 0.5em;
 }
 
-.layout-container .content div.img:not(:empty)::after {
+.layout-container .content span.img:not(:empty)::after {
     position: fixed;
     display: block;
     content: " ";
@@ -598,8 +598,8 @@ a.arrow:before {
     background-color: var(--image-overlay-bg-color);
 }
 
-.layout-container .content div.img.no-large .large,
-.layout-container .content div.img.no-large:not(:empty)::after {
+.layout-container .content span.img.no-large .large,
+.layout-container .content span.img.no-large:not(:empty)::after {
     display: none;
 }
 

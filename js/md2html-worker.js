@@ -548,7 +548,7 @@ md2html.inline.link = function(string) {
 
 /* adjust image replacement with version supporting enlargement and lazy loading */
 md2html.inline.image = function(string) {
-    string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/g, "<div class=\"img $4\" data-src=\"$2\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></div>");
+    string = string.replace(/!\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/g, "<span class=\"img $4\" data-src=\"$2\" title=\"$1\" onclick=\"site.enlargeImage(this);\"></span>");
 
     return string;
 }
