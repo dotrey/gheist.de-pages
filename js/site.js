@@ -1,5 +1,5 @@
 var site = (function(my) {
-    my.version = "0.2.0";
+    my.version = "0.3.0";
     my.debug = true;
 
     my.config = {
@@ -7,6 +7,11 @@ var site = (function(my) {
         rotationInterval : 5000,
         rotationRandom : false,
         lazyImageObserver : null
+    };
+
+    my.handlers = {
+        "content" : [],
+        "navigate" : []
     };
 
     /* navigation and content */
@@ -20,11 +25,21 @@ var site = (function(my) {
             if (parts[i][0] === "!") {
                 // navigation request
                 this.navigate(parts[i].substr(1));
+            }else if (parts[i][0] === "%") {
+                // inject glitch
+                if (typeof window.glitch === "undefined") {
+                    var s = document.createElement("script");
+                    s.src = "/js/glitch.min.js";
+                    document.body.appendChild(s);
+                }
+                // navigation request
+                this.navigate(parts[i].substr(1));
             }
         }
     };
 
     my.navigate = function(loc) {
+        this.trigger("navigate", loc);
         if (!loc || loc === "/") {
             this.setContent("");
         }else{
@@ -60,6 +75,9 @@ var site = (function(my) {
         // scroll to top
         document.body.scrollIntoView(true);
         this.injectImageLazyLoading();
+
+        // trigger possible event handlers
+        this.trigger("content", html);
     }
 
     /* image enlargment and lazy loading */
@@ -166,7 +184,7 @@ var site = (function(my) {
     my.setupMd2Html = function() {
         this.log("setup md2html")
         if (window.Worker) {
-            this.config.md2htmlWorker = new Worker("/js/md2html-worker.js");
+            this.config.md2htmlWorker = new Worker("/js/md2html-worker.min.js");
             this.config.md2htmlWorker.onmessage = function(e) {
                 this.setContent(e.data);
             }.bind(this);
@@ -280,6 +298,19 @@ var site = (function(my) {
             return parent.getElementsByClassName(selector.substr(1));
         }else{
             return parent.getElementsByTagName(selector);
+        }
+    }
+
+    my.on = function(event, handler) {
+        if (typeof this.handlers[event] !== "undefined" &&
+            typeof handler === "function") {
+            this.handlers[event].push(handler);
+        }
+    }
+
+    my.trigger = function(event, data) {
+        for(var i = 0, ic = (this.handlers[event] || []).length; i < ic; i++) {
+            this.handlers[event][i](data)
         }
     }
 
