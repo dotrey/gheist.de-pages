@@ -14,28 +14,33 @@ var glitch = (function(g) {
 
         var p = document.getElementsByTagName("p");
         for(var i = 0, ic = p.length; i < ic; i++) {
-            this.infectText(p[i]);
+            this.contentShift(p[i]);
         }
         var h1 = document.getElementsByTagName("h1");
         for(var i = 0, ic = h1.length; i < ic; i++) {
-            this.infectText(h1[i], {
+            this.contentShift(h1[i], {
                 rgbThreshold : 0.75
             });
         }
         var h2 = document.getElementsByTagName("h2");
         for(var i = 0, ic = h2.length; i < ic; i++) {
-            this.infectText(h2[i], {
+            this.contentShift(h2[i], {
                 rgbThreshold : 0.75
             });
         }
         var h3 = document.getElementsByTagName("h3");
         for(var i = 0, ic = h3.length; i < ic; i++) {
-            this.infectText(h3[i], {
+            this.contentShift(h3[i], {
                 rgbThreshold : 0.75
             });
         }
     };
 
+    /**
+     * Shows an indicator in the upper left, displaying the
+     * current intensity. Also creates an interval to increase
+     * the intensity up to 1.
+     */
     g.updateIndicator = function() {
         if (!this.indicator) {
             this.indicator = document.createElement("span");
@@ -48,6 +53,14 @@ var glitch = (function(g) {
             document.body.appendChild(this.indicator);
             this.interval = window.setInterval(function() {
                 this.intensity += this.increase;
+                if (this.intensity > 0.3) {
+                    // increase speed after 3%
+                    this.intensity += this.increase;
+                    if (this.intensity > 0.6) {
+                        // increase speed again after 60%
+                        this.intensity += this.increase;
+                    }
+                }
                 if (this.intensity > 1) {
                     this.intensity = 1;
                     window.clearInterval(this.interval);
@@ -82,7 +95,13 @@ var glitch = (function(g) {
         }
     }
 
-    g.infectText = function(origin, opts) {
+    /**
+     * Creates a copy of the origin, that shifts around the origin's
+     * position. If an optional rgb threshold is reached, additional
+     * rgb copies will be created that also shift around the original
+     * position.
+     */
+    g.contentShift = function(origin, opts) {
         if (typeof origin.glitch !== "undefined" || !origin.offsetParent) {
             return;
         }
@@ -156,9 +175,12 @@ var glitch = (function(g) {
             glitched.style.opacity = this.opacity;
             origin.style.opacity = 1 - this.opacity;
             if (g.intensity <= this.rgbThreshold) {
+                // remove rgb copies
                 this.clearRgb();
             }else{
+                // make sure we have rgb copies
                 this.createRgb();
+                // position them based on the normal-colored shift
                 this.rgb[0].style.left = this.dx * 0.5 + "px";
                 this.rgb[0].style.top = -this.dy * 0.5 + "px";
                 this.rgb[1].style.left = -this.dx + "px";
@@ -166,6 +188,7 @@ var glitch = (function(g) {
                 this.rgb[2].style.left = this.dx + "px";
                 this.rgb[2].style.top = this.dy + "px";
                 for (var i = 0; i < 3; i++) {
+                    // hide/show the rgb shifts randomly
                     if (Math.random() > 0.5) {
                         this.rgb[i].style.display = "block";
                     }else{
@@ -192,7 +215,7 @@ var glitch = (function(g) {
         return glitch;
     }
 
-    g.infectTextContent = function(origin) {
+    g.contentShuffle = function(origin) {
         if (typeof origin.glitch !== "undefined" ||
             !origin.innerText) {
             return;
@@ -236,6 +259,9 @@ var glitch = (function(g) {
         glitch.disturb();
     }
 
+    /**
+     * Infects the main gheist.de logo and the rotating texts.
+     */
     g.infectLogo = function(hasContent) {
         var gheist = document.querySelector(".logo-gheist");
         var de = document.querySelector(".logo-de");
@@ -247,6 +273,11 @@ var glitch = (function(g) {
         gheist = gheist.firstElementChild;
         de = de.firstElementChild;
 
+        // the main logo is a bit tricky, as it is only
+        // hidden when content is displayed
+        // -> we want to pause the glitch while it is hidden
+        //    (if there is content) and play the glitch when
+        //    it is visible (i.e. no content)
         if (typeof gheist.glitch !== "undefined") {
             if (hasContent) {
                 gheist.glitch.pause();
@@ -263,6 +294,9 @@ var glitch = (function(g) {
             rotator : [],
 
             setup : function() {
+                // create one span for every character and infect it
+                // with the regular text glitch
+                // we also replace the glitching text
                 gheist.innerHTML = "";
                 for (var i = 0; i < 6; i++) {
                     var s = document.createElement("span");
@@ -279,15 +313,17 @@ var glitch = (function(g) {
                 }
 
                 for (var i = 0; i < 8; i++) {
-                    g.infectText(this.origins[i], {
+                    g.contentShift(this.origins[i], {
                         customText : this.glitchedString[i], 
-                        rgbThreshold : 0.75
+                        rgbThreshold : 0.5
                     });
                 }
 
+                // for the rotator, infect all contained spans
+                // with content shuffle
                 this.rotator = rotator.childNodes;
                 for (var i = 0, ic = this.rotator.length; i < ic; i++) {
-                    g.infectTextContent(this.rotator[i]);
+                    g.contentShuffle(this.rotator[i]);
                 }
             },
 
@@ -329,20 +365,27 @@ var glitch = (function(g) {
         gheist.glitch.setup();
     }
 
+    /**
+     * Infects the navigation:
+     * - infects the links with text shuffling
+     * - causes the logo to glitch
+     */
     g.infectNav = function() {
         var gh = document.querySelector(".gh.logo-gh");
         if (!gh || typeof gh.glitch !== "undefined") {
             return;
         }
 
+        // get all links for content shuffle
         var nav = document.querySelector("nav.links");
         var a = nav.getElementsByTagName("a");
         for(var i = 0, ic = a.length; i < ic; i++) {
-            this.infectTextContent(a[i]);
+            this.contentShuffle(a[i]);
         }
 
+        // create a duplicate of the gh logo
         var dupe = function(top) {
-            var comp = getComputedStyle(gh);
+            var isMobile = gh.offsetParent.offsetWidth === 0;
             var e = document.createElement("div");
             e.innerHTML = gh.innerHTML;
             e.setAttribute("data-group", gh.getAttribute("data-group"));
@@ -364,13 +407,13 @@ var glitch = (function(g) {
             c.style.position = "absolute";
             c.style.display = "none";
             if (top) {
-                if (comp.position === "absolute") {
+                if (isMobile) {
                     c.style.top = "1em";
                 }else{
                     c.style.top = 0;
                 }
             }else{
-                if (comp.position === "absolute") {
+                if (isMobile) {
                     c.setAttribute("data-mobile", 1);
                     c.style.top = (gh.offsetHeight + gh.offsetTop) + "px";
                 }else{
@@ -384,6 +427,7 @@ var glitch = (function(g) {
             return c;
         };
 
+        // creates a blocking element inside the original gh logo
         var injectBlocker = function(top) {
             var b = document.createElement("div");
             b.style.width = "100%";
@@ -400,6 +444,16 @@ var glitch = (function(g) {
             return b;
         }
 
+        // To create the glitch-effect on the logo, we create
+        // two copies of the gh logo (split), one positioned 
+        // from the top of the gh logo, one from the bottom.
+        // We also create two blocker (one top, one bottom)
+        // inside the original logo.
+        // The logo copies have hidden overflow and will be
+        // moved to the left/right, while the blocker with the
+        // same height as the copy hides the matching part of
+        // the original logo.
+        // The original logo never moves or changes size.
         var glitch = g.createGlitch();
         glitch.split = [
             dupe(true),
@@ -414,7 +468,6 @@ var glitch = (function(g) {
 
         glitch.reset = function() {
             this.loop = -1;
-            gh.style.transform = "";
             for (var i = 0; i < 2; i++) {
                 this.split[i].style.display = "none";
                 this.split[i].style.height = 0;
@@ -461,7 +514,9 @@ var glitch = (function(g) {
                 var h = gh.offsetHeight * this.h[i];
                 this.split[i].style.height = h + "px";
                 this.split[i].style.right = this.dx[i] + "em";
-                if (this.split[i].getAttribute("data-mobile")) {                    
+                if (this.split[i].getAttribute("data-mobile")) {
+                    // the logo is absolute positioned in mobile view
+                    // -> we must calculate a top position for the bottom part                
                     this.split[i].style.top = (gh.offsetHeight + gh.offsetTop - h) + "px";
                 }
                 this.blocker[i].style.height = h + "px";
@@ -472,12 +527,32 @@ var glitch = (function(g) {
         glitch.disturb();
     }
 
+    /**
+     * Infects the body:
+     * - creates bars that flicker over the screen
+     */
     g.infectBody = function() {
         if (typeof document.body.glitch !== "undefined") {
             return;
         }
 
+        var rgbgrid = document.createElement("div");
+        rgbgrid.style.position = "fixed";
+        rgbgrid.style.top = 0;
+        rgbgrid.style.left = 0;
+        rgbgrid.style.right = 0;
+        rgbgrid.style.bottom = 0;
+        rgbgrid.style.pointerEvents = "none";
+        rgbgrid.style.zIndex = 50;
+        // note: at syntax is unsupported in safari
+        rgbgrid.style.background = "repeating-linear-gradient(#300, transparent 2.5vh), repeating-linear-gradient(90deg, #030, #003 2.5vh)";
+        rgbgrid.style.opacity = 0;
+        rgbgrid.style.transform = "scale(6)";
+        rgbgrid.style.transition = "opacity 0.2s linear";
+        document.body.appendChild(rgbgrid);
+
         var createBar = function() {
+            // create a "flicker" bar
             var bar = document.createElement("div");
             bar.style.position = "fixed";
             bar.style.width = "100%";
@@ -494,13 +569,20 @@ var glitch = (function(g) {
 
             var glitch = g.createGlitch();
             glitch.prepare = function() {
-                this.loop = Math.floor(g.intensity * 10)
+                this.loop = Math.floor(g.intensity * 10 + g.intensity * g.intensity * 10);
+                this.delay = Math.floor(5 + g.intensity * g.intensity * 10);
+                // determine random height
                 height = 1 + Math.random() * g.intensity * maxHeight;
+                // position so that it does not overflow
                 y = Math.random() * (100 - height);
                 
                 bar.style.height = height + "vh";
                 bar.style.display = "block";
-                if (g.intensity > 0.8) {
+                if (g.intensity > 0.6) {
+                    // if intensity is high enough, also add
+                    // rgb bars with blend mode "difference"
+                    // -> will also influence color of everything
+                    //    that is overlayed
                     var r = Math.random();
                     if (r < 0.25) {                        
                         bar.style.backgroundColor = "#000000";
@@ -549,7 +631,7 @@ var glitch = (function(g) {
         glitch.prepare = function() {
             // determine max number of bars
             var max = 0;
-            if (g.intensity >= 0.5) {
+            if (g.intensity >= 0.33) {
                 max = Math.floor(g.intensity * 5 * Math.random()) + 5;
             }
 
@@ -564,6 +646,12 @@ var glitch = (function(g) {
                 bars.push(createBar());
             }
 
+            // adjust rgb grid opacity
+            rgbgrid.style.opacity = Math.max(0, g.intensity - 0.5) / 2;
+
+        }.bind(glitch);
+        glitch.reset = function() {
+            this.loop = -1;
         }.bind(glitch);
         document.body.glitch = glitch;
         glitch.disturb();
