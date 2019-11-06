@@ -5,6 +5,7 @@ var glitch = (function(g) {
     g.increase = 0.0001;
     g.indicator = null;
     g.interval = null;
+    g.onsite = typeof site !== "undefined";
 
     g.infect = function(hasContent) {
         this.updateIndicator();
@@ -50,6 +51,7 @@ var glitch = (function(g) {
             this.indicator.style.top = "1em";
             this.indicator.style.left = "1em";
             this.indicator.style.lineHeight = "0.8";
+            this.indicator.style.pointerEvents = "none";
             document.body.appendChild(this.indicator);
             this.interval = window.setInterval(function() {
                 this.intensity += this.increase;
@@ -64,6 +66,12 @@ var glitch = (function(g) {
                 if (this.intensity > 1) {
                     this.intensity = 1;
                     window.clearInterval(this.interval);
+                    if (this.onsite) {
+                        if (typeof history !== "undefined") {
+                            history.pushState({}, "", location.origin +"#!/playground/glitch/");
+                        }
+                        location.reload();
+                    }
                 }
                 this.updateIndicator();
             }.bind(this), 33);
@@ -92,6 +100,46 @@ var glitch = (function(g) {
             this.indicator.innerHTML = s + "<br/>" + p;
         }else{
             this.indicator.innerHTML = "!100!<br/>=====";
+        }
+        if (this.onsite) {
+            var at = "";
+            if (this.intensity >= 0.75) {
+                at += "<br/><br/>critical state detected";
+            }else if (this.intensity > 0.65) {
+                var ic = Math.floor(this.intensity * 100) - 65;
+                at += "<br/>"
+                for (var i = 0; i < ic; i++) {
+                    at += ".";
+                }
+            }
+            if (this.intensity >= 0.77) {
+                at += "<br/><br/>attempting restore";
+            }
+            if (this.intensity >= 0.88) {
+                at += "<br/><br/>restore failed";
+            }else if (this.intensity > 0.77) {
+                var ic = Math.floor(this.intensity * 100) - 77;
+                at += "<br/>"
+                for (var i = 0; i < ic; i++) {
+                    at += ".";
+                }
+            }
+            if (this.intensity >= 0.9) {
+                at += "<br/><br/>attempting reset";
+            }
+            if (this.intensity >= 0.94) {
+                at += "<br/><br/>preparing glitch containment";
+            }
+            if (this.intensity >= 1) {
+                at += "<br/><br/>initiate reset";
+            }else if (this.intensity > 0.9) {
+                var ic = Math.floor(this.intensity * 100) - 90;
+                at += "<br/>"
+                for (var i = 0; i < ic; i++) {
+                    at += ".";
+                }
+            }
+            this.indicator.innerHTML += at;
         }
     }
 
@@ -706,7 +754,7 @@ var glitch = (function(g) {
         };
     }
 
-    if (typeof site !== "undefined") {
+    if (g.onsite) {
         site.on("content", function(html) {
             g.infect(!!html);
         });
