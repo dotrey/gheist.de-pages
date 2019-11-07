@@ -203,6 +203,16 @@ var site = (function(my) {
                 }
             }
         }
+        // add a small chance for glitched links
+        this.on("content", function(){
+            my.e("#content").querySelectorAll("a").forEach(function(a){
+                var href = (a.getAttribute("href") || "");
+                if ((href || "").indexOf("#!") === 0 && Math.random() < 0.01) {
+                    a.setAttribute("href", "#%" + href.substr(2));
+                    this.log("<1%");
+                }
+            })
+        });
     }
 
     /* utility */

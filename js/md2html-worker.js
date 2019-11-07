@@ -540,7 +540,7 @@ var md2html = (function(my) {
 
 /* adjust link replacement to rewrite relative links into #!.. hash links */
 md2html.inline.link = function(string) {
-    string = string.replace(/\[([^\]]*?)\]\(\/([^)]*?)\)(\{([^}]*?)\})?/g, "<a href=\"#!$2\" class=\"$4\">$1</a>");
+    string = string.replace(/\[([^\]]*?)\]\(\/([^)]*?)\)(\{([^}]*?)\})?/g, "<a href=\"#!/$2\" class=\"$4\">$1</a>");
     string = string.replace(/\[([^\]]*?)\]\(([^)]*?)\)(\{([^}]*?)\})?/g, "<a href=\"$2\" class=\"$4\">$1</a>");
 
     return string;
