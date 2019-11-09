@@ -205,6 +205,9 @@ var site = (function(my) {
         }
         // add a small chance for glitched links
         this.on("content", function(){
+            if (!!my.sio("immunoglobulin", undefined, 1)) {
+                return;
+            }
             my.e("#content").querySelectorAll("a").forEach(function(a){
                 var href = (a.getAttribute("href") || "");
                 if ((href || "").indexOf("#!") === 0 && Math.random() < 0.01) {
@@ -309,6 +312,30 @@ var site = (function(my) {
         }else{
             return parent.getElementsByTagName(selector);
         }
+    }
+
+    /**
+     * Wrapper for local/session storage.
+     * Provide a key and value to store, or only the key
+     * to retrieve.
+     * Will use local storage by default, provide true value
+     * for third parameter to use session storage.
+     */
+    my.sio = function(key, value, session) {
+        try {
+            var s = localStorage;
+            if (!!session) {
+                s = sessionStorage;
+            }
+            if (typeof value !== "undefined") {
+                s.setItem(key, value);
+            }else{
+                return s.getItem(key);
+            }
+        }catch(e) {
+            my.log("exception in storage", e);
+        }
+        return null;
     }
 
     my.on = function(event, handler) {

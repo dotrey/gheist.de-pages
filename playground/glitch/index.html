@@ -48,6 +48,13 @@
             margin: 0.5em 0 0 0;
         }
     </style>
+    <script>
+        try {
+            sessionStorage.setItem("immunoglobulin", 1);
+        }catch(e){
+            // ignore, can happen in private modes
+        }
+    </script>
 </head>
 <body>
     <h1>glitch containment unit</h1>

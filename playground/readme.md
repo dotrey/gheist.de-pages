@@ -1,5 +1,5 @@
 # playground
-This is my personal playground, where I try out all the interesting / strange / stupid / whimsical ideas I pick up here and there. Some of them might work, others will fail.
+This is my personal playground, where I try out all the interesting, strange and whimsical ideas I pick up here and there. Some of them might work, others will fail.
 ====
 ## Kanjiland 
 A game that helps learning kanji? This will take some time... [more](/playground/kanjiland/){arrow}
