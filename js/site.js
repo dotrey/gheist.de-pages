@@ -212,7 +212,7 @@ var site = (function(my) {
                 var href = (a.getAttribute("href") || "");
                 if ((href || "").indexOf("#!") === 0 && Math.random() < 0.01) {
                     a.setAttribute("href", "#%" + href.substr(2));
-                    me.log("<1%");
+                    my.log("<1%");
                 }
             })
         });
