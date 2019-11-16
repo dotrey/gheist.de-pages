@@ -3,8 +3,8 @@ Kanjiland is my idea and attempt to help me with learning Japanese, and especial
 
 With this little dev log, I will try to keep track of kanjiland's progress.
 
-!!>> <div style="text-align: center; font-size: 80%; max-width: 100%;">
-!!>> <video controls height="320" width="320">
+!!>> <div style="text-align: center; font-size: 80%;">
+!!>> <video controls height="320" width="320" style=" max-width: 100%;">
 !!>> <source src="/playground/kanjiland/vid/2019-11-16-kanjiland-animations.webm" type="video/webm" />
 !!>> <source src="/playground/kanjiland/vid/2019-11-16-kanjiland-animations.mp4" type="video/mp4" />
 !!>> </video><br/>testing the first animations in kanjiland
