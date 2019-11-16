@@ -26,6 +26,7 @@ Based on the github Markdown syntax:
   * [x] automatic url replacement
 * [x] Images
   * [x] extended syntax `[title](http://){css classes}`
+* [ ] Videos
 * [x] Tasks
   * [x] partially complete Tasks with `[~]`
 
