@@ -45,6 +45,38 @@ export default class qrGhost {
     displayResultGeneral(result) {
         this.result.innerHTML = result;
     }
+    copyResult() {
+        let result = this.result.innerText;
+        let copySuccess = () => {
+            this.result.classList.add("copied");
+            window.setTimeout(() => {
+                this.result.classList.remove("copied");
+            }, 500);
+        };
+        if (!navigator.clipboard) {
+            let ta = document.createElement("textarea");
+            ta.setAttribute("style", "position: fixed;");
+            ta.value = result;
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try {
+                document.execCommand("copy");
+                copySuccess();
+            }
+            catch (err) {
+                this.log("copy to clipboard failed");
+            }
+            document.body.removeChild(ta);
+        }
+        else {
+            navigator.clipboard.writeText(result).then(function () {
+                copySuccess();
+            }, function (err) {
+                this.log("copy to clipboard failed");
+            });
+        }
+    }
     hideVideo() {
         if (this.video.srcObject) {
             this.video.pause();
@@ -144,6 +176,10 @@ export default class qrGhost {
         this.addClickListener(btn, (e) => {
             this.showVideo();
             this.log("click scan");
+        });
+        let copy = document.getElementById("copy-button");
+        this.addClickListener(copy, (e) => {
+            this.copyResult();
         });
         this.result = document.getElementById("qr-result");
     }
