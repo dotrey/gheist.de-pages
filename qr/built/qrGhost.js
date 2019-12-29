@@ -8,22 +8,27 @@ export default class qrGhost {
             audio: false
         };
         this.scanning = false;
+        this.debug = true;
+        this.extendedDebugging = null;
         this.container = document.getElementById("main-container");
         this.infoContainer = document.getElementById("info-container");
         this.videoContainer = document.getElementById("video-container");
         this.errorContainer = document.getElementById("error");
+        this.setupDebug();
         this.setupCanvas();
         this.setupResult();
         this.setupVideo();
         this.qr = new qrWrapper(this.displayResult.bind(this));
         this.hideVideo();
         this.setupInfo();
+        this.log("initialized");
     }
     displayResult(result) {
         if (!result) {
             this.scan();
             return;
         }
+        this.log("display result", result);
         if (result.match(/^[a-z]*?:\/\//i)) {
             this.displayResultUrl(result);
         }
@@ -93,7 +98,7 @@ export default class qrGhost {
         this.videoContainer.style.display = "block";
         navigator.mediaDevices.getUserMedia(this.videoConstraints)
             .then((stream) => {
-            this.log("video stream found");
+            this.log("video stream found (" + stream.id + ")");
             stream.onremovetrack = (ev) => {
                 this.log("video stream ended");
             };
@@ -165,7 +170,11 @@ export default class qrGhost {
         this.addClickListener(hide, (e) => {
             this.infoContainer.style.display = "none";
         });
-        this.infoContainer.style.display = "none";
+        window.addEventListener("load", () => {
+            window.setTimeout(() => {
+                this.infoContainer.style.display = "none";
+            }, 500);
+        });
     }
     setupResult() {
         let btn = document.getElementById("scan-button");
@@ -205,6 +214,27 @@ export default class qrGhost {
             this.hideVideo();
             this.log("click cancel");
         });
+        this.detectVideoDevices();
+    }
+    detectVideoDevices() {
+        let constraints = navigator.mediaDevices.getSupportedConstraints();
+        this.log("supported media constraints", constraints);
+        this.log("devices:");
+        navigator.mediaDevices.enumerateDevices().then((devices) => {
+            for (let device of devices) {
+                this.log("- " + device.kind + " : " + device.label + " | id: " + device.deviceId);
+            }
+        })
+            .catch(function (err) {
+            console.log(err.name + ": " + err.message);
+        });
+    }
+    setupDebug() {
+        if (location.search === "?debug") {
+            this.extendedDebugging = document.createElement("textarea");
+            this.extendedDebugging.classList.add("debug-area");
+            document.body.appendChild(this.extendedDebugging);
+        }
     }
     addClickListener(element, handler) {
         element.addEventListener("touchstart", (e) => {
@@ -228,9 +258,22 @@ export default class qrGhost {
         this.log(msg, o);
     }
     log(msg, o) {
+        if (!this.debug) {
+            return;
+        }
         console.log("qr ghost >> " + msg);
         if (o) {
             console.log(o);
+        }
+        if (this.extendedDebugging) {
+            this.extendedDebugging.value += "\n" + msg;
+            if (o) {
+                this.extendedDebugging.value += "\nOBJECT: " + o;
+                for (let prop of Object.getOwnPropertyNames(o)) {
+                    this.extendedDebugging.value += "\n " + prop + " : " + o[prop];
+                }
+            }
+            this.extendedDebugging.scrollTop = this.extendedDebugging.scrollHeight;
         }
     }
     demoQrCode(file = "/assets/img/demo/qr-url.png") {
