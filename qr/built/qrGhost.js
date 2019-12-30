@@ -109,6 +109,7 @@ export default class qrGhost {
                 this.log("video stream ended");
             };
             this.video.srcObject = stream;
+            this.video.play();
         })
             .catch((error) => {
             if (error.name === "ConstraintNotSatisfiedError" ||
@@ -260,55 +261,46 @@ export default class qrGhost {
         navigator.mediaDevices.enumerateDevices().then((devices) => {
             let videoDevices = devices.filter((device) => {
                 this.log("- " + device.kind + " : " + device.label + " | id: " + device.deviceId);
-                return device.kind === "videoinput" &&
-                    (device.label || "").indexOf("back") > -1;
+                return device.kind === "videoinput";
             });
-            if (videoDevices.length > 1) {
-                this.log("multiple backward facing cameras detected");
-                let firstDevice = null;
-                let lowest = -1;
-                let index = -1;
-                for (let device of videoDevices) {
-                    let label = device.label.toLowerCase().replace(/[^a-z0-9 ]/, "");
-                    let splitted = label.split(" ");
-                    if (index < 0) {
-                        for (let i = 0, ic = splitted.length; i < ic; i++) {
-                            if ((Number(splitted[i]) + "") === splitted[i]) {
-                                index = i;
-                                break;
+            if (videoDevices.length > 0) {
+                this.log("at least 1 camera found");
+                videoDevices = videoDevices.filter((device) => {
+                    return (device.label || "").indexOf("back") > -1;
+                });
+                if (videoDevices.length > 1) {
+                    this.log("multiple backward facing cameras detected");
+                    let firstDevice = null;
+                    let lowest = -1;
+                    let index = -1;
+                    for (let device of videoDevices) {
+                        let label = device.label.toLowerCase().replace(/[^a-z0-9 ]/, "");
+                        let splitted = label.split(" ");
+                        if (index < 0) {
+                            for (let i = 0, ic = splitted.length; i < ic; i++) {
+                                if ((Number(splitted[i]) + "") === splitted[i]) {
+                                    index = i;
+                                    break;
+                                }
                             }
                         }
-                    }
-                    let value = Number(splitted[index]);
-                    if (!isNaN(value) &&
-                        (value < lowest || lowest < 0)) {
-                        lowest = value;
-                        firstDevice = device;
-                    }
-                }
-                if (firstDevice) {
-                    this.log("-> first device is ", firstDevice);
-                    this.videoConstraints = {
-                        audio: false,
-                        video: {
-                            deviceId: {
-                                ideal: firstDevice.deviceId
-                            },
-                            facingMode: "environment"
+                        let value = Number(splitted[index]);
+                        if (!isNaN(value) &&
+                            (value < lowest || lowest < 0)) {
+                            lowest = value;
+                            firstDevice = device;
                         }
-                    };
-                    this.log("-> updated constraints", this.videoConstraints);
-                }
-                else {
-                    this.log("-> unable to determine first device!");
+                    }
+                    if (firstDevice) {
+                        this.log("-> first device is ", firstDevice);
+                    }
+                    else {
+                        this.log("-> unable to determine first device!");
+                    }
                 }
             }
             else if (!videoDevices.length) {
-                this.log(".. no video devices detected");
-                if (!isRetry) {
-                    this.log("  -> requesting permission");
-                    this.requestVideoDevices();
-                }
+                this.error("no video devices detected");
             }
         })
             .catch((e) => {
