@@ -1,4 +1,5 @@
 import qrWrapper from "./qrWrapper.js";
+import BackStack from "./BackStack.js";
 export default class qrGhost {
     constructor() {
         this.videoConstraints = {
@@ -10,6 +11,7 @@ export default class qrGhost {
         this.scanning = false;
         this.debug = true;
         this.extendedDebugging = null;
+        this.backStack = new BackStack();
         this.container = document.getElementById("main-container");
         this.infoContainer = document.getElementById("info-container");
         this.videoContainer = document.getElementById("video-container");
@@ -96,6 +98,7 @@ export default class qrGhost {
             return;
         }
         this.videoContainer.style.display = "block";
+        this.backStack.push("video");
         navigator.mediaDevices.getUserMedia(this.videoConstraints)
             .then((stream) => {
             this.log("video stream found (" + stream.id + ")");
@@ -119,7 +122,7 @@ export default class qrGhost {
             else {
                 this.error("Error while accessing video stream.", error);
             }
-            this.hideVideo();
+            this.backStack.pop();
         });
     }
     startScanning() {
@@ -166,12 +169,16 @@ export default class qrGhost {
     }
     setupInfo() {
         let show = document.getElementById("show-info-button");
+        this.backStack.addPopHandler("info", () => {
+            this.infoContainer.style.display = "none";
+        });
         this.addClickListener(show, (e) => {
             this.infoContainer.style.display = "block";
+            this.backStack.push("info");
         });
         let hide = document.getElementById("hide-info-button");
         this.addClickListener(hide, (e) => {
-            this.infoContainer.style.display = "none";
+            this.backStack.pop();
         });
         window.addEventListener("load", () => {
             window.setTimeout(() => {
@@ -210,66 +217,62 @@ export default class qrGhost {
         });
         let cancel = this.videoContainer.querySelector(".cancel");
         this.addClickListener(cancel, (e) => {
-            this.hideVideo();
+            this.backStack.pop();
             this.log("touch cancel");
         });
         this.addClickListener(cancel, (e) => {
-            this.hideVideo();
+            this.backStack.pop();
             this.log("click cancel");
         });
         this.detectVideoDevices();
+        this.backStack.addPopHandler("video", this.hideVideo.bind(this));
     }
     detectVideoDevices() {
         let constraints = navigator.mediaDevices.getSupportedConstraints();
         this.log("supported media constraints", constraints);
         this.log("devices:");
-        let videoDevices = [];
         navigator.mediaDevices.enumerateDevices().then((devices) => {
-            for (let device of devices) {
+            let videoDevices = devices.filter((device) => {
                 this.log("- " + device.kind + " : " + device.label + " | id: " + device.deviceId);
-                if (device.kind === "videoinput") {
-                    videoDevices.push(device);
+                return device.kind === "videoinput" &&
+                    (device.label || "").indexOf("back") > -1;
+            });
+            if (videoDevices.length > 1) {
+                this.log("multiple backward facing cameras detected");
+                let firstDevice = null;
+                let lowest = -1;
+                let index = -1;
+                for (let device of videoDevices) {
+                    let label = device.label.toLowerCase().replace(/[^a-z0-9 ]/, "");
+                    let splitted = label.split(" ");
+                    if (index < 0) {
+                        for (let i = 0, ic = splitted.length; i < ic; i++) {
+                            if ((Number(splitted[i]) + "") === splitted[i]) {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
+                    let value = Number(splitted[index]);
+                    if (!isNaN(value) &&
+                        (value < lowest || lowest < 0)) {
+                        lowest = value;
+                        firstDevice = device;
+                    }
+                }
+                if (firstDevice) {
+                    this.log("-> first device is ", firstDevice);
+                    this.videoConstraints.video = Object.assign(this.videoConstraints.video, { id: { ideal: firstDevice.deviceId } });
+                    this.log("-> updated constraints", this.videoConstraints);
+                }
+                else {
+                    this.log("-> unable to determine first device!");
                 }
             }
         })
             .catch((e) => {
             this.log("error while enumerating devices", e);
         });
-        videoDevices = videoDevices.filter((value) => {
-            return (value.label || "").indexOf("back") > -1;
-        });
-        if (videoDevices.length > 1) {
-            this.log("multiple backward facing cameras detected");
-            let firstDevice = null;
-            let lowest = -1;
-            let index = -1;
-            for (let device of videoDevices) {
-                let label = device.label.toLowerCase().replace(/[^a-z0-9 ]/, "");
-                let splitted = label.split(" ");
-                if (index < 0) {
-                    for (let i = 0, ic = splitted.length; i < ic; i++) {
-                        if ((Number(splitted[i]) + "") === splitted[i]) {
-                            index = i;
-                            break;
-                        }
-                    }
-                }
-                let value = Number(splitted[index]);
-                if (!isNaN(value) &&
-                    (value < lowest || lowest < 0)) {
-                    lowest = value;
-                    firstDevice = device;
-                }
-            }
-            if (firstDevice) {
-                this.log("-> first device is ", firstDevice);
-                this.videoConstraints.video = Object.assign(this.videoConstraints.video, { id: { ideal: firstDevice.deviceId } });
-                this.log("-> updated constraints", this.videoConstraints);
-            }
-            else {
-                this.log("-> unable to determine first device!");
-            }
-        }
     }
     setupDebug() {
         if (location.search === "?debug") {
