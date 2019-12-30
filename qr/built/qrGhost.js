@@ -224,7 +224,7 @@ export default class qrGhost {
             this.backStack.pop();
             this.log("click cancel");
         });
-        this.requestVideoDevices();
+        this.detectVideoDevices();
         this.backStack.addPopHandler("video", this.hideVideo.bind(this));
     }
     requestVideoDevices() {
@@ -236,8 +236,8 @@ export default class qrGhost {
         this.log("requesting initial device permission");
         navigator.mediaDevices.getUserMedia(this.videoConstraints)
             .then((stream) => {
-            this.log("permission granted");
-            this.detectVideoDevices();
+            this.log("camera permission granted");
+            this.detectVideoDevices(true);
         })
             .catch((error) => {
             if (error.name === "ConstraintNotSatisfiedError" ||
@@ -253,7 +253,7 @@ export default class qrGhost {
             }
         });
     }
-    detectVideoDevices() {
+    detectVideoDevices(isRetry = false) {
         let constraints = navigator.mediaDevices.getSupportedConstraints();
         this.log("supported media constraints", constraints);
         this.log("devices:");
@@ -301,6 +301,13 @@ export default class qrGhost {
                 }
                 else {
                     this.log("-> unable to determine first device!");
+                }
+            }
+            else if (!videoDevices.length) {
+                this.log(".. no video devices detected");
+                if (!isRetry) {
+                    this.log("  -> requesting permission");
+                    this.requestVideoDevices();
                 }
             }
         })
