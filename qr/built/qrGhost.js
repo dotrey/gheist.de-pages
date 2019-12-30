@@ -94,7 +94,7 @@ export default class qrGhost {
     showVideo() {
         this.error();
         if (!navigator.mediaDevices) {
-            this.log("no media device support");
+            this.error("no media device support");
             return;
         }
         this.videoContainer.style.display = "block";
@@ -224,8 +224,34 @@ export default class qrGhost {
             this.backStack.pop();
             this.log("click cancel");
         });
-        this.detectVideoDevices();
+        this.requestVideoDevices();
         this.backStack.addPopHandler("video", this.hideVideo.bind(this));
+    }
+    requestVideoDevices() {
+        this.error();
+        if (!navigator.mediaDevices) {
+            this.error("no media device support");
+            return;
+        }
+        this.log("requesting initial device permission");
+        navigator.mediaDevices.getUserMedia(this.videoConstraints)
+            .then((stream) => {
+            this.log("permission granted");
+            this.detectVideoDevices();
+        })
+            .catch((error) => {
+            if (error.name === "ConstraintNotSatisfiedError" ||
+                error.name === "OverconstrainedError") {
+                this.error("No video stream available for specified constraints.", this.videoConstraints);
+            }
+            else if (error.name === "PermissionDeniedError" ||
+                error.name === "NotAllowedError") {
+                this.error("Permission to access camera is required.");
+            }
+            else {
+                this.error("Error while accessing video stream.", error);
+            }
+        });
     }
     detectVideoDevices() {
         let constraints = navigator.mediaDevices.getSupportedConstraints();
