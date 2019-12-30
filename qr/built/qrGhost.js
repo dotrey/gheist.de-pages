@@ -223,14 +223,53 @@ export default class qrGhost {
         let constraints = navigator.mediaDevices.getSupportedConstraints();
         this.log("supported media constraints", constraints);
         this.log("devices:");
+        let videoDevices = [];
         navigator.mediaDevices.enumerateDevices().then((devices) => {
             for (let device of devices) {
                 this.log("- " + device.kind + " : " + device.label + " | id: " + device.deviceId);
+                if (device.kind === "videoinput") {
+                    videoDevices.push(device);
+                }
             }
         })
-            .catch(function (err) {
-            console.log(err.name + ": " + err.message);
+            .catch((e) => {
+            this.log("error while enumerating devices", e);
         });
+        videoDevices = videoDevices.filter((value) => {
+            return (value.label || "").indexOf("back") > -1;
+        });
+        if (videoDevices.length > 1) {
+            this.log("multiple backward facing cameras detected");
+            let firstDevice = null;
+            let lowest = -1;
+            let index = -1;
+            for (let device of videoDevices) {
+                let label = device.label.toLowerCase().replace(/[^a-z0-9 ]/, "");
+                let splitted = label.split(" ");
+                if (index < 0) {
+                    for (let i = 0, ic = splitted.length; i < ic; i++) {
+                        if ((Number(splitted[i]) + "") === splitted[i]) {
+                            index = i;
+                            break;
+                        }
+                    }
+                }
+                let value = Number(splitted[index]);
+                if (!isNaN(value) &&
+                    (value < lowest || lowest < 0)) {
+                    lowest = value;
+                    firstDevice = device;
+                }
+            }
+            if (firstDevice) {
+                this.log("-> first device is ", firstDevice);
+                this.videoConstraints.video = Object.assign(this.videoConstraints.video, { id: { ideal: firstDevice.deviceId } });
+                this.log("-> updated constraints", this.videoConstraints);
+            }
+            else {
+                this.log("-> unable to determine first device!");
+            }
+        }
     }
     setupDebug() {
         if (location.search === "?debug") {
@@ -270,11 +309,14 @@ export default class qrGhost {
         }
         if (this.extendedDebugging) {
             this.extendedDebugging.value += "\n" + msg;
-            if (o) {
+            if (typeof o === "object") {
                 this.extendedDebugging.value += "\nOBJECT: " + o;
                 for (let prop of Object.getOwnPropertyNames(o)) {
                     this.extendedDebugging.value += "\n " + prop + " : " + o[prop];
                 }
+            }
+            else if (o) {
+                this.extendedDebugging.value += "\nVALUE: " + o;
             }
             this.extendedDebugging.scrollTop = this.extendedDebugging.scrollHeight;
         }
