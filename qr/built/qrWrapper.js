@@ -55,5 +55,19 @@ export default class qrWrapper {
     imageData(context) {
         return context.getImageData(0, 0, context.canvas.width, context.canvas.height);
     }
+    scanMode(exhaustive = false) {
+        if (exhaustive) {
+            this.worker.postMessage({
+                type: "scan-mode",
+                data: "exhaustive"
+            });
+        }
+        else {
+            this.worker.postMessage({
+                type: "scan-mode",
+                data: "normal"
+            });
+        }
+    }
 }
 //# sourceMappingURL=qrWrapper.js.map
