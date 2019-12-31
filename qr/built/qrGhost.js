@@ -293,6 +293,16 @@ export default class qrGhost {
                     }
                     if (firstDevice) {
                         this.log("-> first device is ", firstDevice);
+                        this.videoConstraints = {
+                            audio: false,
+                            video: {
+                                deviceId: {
+                                    ideal: firstDevice.deviceId
+                                },
+                                facingMode: "environment"
+                            }
+                        };
+                        this.log("-> updated constraints", this.videoConstraints);
                     }
                     else {
                         this.log("-> unable to determine first device!");
