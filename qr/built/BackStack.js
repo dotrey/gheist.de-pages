@@ -6,7 +6,6 @@ export default class BackStack {
     onpop(event) {
         if (typeof this.events[event.state] === "function") {
             this.events[event.state]();
-            console.log(history.state);
             event.preventDefault();
             window.history.replaceState(undefined, "");
         }
