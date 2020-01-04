@@ -1,13 +1,8 @@
 import qrWrapper from "./qrWrapper.js";
 import BackStack from "./BackStack.js";
+import VideoHelper from "./VideoHelper.js";
 export default class qrGhost {
     constructor() {
-        this.videoConstraints = {
-            video: {
-                facingMode: "environment"
-            },
-            audio: false
-        };
         this.scanning = false;
         this.debug = true;
         this.extendedDebugging = null;
@@ -86,10 +81,7 @@ export default class qrGhost {
         }
     }
     hideVideo() {
-        this.video.pause();
-        if (this.video.srcObject) {
-            this.video.srcObject = null;
-        }
+        this.videoHelper.pause();
         this.videoContainer.style.display = "none";
     }
     showVideo() {
@@ -99,23 +91,16 @@ export default class qrGhost {
             return;
         }
         this.videoContainer.style.display = "block";
+        this.video.style.visibility = "hidden";
         this.backStack.push("video");
-        navigator.mediaDevices.getUserMedia(this.videoConstraints)
-            .then((stream) => {
-            this.log("video stream found (" + stream.id + ")");
-            for (let track of stream.getVideoTracks()) {
-                this.log("- " + track.label + " : " + track.id);
-            }
-            stream.onremovetrack = (ev) => {
-                this.log("video stream ended");
-            };
-            this.video.srcObject = stream;
-            this.assertVideoPlaying();
+        this.videoHelper.play()
+            .then((value) => {
+            this.video.style.visibility = "visible";
         })
             .catch((error) => {
             if (error.name === "ConstraintNotSatisfiedError" ||
                 error.name === "OverconstrainedError") {
-                this.error("No video stream available for specified constraints.", this.videoConstraints);
+                this.error("No video stream available for specified constraints.");
             }
             else if (error.name === "PermissionDeniedError" ||
                 error.name === "NotAllowedError") {
@@ -126,20 +111,6 @@ export default class qrGhost {
             }
             this.backStack.pop();
         });
-    }
-    assertVideoPlaying() {
-        if (this.video.srcObject &&
-            this.videoContainer.style.display === "block" &&
-            (this.video.paused || this.video.ended)) {
-            try {
-                this.log("asserting video playback...");
-                this.video.play();
-            }
-            catch (ex) {
-                this.log("exception while starting playback", ex);
-            }
-            window.setTimeout(this.assertVideoPlaying.bind(this), 250);
-        }
     }
     startScanning() {
         let context = this.canvas.getContext("2d");
@@ -228,9 +199,6 @@ export default class qrGhost {
             this.log("resize");
             this.adjustVideoSize();
         });
-        this.video.addEventListener("loadedmetadata", (e) => {
-            this.assertVideoPlaying();
-        });
         let cancel = this.videoContainer.querySelector(".cancel");
         this.addClickListener(cancel, (e) => {
             this.backStack.pop();
@@ -245,102 +213,11 @@ export default class qrGhost {
             this.log("setting scan mode: " + (exhaust.checked ? "exhaustive" : "normal"));
             this.qr.scanMode(exhaust.checked);
         });
-        if (navigator.mediaDevices) {
-            navigator.mediaDevices.addEventListener("devicechange", (ev) => {
-                this.log("media devices have changed!");
-            });
+        this.videoHelper = new VideoHelper(this.video, this.log.bind(this));
+        if (!this.videoHelper.detectVideoDevices()) {
+            this.error("no video devices detected");
         }
-        this.detectVideoDevices();
-        this.backStack.addPopHandler("video", this.hideVideo.bind(this));
-    }
-    requestVideoDevices() {
-        this.error();
-        if (!navigator.mediaDevices) {
-            this.error("no media device support");
-            return;
-        }
-        this.log("requesting initial device permission");
-        navigator.mediaDevices.getUserMedia(this.videoConstraints)
-            .then((stream) => {
-            this.log("camera permission granted");
-            this.detectVideoDevices(true);
-        })
-            .catch((error) => {
-            if (error.name === "ConstraintNotSatisfiedError" ||
-                error.name === "OverconstrainedError") {
-                this.error("No video stream available for specified constraints.", this.videoConstraints);
-            }
-            else if (error.name === "PermissionDeniedError" ||
-                error.name === "NotAllowedError") {
-                this.error("Permission to access camera is required.");
-            }
-            else {
-                this.error("Error while accessing video stream.", error);
-            }
-        });
-    }
-    detectVideoDevices(isRetry = false) {
-        let constraints = navigator.mediaDevices.getSupportedConstraints();
-        this.log("supported media constraints", constraints);
-        this.log("devices:");
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-            let videoDevices = devices.filter((device) => {
-                this.log("- " + device.kind + " : " + device.label + " | id: " + device.deviceId);
-                return device.kind === "videoinput";
-            });
-            if (videoDevices.length > 0) {
-                this.log("at least 1 camera found");
-                videoDevices = videoDevices.filter((device) => {
-                    return (device.label || "").indexOf("back") > -1;
-                });
-                if (videoDevices.length > 1) {
-                    this.log("multiple backward facing cameras detected");
-                    let firstDevice = null;
-                    let lowest = -1;
-                    let index = -1;
-                    for (let device of videoDevices) {
-                        let label = device.label.toLowerCase().replace(/[^a-z0-9 ]/, "");
-                        let splitted = label.split(" ");
-                        if (index < 0) {
-                            for (let i = 0, ic = splitted.length; i < ic; i++) {
-                                if ((Number(splitted[i]) + "") === splitted[i]) {
-                                    index = i;
-                                    break;
-                                }
-                            }
-                        }
-                        let value = Number(splitted[index]);
-                        if (!isNaN(value) &&
-                            (value < lowest || lowest < 0)) {
-                            lowest = value;
-                            firstDevice = device;
-                        }
-                    }
-                    if (firstDevice) {
-                        this.log("-> first device is ", firstDevice);
-                        this.videoConstraints = {
-                            audio: false,
-                            video: {
-                                deviceId: {
-                                    ideal: firstDevice.deviceId
-                                },
-                                facingMode: "environment"
-                            }
-                        };
-                        this.log("-> updated constraints", this.videoConstraints);
-                    }
-                    else {
-                        this.log("-> unable to determine first device!");
-                    }
-                }
-            }
-            else if (!videoDevices.length) {
-                this.error("no video devices detected");
-            }
-        })
-            .catch((e) => {
-            this.log("error while enumerating devices", e);
-        });
+        this.backStack.addPopHandler("video", this.stopScanning.bind(this));
     }
     setupDebug() {
         if (location.search === "?debug") {
