@@ -62,12 +62,12 @@ export default class VideoHelper {
                 navigator.mediaDevices.getUserMedia(this.videoConstraints)
                     .then((stream) => {
                     this.log("video stream found (" + stream.id + ")");
-                    let trackLabel = "";
+                    let trackDeviceId = "";
                     for (let track of stream.getVideoTracks()) {
                         this.log("- " + track.label + " : " + track.id);
-                        trackLabel = track.label;
+                        trackDeviceId = track.getSettings().deviceId;
                     }
-                    this.enumerateBackCameras(trackLabel);
+                    this.enumerateBackCameras(trackDeviceId);
                     stream.onremovetrack = (ev) => {
                         this.log("video stream ended");
                     };
@@ -196,17 +196,12 @@ export default class VideoHelper {
         });
         return true;
     }
-    enumerateBackCameras(trackLabel) {
+    enumerateBackCameras(trackDeviceId) {
+        this.log("enumerating backward cameras");
         let done = (cameraDevices) => {
+            this.log(".. done enumerating backwards cameras", cameraDevices);
             if (typeof this.onDeviceRetrieved === "function") {
-                let activeDeviceId = "";
-                for (let device of cameraDevices) {
-                    if (device.label === trackLabel) {
-                        activeDeviceId = device.deviceId;
-                        break;
-                    }
-                }
-                this.onDeviceRetrieved(cameraDevices, activeDeviceId);
+                this.onDeviceRetrieved(cameraDevices, trackDeviceId);
             }
         };
         navigator.mediaDevices.enumerateDevices().then((devices) => {
@@ -214,10 +209,15 @@ export default class VideoHelper {
             let videoDevices = devices.filter((device) => {
                 return device.kind === "videoinput";
             });
+            this.log(".. total cameras: " + videoDevices.length);
             if (videoDevices.length > 0) {
+                let devicesWithLabel = 0;
                 videoDevices = videoDevices.filter((device) => {
+                    this.log(".. > " + device.label + " (" + device.deviceId + ")");
+                    devicesWithLabel += !!device.label ? 1 : 0;
                     return (device.label || "").indexOf("back") > -1;
                 });
+                this.log(".. total backward cameras: " + videoDevices.length);
                 if (videoDevices.length) {
                     let index = -1;
                     let ordered = [];
@@ -238,6 +238,9 @@ export default class VideoHelper {
                         }
                     }
                     cameraDevices = ordered.filter((d) => { return !!d; });
+                }
+                else if (devicesWithLabel === 0) {
+                    this.log(".. devices have no labels!", devices);
                 }
             }
             done(cameraDevices);

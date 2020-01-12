@@ -194,6 +194,14 @@ export default class qrGhost {
                 this.infoContainer.style.display = "none";
             }, 500);
         });
+        let img = this.infoContainer.querySelector(".about img");
+        this.addClickListener(img, (e) => {
+            let val = (img.getAttribute("data-debug") || "");
+            if (val.length === 9) {
+                this.setupDebug(true);
+            }
+            img.setAttribute("data-debug", val + ".");
+        });
     }
     setupResult() {
         let btn = document.getElementById("scan-button");
@@ -279,10 +287,11 @@ export default class qrGhost {
             }
         };
     }
-    setupDebug() {
-        if (location.search === "?debug") {
+    setupDebug(debug = false) {
+        if (location.search === "?debug" || debug) {
             this.extendedDebugging = document.createElement("textarea");
             this.extendedDebugging.classList.add("debug-area");
+            this.extendedDebugging.readOnly = true;
             document.body.appendChild(this.extendedDebugging);
         }
     }
