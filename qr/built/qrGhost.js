@@ -258,13 +258,14 @@ export default class qrGhost {
             let selectButton = document.getElementById("select-device-button");
             if (devices.length > 1) {
                 this.selectDeviceContainer.innerHTML = "";
+                let i = 1;
                 for (let device of devices) {
                     let d = document.createElement("div");
                     d.classList.add("device");
                     if (device.deviceId === activeDeviceId) {
                         d.classList.add("active");
                     }
-                    d.innerHTML = device.label;
+                    d.innerHTML = "Camera " + i++;
                     this.addClickListener(d, (e) => {
                         this.backStack.pop();
                         this.selectDevice(device.deviceId);
