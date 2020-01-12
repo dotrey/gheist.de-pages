@@ -11,6 +11,7 @@ export default class VideoHelper {
             },
             audio: false
         };
+        this.onDeviceRetrieved = null;
         if (navigator.mediaDevices) {
             navigator.mediaDevices.addEventListener("devicechange", (ev) => {
                 this.log("media devices have changed!");
@@ -56,12 +57,17 @@ export default class VideoHelper {
             }
             else {
                 this.log("requesting new video stream");
+                let assignStream = (stream) => {
+                };
                 navigator.mediaDevices.getUserMedia(this.videoConstraints)
                     .then((stream) => {
                     this.log("video stream found (" + stream.id + ")");
+                    let trackLabel = "";
                     for (let track of stream.getVideoTracks()) {
                         this.log("- " + track.label + " : " + track.id);
+                        trackLabel = track.label;
                     }
+                    this.enumerateBackCameras(trackLabel);
                     stream.onremovetrack = (ev) => {
                         this.log("video stream ended");
                     };
@@ -94,6 +100,19 @@ export default class VideoHelper {
             this.assertPlayingTimeout = null;
         }
         this.video.pause();
+    }
+    selectDevice(deviceId) {
+        this.release();
+        this.videoConstraints = {
+            audio: false,
+            video: {
+                deviceId: {
+                    ideal: deviceId
+                },
+                facingMode: "environment"
+            }
+        };
+        return this.play();
     }
     release() {
         this.log("releasing video stream");
@@ -176,6 +195,70 @@ export default class VideoHelper {
             this.log("error while enumerating devices", e);
         });
         return true;
+    }
+    enumerateBackCameras(trackLabel) {
+        let done = (cameraDevices) => {
+            if (typeof this.onDeviceRetrieved === "function") {
+                let activeDeviceId = "";
+                for (let device of cameraDevices) {
+                    if (device.label === trackLabel) {
+                        activeDeviceId = device.deviceId;
+                        break;
+                    }
+                }
+                this.onDeviceRetrieved(cameraDevices, activeDeviceId);
+            }
+        };
+        navigator.mediaDevices.enumerateDevices().then((devices) => {
+            let cameraDevices = [];
+            let videoDevices = devices.filter((device) => {
+                return device.kind === "videoinput";
+            });
+            if (videoDevices.length > 0) {
+                videoDevices = videoDevices.filter((device) => {
+                    return (device.label || "").indexOf("back") > -1;
+                });
+                if (videoDevices.length) {
+                    let index = -1;
+                    let ordered = [];
+                    for (let device of videoDevices) {
+                        let label = device.label.toLowerCase().replace(/[^a-z0-9 ]/, "");
+                        let splitted = label.split(" ");
+                        if (index < 0) {
+                            for (let i = 0, ic = splitted.length; i < ic; i++) {
+                                if ((Number(splitted[i]) + "") === splitted[i]) {
+                                    index = i;
+                                    break;
+                                }
+                            }
+                        }
+                        let value = Number(splitted[index]);
+                        if (!isNaN(value)) {
+                            ordered[value] = device;
+                        }
+                    }
+                    cameraDevices = ordered.filter((d) => { return !!d; });
+                }
+            }
+            done(cameraDevices);
+        })
+            .catch((e) => {
+            this.log("error while enumerating devices", e);
+            done([]);
+        });
+    }
+    demoDevices() {
+        let cams = [];
+        for (let i = 0; i < 5; i++) {
+            cams.push({
+                label: "camera " + i,
+                deviceId: "" + i,
+                groupId: "groupid",
+                kind: "videoinput",
+                toJSON: () => ""
+            });
+        }
+        this.onDeviceRetrieved(cams, "1");
     }
 }
 //# sourceMappingURL=VideoHelper.js.map

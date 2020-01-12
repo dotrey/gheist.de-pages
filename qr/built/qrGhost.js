@@ -112,6 +112,28 @@ export default class qrGhost {
             this.backStack.pop();
         });
     }
+    selectDevice(deviceId) {
+        this.log("user select device: " + deviceId);
+        this.video.style.visibility = "hidden";
+        this.videoHelper.selectDevice(deviceId)
+            .then((value) => {
+            this.video.style.visibility = "visible";
+        })
+            .catch((error) => {
+            if (error.name === "ConstraintNotSatisfiedError" ||
+                error.name === "OverconstrainedError") {
+                this.error("No video stream available for specified constraints.");
+            }
+            else if (error.name === "PermissionDeniedError" ||
+                error.name === "NotAllowedError") {
+                this.error("Permission to access camera is required.");
+            }
+            else {
+                this.error("Error while accessing video stream.", error);
+            }
+            this.backStack.pop();
+        });
+    }
     startScanning() {
         let context = this.canvas.getContext("2d");
         context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -218,6 +240,43 @@ export default class qrGhost {
             this.error("no video devices detected");
         }
         this.backStack.addPopHandler("video", this.stopScanning.bind(this));
+        this.selectDeviceContainer = document.getElementById("select-device");
+        this.selectDeviceContainer.style.display = "none";
+        this.addClickListener(this.selectDeviceContainer, (e) => {
+            this.backStack.pop();
+        });
+        let selectButton = document.getElementById("select-device-button");
+        selectButton.style.display = "none";
+        this.addClickListener(selectButton, (e) => {
+            this.backStack.push("select-device");
+            this.selectDeviceContainer.style.display = "block";
+        });
+        this.backStack.addPopHandler("select-device", () => {
+            this.selectDeviceContainer.style.display = "none";
+        });
+        this.videoHelper.onDeviceRetrieved = (devices, activeDeviceId) => {
+            let selectButton = document.getElementById("select-device-button");
+            if (devices.length > 1) {
+                this.selectDeviceContainer.innerHTML = "";
+                for (let device of devices) {
+                    let d = document.createElement("div");
+                    d.classList.add("device");
+                    if (device.deviceId === activeDeviceId) {
+                        d.classList.add("active");
+                    }
+                    d.innerHTML = device.label;
+                    this.addClickListener(d, (e) => {
+                        this.backStack.pop();
+                        this.selectDevice(device.deviceId);
+                    });
+                    this.selectDeviceContainer.appendChild(d);
+                }
+                selectButton.style.display = "block";
+            }
+            else {
+                selectButton.style.display = "none";
+            }
+        };
     }
     setupDebug() {
         if (location.search === "?debug") {
@@ -273,6 +332,9 @@ export default class qrGhost {
     }
     demoQrCode(file = "/assets/img/demo/qr-url.png") {
         this.qr.decodeImage(file, this.canvas);
+    }
+    demoDevices() {
+        this.videoHelper.demoDevices();
     }
 }
 //# sourceMappingURL=qrGhost.js.map
