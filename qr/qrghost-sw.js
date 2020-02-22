@@ -1,32 +1,33 @@
 var cacheName = "qr-ghost-cache-v0.9";
 var cachedFiles = [
-    "/assets/css/style.css",
-    "/assets/font/Apache License.txt",
-    "/assets/font/OpenSans-Regular.ttf",
-    "/assets/font/RobotoMono-Regular.ttf",
-    "/assets/img/qr-ghost.png",
-    "/assets/img/icons/128-qr-ghost.png",
-    "/assets/img/icons/192-qr-ghost.png",
-    "/assets/img/icons/256-qr-ghost.png",
-    "/assets/img/icons/512-qr-ghost.png",
-    "/assets/img/video-poster.png",
-    "/assets/img/codes/aztec-code.gif",
-    "/assets/img/codes/barcode.gif",
-    "/assets/img/codes/data-matrix.gif",
-    "/assets/img/codes/micro-qr-code.gif",
-    "/assets/img/codes/qr-code-large.gif",
-    "/assets/img/codes/qr-code.gif",
-    "/assets/img/demo/qr-url.png",
+    "/qr/assets/css/style.css",
+    "/qr/assets/font/Apache License.txt",
+    "/qr/assets/font/OpenSans-Regular.ttf",
+    "/qr/assets/font/RobotoMono-Regular.ttf",
+    "/qr/assets/img/qr-ghost.png",
+    "/qr/assets/img/icons/128-qr-ghost.png",
+    "/qr/assets/img/icons/192-qr-ghost.png",
+    "/qr/assets/img/icons/256-qr-ghost.png",
+    "/qr/assets/img/icons/512-qr-ghost.png",
+    "/qr/assets/img/video-poster.png",
+    "/qr/assets/img/codes/aztec-code.gif",
+    "/qr/assets/img/codes/barcode.gif",
+    "/qr/assets/img/codes/data-matrix.gif",
+    "/qr/assets/img/codes/micro-qr-code.gif",
+    "/qr/assets/img/codes/qr-code-large.gif",
+    "/qr/assets/img/codes/qr-code.gif",
+    "/qr/assets/img/demo/qr-url.png",
 
-    "/built/BackStack.js",
-    "/built/qrGhost.js",
-    "/built/qrWrapper.js",
-    "/built/VideoHelper.js",
+    "/qr/built/BackStack.js",
+    "/qr/built/qrGhost.js",
+    "/qr/built/qrWrapper.js",
+    "/qr/built/VideoHelper.js",
 
-    "/lib/jsQR/jsQR.js",
-    "/lib/qrWorker/qrWorker.js",
+    "/qr/lib/jsQR/jsQR.js",
+    "/qr/lib/qrWorker/qrWorker.js",
 
-    "/index.html"
+    "/qr/",
+    "/qr/index.html"
 ]
 
 self.addEventListener("install", function(e) {
