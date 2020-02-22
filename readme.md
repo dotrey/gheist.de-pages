@@ -1,5 +1,5 @@
 # gheist.de
-This is v6 of gheist.de, my personal website. Visit https://v6.gheist.de for a styled version,
+This is v6 of gheist.de, my personal website. Visit https://gheist.de for a styled version,
 or look around this repository.
 
 # TODO List
