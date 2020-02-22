@@ -10,6 +10,23 @@
             console.log("register service worker");
             navigator.serviceWorker.register("/service-worker.js", {
                 scope : "/"
+            })
+            .then(function(reg) {
+                console.log(".. service worker was registered");
+                console.log(reg);
+                if (reg.active) {
+                    window.addEventListener("message", function(msg) {
+                        console.log(msg);
+                    });
+                    reg.active.postMessage("hi");
+                }
+                // servicer.addEventListener("message", function(msg) {
+                //     console.log(msg.data);
+                // });
+                // servicer.postMessage("hi");
+            })
+            .catch(function(err) {
+                console.log(".. failed to register service worker");
             });
         }else{
             console.log("no service worker support");

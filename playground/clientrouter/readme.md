@@ -1,0 +1,10 @@
+# Client Router
+Currently, this website uses so called hashbangs `#!` in the URL for different pages. This is because one can easily form valid links, and a changing hash is easy to detect on the client side with JS. This allows for basic `<a href="#!...">` links on the page. The JS then indirectly catches the click on such a link through the changed hash and uses its internal logic to e.g. fetch new content and display this content.
+
+This system is tested and working, but looking at [Google Search](/playground/google-search/) it seems to be troublesome for the search engine. And in addition to that, a URL like `gheist.de/playground/kanjiland` still looks a bit nicer and simpler than `gheist.de/#!/playground/kanjiland`. However, if the first URL is entered into the browser, the request goes through to the webserver. If we had control over the webserver, we could re-route this request on the server side. But since this website uses github pages, we have no control over the server and must resolve this on the client side.
+
+## Service Worker
+The JS ServiceWorker seems like the perfect answer to this. Once correctly installed, it serves as a proxy between the client and the server. This position allows the ServiceWorker to intercept all requests. Hence it could also detect a request to `/playground/kanjiland/` and fetch the desired `/playground/kanjiland/readme.md`. It then would need to somehow cancel the original request (so the browser does not change its content) and instead post the fetched `readme.md` to the website's script. The site script then would convert the fetched content into HTML using the `md2html-worker` and display it in the current document.
+
+However, as it turns out, communicating from inside the ServiceWorker to the script in the websites scope is not trivial. Somehow, the `postMessage()` function can be used to send messages into the ServiceWorker, similar to a WebWorker. But unlike the WebWorker, there is no `postMessage()` inside the ServiceWorker to send a message back.
+This might be, because the ServiceWorker specification of W3 is still a *working draft*.

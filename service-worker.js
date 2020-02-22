@@ -5,13 +5,27 @@
  *    required scope folder
  */
 var cacheName = "static-cache";
+var outsideClient = null;
 
 self.addEventListener("install", function(e){
     e.waitUntil(buildCache());
 });
 
 self.addEventListener("fetch", function(e){
-    e.respondWith(fromCache(e.request));
+    if (e.request.url.substr(-4) === ".ttf") {
+        log("sw from cache");
+        e.respondWith(fromCache(e.request));
+    }else if (e.request.url.substr(-5) === ".ghst") {
+        log("sw custom");
+        e.respondWith(new Response("Hello World"));
+    }else{
+        log("sw fetch");
+        e.respondWith(fetch(e.request));
+    }
+});
+
+self.addEventListener("message", function(e) {
+    outsideClient = e.source;
 });
 
 function buildCache() {
@@ -24,10 +38,8 @@ function buildCache() {
 }
 
 function fromCache(request) {
-    return caches.open(cacheName).then(function(cache) {
-        return cache.match(request).then(function(match) {
-            return match || fetch(request);
-        })
+    return caches.match(request).then(function(match) {
+        return match || fetch(request);
     });
 }
 
@@ -37,4 +49,12 @@ function update(request) {
             return cache.put(request, response);
         });
     });
+}
+
+function log(msg) {
+    console.log(msg);
+    if (!outsideClient) {
+        return;
+    }
+    outsideClient.postMessage(msg);
 }
