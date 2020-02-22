@@ -10,3 +10,5 @@ No other pages are listed, this means that none of the hashbang links were follo
 Note that there is no link referencing the qr ghost url, even the privacy url in the playstore is a hashbang ur pointing to `https://gheist.de/#!qr/privacy.md`.
 
 To better understand how Google indexes this website, I have enabled the Google Search Console for `gheist.de`. Unfortunately, it tells me to check back tomorrow as the data is still being processed.
+
+Update after ~8 hours: still no data available, using url checker shows that `https://gheist.de` is indexed without sitemap and without referencing pages. Google says 'URL might be known from other sources not listed'.
