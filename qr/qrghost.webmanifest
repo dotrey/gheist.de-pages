@@ -4,7 +4,7 @@
     "theme_color" : "#E0E0E0",
     "background_color" : "#FFFFFF",
     "display" : "standalone",
-    "start_url" : "/qr/index.html",
+    "start_url" : "./index.html",
     "icons" : [
         {
             "src" : "assets/img/qr-ghost.png",
