@@ -5,6 +5,7 @@ export default class VideoHelper {
         this.assertPlayingTimeout = null;
         this.destroyAfterBlurTimeout = null;
         this.destroyAfterBlurDelay = 10;
+        this.defaultFacingMode = "environment";
         this.videoConstraints = {
             video: {
                 facingMode: "environment"
@@ -103,13 +104,20 @@ export default class VideoHelper {
     }
     selectDevice(deviceId) {
         this.release();
-        this.videoConstraints = {
+        this.videoConstraints = this.defaultFacingMode ? {
             audio: false,
             video: {
                 deviceId: {
                     ideal: deviceId
                 },
-                facingMode: "environment"
+                facingMode: this.defaultFacingMode
+            }
+        } : {
+            audio: false,
+            video: {
+                deviceId: {
+                    ideal: deviceId
+                }
             }
         };
         return this.play();
@@ -240,7 +248,11 @@ export default class VideoHelper {
                     cameraDevices = ordered.filter((d) => { return !!d; });
                 }
                 else if (devicesWithLabel === 0) {
-                    this.log(".. devices have no labels!", devices);
+                    cameraDevices = devices.filter((device) => {
+                        return device.kind === "videoinput";
+                    });
+                    this.log(".. devices have no labels, remove facing-mode constraint");
+                    this.defaultFacingMode = null;
                 }
             }
             done(cameraDevices);
