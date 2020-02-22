@@ -9,7 +9,7 @@ parts. The order of those smaller parts is altered in the HTML, resulting in som
 To make it readable (preferably only for humans), we add various CSS rules that alter the
 order of the parts when rendered inside a browser, such that the gibberish resolves to
 the actual email address again. This should prevent crawlers that only download and parse
-the HTML from being able to extract the email address. Actually, even if the `innerText` of
+the HTML from being able to extract the email address. Actually, even the `innerText` of
 the DOM element containing the scrambled text resolves to the gibberish, thus even if the
 crawler renders the website's HTML it would be non-trivial to search for the email address.
 
