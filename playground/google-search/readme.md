@@ -42,6 +42,7 @@ The sitemap covers most of the playground. The interesting part will be kanjilan
 - Does the crawler index a `#!` URL if it is explicitely given?
 - Does the crawler, once he knows that `#!` URLs are used, stop ignoring them?
 
+**Update 14:20**: Pinged sitemap to Google. Also, certificate issue on `www.gheist.de` seems to be resolved, after removing the `CNAME` entry on the DNS server and re-adding it (`CNAME` for `www.gheist.de` to `gheist.de`).
 
 ====
 
