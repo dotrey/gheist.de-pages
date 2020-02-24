@@ -34,7 +34,7 @@ https://gheist.de/#!/playground/
 https://gheist.de/#!/playground/kanjiland/
 https://gheist.de/#!/playground/staticbgheading/
 https://gheist.de/#!/playground/md2html/
-https://gheist.de/#!/playground/mailscambler/
+https://gheist.de/#!/playground/mailscrambler/
 ```
 I will manually ping the sitemap to Google once it is uploaded.
 
