@@ -3,6 +3,12 @@ This is a test and documentation on how well Google understands the hashbang `!#
 
 ====
 
+## 2020-02-24
+
+Sitemap was checked and an error was reported by Google -> checked once per day?
+
+====
+
 ## 2020-02-23
 Searching for `site:gheist.de` still returns the same 2 results as on 2020-02-22.
 
