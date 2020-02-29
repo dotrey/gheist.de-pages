@@ -1,6 +1,20 @@
 # Have you seen this gheist?
 This is a test and documentation on how well Google understands the hashbang `!#` links used on this site, and how good the page can be found using Google Search.
 
+## 2020-02-29
+The Google Search coverage is still not updated from 2020-02-26, but searching for `site:gheist.de` now yields new results:
+- the first page of `gheist.de`, with all the rotating keywords (unchanged)
+- qr ghost, which is available by a regular url  on `/qr` (unchanged)
+- link to `https://gheist.de/#!/pixel/` -> this one was manually requested
+- link to `https://gheist.de/#!/playground/` -> from sitemap
+- link to `https://gheist.de/#!/playground/kanjiland/`-> from sitemap
+
+All new links have the matching preview text of the pages they link to.
+
+**Interesting Observation:** The links of the sitemap started showing up on 2020-02-28. However, on 28th the search result yielded the link to the mail scrambler instead of kanjiland.
+
+-> waiting for new update of search coverage.
+
 ====
 
 ## 2020-02-27
