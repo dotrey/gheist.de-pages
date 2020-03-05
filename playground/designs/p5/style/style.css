@@ -1,0 +1,169 @@
+:root {
+    --main-bg-color: #E40000;
+    --text-color: #000000;
+    --secondary-color: #FEFEFE;
+    
+    --content-bg-color: #333333;
+    --content-border-color: #303030;
+    --content-box-bg-color: #3F3F3F;
+    --content-box-border-color: #484848;
+    --main-link-color:#589DF6;
+    --low-contrast-color: #878787;
+    --image-overlay-bg-color: rgba(0, 0, 0, 0.95);
+}
+
+body, html {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+	font-family: "Open Sans Regular", Arial, sans-serif;
+	font-size: 13pt;
+	line-height: 1.4;
+    color: var(--text-color);
+    background-color: var(--main-bg-color);
+    overflow: hidden;
+}
+
+.container {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 56.25vw;
+    max-height: 80vh;
+    box-sizing: border-box;
+    border: 1px solid #000000;
+    overflow: visible;
+}
+
+.navigation {
+    position: absolute;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    top: 0;
+    right: -25%;
+    bottom: 0;
+    width: 50%;
+    transform: skewX(-18deg);
+}
+
+.navigation::before {
+    position: absolute;
+    display: block;
+    content: "";
+    background-color: inherit;
+    width: 100%;
+    height: 200vh;
+    top: -50vh
+}
+
+.navigation .links {
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+    font-size: 20pt;
+    margin-left: -15vh;
+}
+
+.navigation .links>a {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+    transform: skewX(18deg);
+    padding: 1em;
+    cursor: pointer;
+}
+
+.navigation .links>a::before {
+    position: absolute;
+    box-sizing: border-box;
+    width: calc(100% - 1.5em);
+    height: calc(100% - 1.5em);
+    top: 0.75em;
+    left: 0.75em;
+    display: block;
+    content: "";
+    background-color: var(--text-color);
+    transform: skewX(10deg) skewY(2deg);
+    transition: all 0.25s ease-in;
+}
+
+.navigation .links>a:hover::before {
+    /* animation: nav-link-hover 0.5s ease-in 0s infinite alternate; */
+    transform: skewX(-10deg) skewY(-2deg);
+}
+
+.navigation .links>a i {
+    position: relative;
+    display: inline-block;
+    padding: 0.125em 0.25em;
+    margin: 0 1px 0 0;
+    background-color: var(--secondary-color);
+    font-style: normal;
+    font-weight: bold;
+    -webkit-text-stroke: 5px var(--text-color);
+}
+
+.navigation .links>a i:nth-child(2n) {
+    top: 0.1em
+}
+
+.navigation .links>a i:nth-child(3n) {
+    top: -0.05em
+}
+
+.navigation .links>a i:nth-child(5n) {
+    top: -0.1em
+}
+
+.navigation .links>a i:nth-child(6n) {
+    top: 0.05em
+}
+
+.navigation .links>a i::after {
+    position: absolute;
+    display: block;
+    content: attr(data-value);
+    transform-origin: center;
+    color: var(--secondary-color);
+    z-index: 1;
+    top: 0;
+    left: 0;
+    padding: inherit;
+    -webkit-text-stroke: initial;
+    /* text-shadow: -1px 0 var(--secondary-color), 0 1px var(--secondary-color), 1px 0 var(--secondary-color), 0 -1px var(--secondary-color); */
+}
+
+.navigation .links>a i[data-color="1"] {
+    background-color: var(--main-bg-color);
+    -webkit-text-stroke: 5px var(--secondary-color);
+}
+
+.navigation .links>a i[data-color="1"]::after {
+    color: var(--text-color);
+    -webkit-text-stroke: initial;
+}
+
+.navigation .links>a i[data-color="2"] {
+    -webkit-text-stroke: 5px var(--main-bg-color);
+}
+
+.navigation .links>a i[data-color="2"]::after {
+    color: var(--secondary-color);
+    -webkit-text-stroke: initial;
+}
+
+@keyframes nav-link-hover {
+    from {
+        transform: skewX(10deg) skewY(2deg);
+    }
+    to {
+        transform: skewX(-10deg) skewY(-2deg);
+    }
+}

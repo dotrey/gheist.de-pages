@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <div class="links">
+                <a>aBOuT</a><br/>
+                <a>PLaYgrOUnD</a><br/>
+                <a>piXeL</a><br/>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function initNavigation() {
+            let c1 = ["T", "p", "Y", "D"];
+            let c2 = ["B", "U", "n", "i", "P"];
+            document.querySelectorAll(".navigation .links a").forEach((a) => {
+                let t = a.innerText || "";
+                a.innerHTML = "";
+                for (let i = 0, ic = t.length; i < ic; i++) {
+                    let e = document.createElement("i");
+                    e.innerHTML = t[i];
+                    e.setAttribute("data-value", t[i]);
+                    if (c1.indexOf(t[i]) >= 0) {
+                        e.setAttribute("data-color", "1");
+                    }
+                    if (c2.indexOf(t[i]) >= 0) {
+                        e.setAttribute("data-color", "2");
+                    }
+                    a.appendChild(e);
+                }
+            });
+        }
+        initNavigation();
+    </script>
+</body>
+</html>
