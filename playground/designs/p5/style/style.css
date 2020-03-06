@@ -29,38 +29,29 @@ body {
     overflow: hidden;
 }
 
-.container {
+.layout-container {
     position: absolute;
+    display: grid;
+    top: 0;
     left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    height: 56.25vw;
-    max-height: 80vh;
-    box-sizing: border-box;
-    border: 1px solid #000000;
-    overflow: visible;
+    right: 0;
+    bottom: 0;
+
+    grid-template-columns: 1fr minmax(16em, 20%);
+    grid-template-rows: 100%;
+    grid-template-areas: 
+        "content nav";
 }
 
 .navigation {
-    position: absolute;
-    background-color: #FFFFFF;
+    position: relative;
+    grid-area: nav;
+    align-self: stretch;
+    justify-self: left;
+    background-color: var(--secondary-color);
     box-sizing: border-box;
-    top: 0;
-    right: -25%;
-    bottom: 0;
-    width: 50%;
+    width: 200%;
     transform: skewX(-18deg);
-}
-
-.navigation::before {
-    position: absolute;
-    display: block;
-    content: "";
-    background-color: inherit;
-    width: 100%;
-    height: 200vh;
-    top: -50vh
 }
 
 .navigation .links {
@@ -68,7 +59,9 @@ body {
     box-sizing: border-box;
     display: block;
     font-size: 20pt;
-    margin-left: -15vh;
+    margin-left: -6em;
+    top: 20%;
+    z-index: 10;
 }
 
 .navigation .links>a {
@@ -159,11 +152,305 @@ body {
     -webkit-text-stroke: initial;
 }
 
-@keyframes nav-link-hover {
-    from {
-        transform: skewX(10deg) skewY(2deg);
-    }
-    to {
-        transform: skewX(-10deg) skewY(-2deg);
-    }
+.navigation .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    background-color: var(--secondary-color);
+}
+
+.navigation .background::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    content: "";
+    background: linear-gradient(90deg, var(--secondary-color), transparent);
+    transition: opacity 0.5s ease;
+    z-index: 1;
+    opacity: 0;
+}
+
+.navigation .links:hover ~ .background::after {
+    opacity: 0.7;
+}
+
+/* GH */
+.gh {
+    position: absolute;
+    display: block;
+    width: 7em;
+    height: 5em;
+    background-color: transparent;
+    mix-blend-mode: multiply;
+    overflow: visible;
+    z-index: 1;
+    transform: skewX(18deg);
+    transform-origin: center;
+}
+
+.gh .block {
+    position: absolute;
+    background-color: var(--secondary-color);
+    z-index: 10;
+}
+
+/* gh1 to gh5 forming GH */
+.gh .block.gh1 {
+    top: -1%;
+    left: 57.2%;
+    height: 41%;
+    width: 28.6%;
+}
+
+.gh .block.gh2 {
+    top: 20%;
+    left: 14.3%;
+    height: 20%;
+    width: 45%;
+}
+
+.gh .block.gh3 {
+    top: 20%;
+    left: 14.3%;
+    height: 60%;
+    width: 14.3%;
+}
+
+.gh .block.gh4 {
+    top: 60%;
+    left: 14.3%;
+    height: 20%;
+    width: 28.6%;
+}
+
+.gh .block.gh5 {
+    bottom: -1%;
+    left: 57.2%;
+    height: 41%;
+    width: 28.6%;
+}
+
+.navigation .gh[data-color="l1"] {
+    background-image: repeating-linear-gradient(-45deg,
+        var(--secondary-color),
+        var(--secondary-color) 0.5em,
+        var(--text-color) 0.5em,
+        var(--text-color) 1em);
+    top: 0;
+    left: 0;
+}
+
+.navigation .gh[data-color="l2"] {
+    background-image: repeating-linear-gradient(-45deg,
+        var(--secondary-color),
+        var(--secondary-color) 0.5em,
+        var(--main-bg-color) 0.5em,
+        var(--main-bg-color) 1em);
+    top: 0;
+    left: 0;
+}
+
+.navigation .gh[data-color="l3"] {
+    background-image: repeating-linear-gradient(-45deg,
+        var(--text-color),
+        var(--text-color) 0.5em,
+        var(--main-bg-color) 0.5em,
+        var(--main-bg-color) 1em);
+    top: 0;
+    left: 0;
+}
+
+.navigation .gh[data-color="r1"] {
+    background-image: repeating-radial-gradient(
+        var(--secondary-color),
+        var(--secondary-color) 0.5em,
+        var(--text-color) 0.5em,
+        var(--text-color) 1em);
+    top: 7em;
+    left: 0;
+}
+
+.navigation .gh[data-color="r2"] {
+    background-image: repeating-radial-gradient(
+        var(--secondary-color),
+        var(--secondary-color) 0.5em,
+        var(--main-bg-color) 0.5em,
+        var(--main-bg-color) 1em);
+    top: 7em;
+    left: 0;
+}
+
+.navigation .gh[data-color="r3"] {
+    background-image: repeating-radial-gradient(
+        var(--text-color),
+        var(--text-color) 0.5em,
+        var(--main-bg-color) 0.5em,
+        var(--main-bg-color) 1em);
+    top: 7em;
+    left: 0;
+}
+
+.navigation .gh[data-color="c1"] {
+    background-image: repeating-conic-gradient(
+        var(--secondary-color) 0 9deg,
+        var(--text-color) 9deg 18deg);
+    top: 14em;
+    left: 0;
+}
+
+.navigation .gh[data-color="c2"] {
+    background-image: repeating-conic-gradient(
+        var(--secondary-color) 0 9deg,
+        var(--main-bg-color) 9deg 18deg);
+    top: 14em;
+    left: 0;
+}
+
+.navigation .gh[data-color="c3"] {
+    background-image: repeating-conic-gradient(
+        var(--text-color) 0 9deg,
+        var(--main-bg-color) 9deg 18deg);
+    top: 14em;
+    left: 0;
+}
+
+.navigation .gh:nth-child(1) {
+    width: 7em;
+    height: 5em;
+    top: 35%;
+    left: 38%;
+    transform: skew(18deg) rotate(-90deg);
+    opacity: 0.6;
+}
+
+.navigation .gh:nth-child(2) {
+    width: 7em;
+    height: 5em;
+    top: 45%;
+    left: 40%;
+    transform: skew(18deg) rotate(5deg);
+    opacity: 0.6;
+}
+
+.navigation .gh:nth-child(3) {
+    width: 9.8em;
+    height: 7em;
+    top: 9%;
+    left: -8%;
+    transform: skew(18deg) rotate(20deg);
+    opacity: 0.7;
+}
+
+.navigation .gh:nth-child(4) {
+    width: 9.8em;
+    height: 7em;
+    top: 17%;
+    left: 23%;
+    transform: skew(18deg) rotate(45deg);
+    opacity: 0.7;
+}
+
+.navigation .gh:nth-child(5) {
+    width: 9.8em;
+    height: 7em;
+    top: 56%;
+    left: 37%;
+    transform: skew(18deg) rotate(-85deg);
+    opacity: 0.7;
+}
+
+.navigation .gh:nth-child(6) {
+    width: 9.8em;
+    height: 7em;
+    top: 87%;
+    left: 53%;
+    transform: skew(18deg) rotate(-60deg);
+    opacity: 0.7;
+}
+
+.navigation .gh:nth-child(7) {
+    width: 9.8em;
+    height: 7em;
+    top: 84%;
+    left: 18%;
+    transform: skew(18deg) rotate(45deg);
+    opacity: 0.7;
+}
+
+.navigation .gh:nth-child(8) {
+    width: 12.6em;
+    height: 9em;
+    top: 91%;
+    left: 35%;
+    transform: skew(18deg) rotate(-87deg);
+    opacity: 0.8;
+}
+
+.navigation .gh:nth-child(9) {
+    width: 12.6em;
+    height: 9em;
+    top: -1%;
+    left: 1%;
+    transform: skew(18deg) rotate(33deg);
+    opacity: 0.8;
+}
+
+.navigation .gh:nth-child(10) {
+    width: 12.6em;
+    height: 9em;
+    top: 71%;
+    left: 31%;
+    transform: skew(18deg) rotate(-12deg);
+    opacity: 0.8;
+}
+
+.navigation .gh:nth-child(11) {
+    width: 12.6em;
+    height: 9em;
+    top: 83%;
+    left: -4%;
+    transform: skew(18deg) rotate(12deg);
+    opacity: 0.8;
+}
+
+.navigation .gh:nth-child(12) {
+    width: 12.6em;
+    height: 9em;
+    top: 20%;
+    left: -4%;
+    transform: skew(18deg) rotate(-12deg);
+    opacity: 0.8;
+}
+
+.navigation .gh:nth-child(13) {
+    width: 15em;
+    height: 10em;
+    top: 29.5%;
+    left: 10%;
+    transform: skew(18deg) rotate(104deg);
+    opacity: 0.9;
+}
+
+.navigation .gh:nth-child(14) {
+    width: 15em;
+    height: 10em;
+    top: 64%;
+    left: 0;
+    transform: skew(18deg) rotate(-45deg);
+    opacity: 0.9;
+}
+
+.navigation .gh:nth-child(15) {
+    width: 17.5em;
+    height: 12.5em;
+    top: 42%;
+    left: 0;
+    transform: skew(18deg) rotate(14deg);
 }
