@@ -1,7 +1,7 @@
 :root {
     --main-bg-color: #E40000;
-    --text-color: #000000;
-    --secondary-color: #FEFEFE;
+    --dark-color: #000000;
+    --bright-color: #FEFEFE;
     
     --content-bg-color: #333333;
     --content-border-color: #303030;
@@ -24,7 +24,7 @@ body {
 	font-family: "Open Sans Regular", Arial, sans-serif;
 	font-size: 13pt;
 	line-height: 1.4;
-    color: var(--text-color);
+    color: var(--dark-color);
     background-color: var(--main-bg-color);
     overflow: hidden;
 }
@@ -48,7 +48,7 @@ body {
     grid-area: nav;
     align-self: stretch;
     justify-self: left;
-    background-color: var(--secondary-color);
+    background-color: var(--bright-color);
     box-sizing: border-box;
     width: 200%;
     transform: skewX(-18deg);
@@ -82,7 +82,7 @@ body {
     left: 0.75em;
     display: block;
     content: "";
-    background-color: var(--text-color);
+    background-color: var(--dark-color);
     transform: skewX(10deg) skewY(2deg);
     transition: all 0.25s ease-in;
 }
@@ -97,10 +97,10 @@ body {
     display: inline-block;
     padding: 0.125em 0.25em;
     margin: 0 1px 0 0;
-    background-color: var(--secondary-color);
+    background-color: var(--bright-color);
     font-style: normal;
     font-weight: bold;
-    -webkit-text-stroke: 5px var(--text-color);
+    -webkit-text-stroke: 5px var(--dark-color);
 }
 
 .navigation .links>a i:nth-child(2n) {
@@ -124,22 +124,22 @@ body {
     display: block;
     content: attr(data-value);
     transform-origin: center;
-    color: var(--secondary-color);
+    color: var(--bright-color);
     z-index: 1;
     top: 0;
     left: 0;
     padding: inherit;
     -webkit-text-stroke: initial;
-    /* text-shadow: -1px 0 var(--secondary-color), 0 1px var(--secondary-color), 1px 0 var(--secondary-color), 0 -1px var(--secondary-color); */
+    /* text-shadow: -1px 0 var(--bright-color), 0 1px var(--bright-color), 1px 0 var(--bright-color), 0 -1px var(--bright-color); */
 }
 
 .navigation .links>a i[data-color="1"] {
     background-color: var(--main-bg-color);
-    -webkit-text-stroke: 5px var(--secondary-color);
+    -webkit-text-stroke: 5px var(--bright-color);
 }
 
 .navigation .links>a i[data-color="1"]::after {
-    color: var(--text-color);
+    color: var(--dark-color);
     -webkit-text-stroke: initial;
 }
 
@@ -148,7 +148,7 @@ body {
 }
 
 .navigation .links>a i[data-color="2"]::after {
-    color: var(--secondary-color);
+    color: var(--bright-color);
     -webkit-text-stroke: initial;
 }
 
@@ -160,7 +160,7 @@ body {
     height: 100%;
     z-index: 0;
     overflow: hidden;
-    background-color: var(--secondary-color);
+    background-color: var(--bright-color);
 }
 
 .navigation .background::after {
@@ -171,7 +171,7 @@ body {
     height: 100%;
     display: block;
     content: "";
-    background: linear-gradient(90deg, var(--secondary-color), transparent);
+    background: linear-gradient(90deg, var(--bright-color), transparent);
     transition: opacity 0.5s ease;
     z-index: 1;
     opacity: 0;
@@ -179,6 +179,87 @@ body {
 
 .navigation .links:hover ~ .background::after {
     opacity: 0.7;
+}
+
+.content {
+    position: relative;
+    grid-area: 1 / 1 / 1 / 3;
+    justify-self: stretch;
+    align-self: stretch;
+    display: grid;
+    grid-template-columns: 1fr 10em minmax(16em, 20%);
+    grid-template-rows: 15% 1fr 15%;
+    grid-template-areas: 
+        ". . ."
+        "textcontent . ."
+        ". . .";
+    overflow-y: auto;
+}
+
+.content .text-box {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    grid-area: textcontent;
+    justify-self: end;
+    align-self: start;
+}
+
+.content .text {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 3em;
+    color: var(--bright-color);
+    min-width: 8em;
+    max-width: 30em;
+    min-height: 8em;
+    margin-bottom: 5em;
+}
+
+.content .text:last-child {
+    margin-bottom: 15vh;
+}
+
+.content .text::before {
+    position: absolute;
+    display: block;
+    content: "";
+    background-color: var(--bright-color);
+    z-index: -2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: skewX(3deg) skewY(1deg);
+}
+
+.content .text::after {
+    position: absolute;
+    display: block;
+    content: "";
+    background-color: var(--dark-color);
+    z-index: -1;
+    top: 0.75em;
+    left: 0.75em;
+    width: calc(100% - 1.5em);
+    height: calc(100% - 1.5em);
+    transform: skewX(2deg) skewY(2deg);
+}
+
+.content .text h1:first-child {
+    position: relative;
+    font-size: 4em;
+    font-weight: 900;
+    padding: 0;
+    line-height: 1;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    margin: -1.25em -1.1em 0.5em -1.1em;
+    mix-blend-mode: difference;
+    text-shadow: -5px 0 var(--dark-color), 0 1px var(--dark-color), 1px 0 var(--dark-color), 0 -1px var(--dark-color);
 }
 
 /* GH */
@@ -197,7 +278,7 @@ body {
 
 .gh .block {
     position: absolute;
-    background-color: var(--secondary-color);
+    background-color: var(--bright-color);
     z-index: 10;
 }
 
@@ -239,18 +320,18 @@ body {
 
 .navigation .gh[data-color="l1"] {
     background-image: repeating-linear-gradient(-45deg,
-        var(--secondary-color),
-        var(--secondary-color) 0.5em,
-        var(--text-color) 0.5em,
-        var(--text-color) 1em);
+        var(--bright-color),
+        var(--bright-color) 0.5em,
+        var(--dark-color) 0.5em,
+        var(--dark-color) 1em);
     top: 0;
     left: 0;
 }
 
 .navigation .gh[data-color="l2"] {
     background-image: repeating-linear-gradient(-45deg,
-        var(--secondary-color),
-        var(--secondary-color) 0.5em,
+        var(--bright-color),
+        var(--bright-color) 0.5em,
         var(--main-bg-color) 0.5em,
         var(--main-bg-color) 1em);
     top: 0;
@@ -259,8 +340,8 @@ body {
 
 .navigation .gh[data-color="l3"] {
     background-image: repeating-linear-gradient(-45deg,
-        var(--text-color),
-        var(--text-color) 0.5em,
+        var(--dark-color),
+        var(--dark-color) 0.5em,
         var(--main-bg-color) 0.5em,
         var(--main-bg-color) 1em);
     top: 0;
@@ -269,18 +350,18 @@ body {
 
 .navigation .gh[data-color="r1"] {
     background-image: repeating-radial-gradient(
-        var(--secondary-color),
-        var(--secondary-color) 0.5em,
-        var(--text-color) 0.5em,
-        var(--text-color) 1em);
+        var(--bright-color),
+        var(--bright-color) 0.5em,
+        var(--dark-color) 0.5em,
+        var(--dark-color) 1em);
     top: 7em;
     left: 0;
 }
 
 .navigation .gh[data-color="r2"] {
     background-image: repeating-radial-gradient(
-        var(--secondary-color),
-        var(--secondary-color) 0.5em,
+        var(--bright-color),
+        var(--bright-color) 0.5em,
         var(--main-bg-color) 0.5em,
         var(--main-bg-color) 1em);
     top: 7em;
@@ -289,8 +370,8 @@ body {
 
 .navigation .gh[data-color="r3"] {
     background-image: repeating-radial-gradient(
-        var(--text-color),
-        var(--text-color) 0.5em,
+        var(--dark-color),
+        var(--dark-color) 0.5em,
         var(--main-bg-color) 0.5em,
         var(--main-bg-color) 1em);
     top: 7em;
@@ -299,15 +380,15 @@ body {
 
 .navigation .gh[data-color="c1"] {
     background-image: repeating-conic-gradient(
-        var(--secondary-color) 0 9deg,
-        var(--text-color) 9deg 18deg);
+        var(--bright-color) 0 9deg,
+        var(--dark-color) 9deg 18deg);
     top: 14em;
     left: 0;
 }
 
 .navigation .gh[data-color="c2"] {
     background-image: repeating-conic-gradient(
-        var(--secondary-color) 0 9deg,
+        var(--bright-color) 0 9deg,
         var(--main-bg-color) 9deg 18deg);
     top: 14em;
     left: 0;
@@ -315,7 +396,7 @@ body {
 
 .navigation .gh[data-color="c3"] {
     background-image: repeating-conic-gradient(
-        var(--text-color) 0 9deg,
+        var(--dark-color) 0 9deg,
         var(--main-bg-color) 9deg 18deg);
     top: 14em;
     left: 0;
