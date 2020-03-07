@@ -43,6 +43,23 @@ body {
         "content nav";
 }
 
+.ghost {
+    position: relative;
+    grid-area: content;
+    justify-self: start;
+    align-self: end;
+    width: 100%;
+    height: 100%;
+    max-width: 1024px;
+    max-height: 1024px;
+    background-image: url('../img/gheist.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: rotate(18deg);
+    opacity: 0.2;
+}
+
 .navigation {
     position: relative;
     grid-area: nav;
