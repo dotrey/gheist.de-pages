@@ -1,6 +1,22 @@
 # Have you seen this gheist?
 This is a test and documentation on how well Google understands the hashbang `!#` links used on this site, and how good the page can be found using Google Search.
 
+## 2020-03-08
+The Google Search coverage finaly updated on 2020-03-07 again, and now lists 8 pages as indexed:
+```
+https://gheist.de/
+https://gheist.de/qr/
+https://gheist.de/?_escaped_fragment_=/playground/
+https://gheist.de/?_escaped_fragment_=/playground/mailscrambler/
+https://gheist.de/?_escaped_fragment_=/playground/kanjiland/
+https://gheist.de/?_escaped_fragment_=/playground/staticbgheading/
+https://gheist.de/?_escaped_fragment_=/pixel/
+https://gheist.de/#!/playground/staticbgheading/
+```
+This means now 5 of the 6 urls from the sitemap are indexed, missing is `https://gheist.de/#!/playground/md2html/`.
+
+Notice how the `#!` seems to show up as `?_escaped_fragment_=`, and yet there is one `#!` in the list (`staticbgheading` is indexed twice). A quick search found me a [AJAX FAQ](https://support.google.com/webmasters/answer/174993) in Google's Search Console Help - which contradicts the [other Google help page](https://developers.google.com/search/mobile-sites/mobile-first-indexing#mobile-url-anchor-fragment) I found earlier.
+
 ## 2020-02-29
 The Google Search coverage is still not updated from 2020-02-26, but searching for `site:gheist.de` now yields new results:
 - the first page of `gheist.de`, with all the rotating keywords (unchanged)
