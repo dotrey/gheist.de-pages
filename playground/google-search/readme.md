@@ -1,6 +1,17 @@
 # Have you seen this gheist?
 This is a test and documentation on how well Google understands the hashbang `!#` links used on this site, and how good the page can be found using Google Search.
 
+## 2020-03-15
+The Google Search coverage updated again, and now also contains the formerly missing `md2html` as `https://gheist.de/?_escaped_fragment_=/playground/md2html/`. The coverage now contains 9 urls (same as on 2020-03-08 + `md2html`).
+
+*Observation:* All urls are somehow listed as "indexed, not sent by sitemap"
+
+### Conclusions
+1. Using `#!` prevents the crawler from finding the linked content
+1. Providing `#!` urls in a sitemap works, but only for the provided links
+
+====
+
 ## 2020-03-08
 The Google Search coverage finaly updated on 2020-03-07 again, and now lists 8 pages as indexed:
 ```
@@ -17,6 +28,8 @@ This means now 5 of the 6 urls from the sitemap are indexed, missing is `https:/
 
 Notice how the `#!` seems to show up as `?_escaped_fragment_=`, and yet there is one `#!` in the list (`staticbgheading` is indexed twice). A quick search found me a [AJAX FAQ](https://support.google.com/webmasters/answer/174993) in Google's Search Console Help - which contradicts the [other Google help page](https://developers.google.com/search/mobile-sites/mobile-first-indexing#mobile-url-anchor-fragment) I found earlier.
 
+====
+
 ## 2020-02-29
 The Google Search coverage is still not updated from 2020-02-26, but searching for `site:gheist.de` now yields new results:
 - the first page of `gheist.de`, with all the rotating keywords (unchanged)
@@ -27,7 +40,7 @@ The Google Search coverage is still not updated from 2020-02-26, but searching f
 
 All new links have the matching preview text of the pages they link to.
 
-**Interesting Observation:** The links of the sitemap started showing up on 2020-02-28. However, on 28th the search result yielded the link to the mail scrambler instead of kanjiland.
+*Observation:* The links of the sitemap started showing up on 2020-02-28. However, on 28th the search result yielded the link to the mail scrambler instead of kanjiland.
 
 -> waiting for new update of search coverage.
 
