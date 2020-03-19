@@ -201,7 +201,7 @@ a.arrow:before {
     justify-self: center;
     align-self: end;
     box-sizing: border-box;
-    font-size: 50%;
+    font-size: 65%;
     padding: 0.5em;
     color: var(--low-contrast-color);
 }

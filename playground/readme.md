@@ -1,6 +1,9 @@
 # playground
 This is my personal playground, where I try out all the interesting, strange and whimsical ideas I pick up here and there. Some of them might work, others will fail.
 ====
+## qr ghost 
+A simple qr code scanner that runs in your browser -- even offline [more](/playground/qrghost/){arrow}
+====
 ## Kanjiland 
 A game that helps learning kanji? This will take some time... [more](/playground/kanjiland/){arrow}
 ====

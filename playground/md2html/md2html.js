@@ -363,6 +363,7 @@ var md2html = (function(my) {
             string = this.task(string);
             string = this.iframe(string);
             string = this.forcedLineBreak(string);
+            string = this.ndash(string);
             string = this.emphasis(string);
             return string;
         },
@@ -407,7 +408,11 @@ var md2html = (function(my) {
             function codeSpan(value) {
                 value = value.substr(1, value.length - 2);
                 return "<span class=\"inline-code\">" + 
-                    value.replace("<", "&lt;").replace(">", "&gt;").replace("[", "&#91;") +
+                    value
+                        .replace("<", "&lt;")
+                        .replace(">", "&gt;")
+                        .replace(" ", "&nbsp;")
+                        .replace("[", "&#91;") +
                     "</span>";
             }
             string = string.replace(/`[^`\n]+?`/g, codeSpan);
@@ -441,6 +446,11 @@ var md2html = (function(my) {
 
         nl2br : function(string) {
             string = string.replace(/\n/g, "<br/>");
+            return string;
+        },
+
+        ndash : function(string) {
+            string = string.replace(/ -- /g, " &ndash; ");
             return string;
         },
 
