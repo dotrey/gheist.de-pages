@@ -1,5 +1,8 @@
 # pixel
 
+### (21.03.2020) Akako
+![Akako](/pixel/akako/akako-overview-2020-03-21.png){contain bg-bright}
+
 ### (14.07.2019) Dwarves VII
 ![Dwarf](/pixel/dwarves/2019-07-14.png){contain bg-bright}
 Adding a few more pixels to give the dwarf more details.
