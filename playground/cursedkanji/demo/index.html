@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursed Kanji</title>
+    
+    <link rel="stylesheet" href="./assets/style/style.css">
+    <script src="/lib/mithril/mithril.min.js"></script>
+    <script src="/built/CursedKanji.js" type="module"></script>
+    <script type="module">
+        import CursedKanji from "./built/CursedKanji.js";
+        window.cursed = new CursedKanji();
+    </script>
+</head>
+<body>
+    <div class="container game" id="container-game"></div>
+    <div class="container" id="container"></div>
+</body>
+</html>
