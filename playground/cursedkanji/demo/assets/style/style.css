@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Noto Sans JP";
-    src: url('/assets/font/NotoSansJP-Regular.otf'); /* Open Font License, see /assets/font/OFL.txt */
+    src: url('../font/NotoSansJP-Regular.otf'); /* Open Font License, see /assets/font/OFL.txt */
     font-display: block;
 }
 
