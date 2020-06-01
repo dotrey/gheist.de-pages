@@ -1,0 +1,233 @@
+{
+    "version" : 1,
+    "groups" : {
+        "" : "uncategorized",
+        "basics" : "Basics",
+        "genki-i-2011" : "GENKI I (2011)",
+        "genki-i-2011-expressions" : "GENKI I (2011) Useful Expressions"
+    },
+    "books" : [
+        {
+            "id" : "cursed-hiragana",
+            "file" : "cursed/hiragana.json",
+            "name" : "Basics: Hiragana",
+            "_wordCount" : 46,
+            "group" : "basics"
+        },
+        {
+            "id" : "cursed-hiragana-youon",
+            "file" : "cursed/hiragana-youon.json",
+            "name" : "Basics: Hiragana yōon",
+            "_wordCount" : 21,
+            "group" : "basics"
+        },
+        {
+            "id" : "cursed-hiragana-dakuten",
+            "file" : "cursed/hiragana-dakuten.json",
+            "name" : "Basics: Hiragana (han)dakuten",
+            "_wordCount" : 25,
+            "group" : "basics"
+        },
+        {
+            "id" : "cursed-hiragana-youon-dakuten",
+            "file" : "cursed/hiragana-youon-dakuten.json",
+            "name" : "Basics: Katakana yōon + (han)dakuten",
+            "_wordCount" : 15,
+            "group" : "basics"
+        },
+        
+        {
+            "id" : "cursed-katakana",
+            "file" : "cursed/katakana.json",
+            "name" : "Basics: Katakana",
+            "_wordCount" : 46,
+            "group" : "basics"
+        },
+        {
+            "id" : "cursed-katakana-youon",
+            "file" : "cursed/katakana-youon.json",
+            "name" : "Basics: Katakana yōon",
+            "_wordCount" : 21,
+            "group" : "basics"
+        },
+        {
+            "id" : "cursed-katakana-dakuten",
+            "file" : "cursed/katakana-dakuten.json",
+            "name" : "Basics: Katakana (han)dakuten",
+            "_wordCount" : 25,
+            "group" : "basics"
+        },
+        {
+            "id" : "cursed-katakana-youon-dakuten",
+            "file" : "cursed/katakana-youon-dakuten.json",
+            "name" : "Basics: Katakana yōon + (han)dakuten",
+            "_wordCount" : 15,
+            "group" : "basics"
+        },
+
+
+
+    
+        {
+            "id" : "genki-i-2011-lesson-1-new-friends",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 1: New Friends",
+            "_wordCount" : 61,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-1-time-age",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 1: Time and Age",
+            "_wordCount" : 17,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-2-shopping",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 2: Shopping",
+            "_wordCount" : 59,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-2-in-the-classroom",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 2: In the Classroom",
+            "_wordCount" : 24,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-3-making-a-date",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 3: Making a Date",
+            "_wordCount" : 63,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-3-japanese-houses",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 3: Japanese Houses",
+            "_wordCount" : 32,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-4-the-first-date",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 4: The First Date",
+            "_wordCount" : 47,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-4-dates",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 4: Days/Weeks/Months/Years",
+            "_wordCount" : 22,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-5-a-trip-to-okinawa",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 5: A Trip to Okinawa",
+            "_wordCount" : 64,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-5-at-the-post-office",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 5: At the Post Office",
+            "_wordCount" : 41,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-6-a-day-in-roberts-life",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 6: A Day in Robert's Life",
+            "_wordCount" : 55,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-6-directions",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 6: Directions",
+            "_wordCount" : 18,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-7-family-picture",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 7: Family Picture",
+            "_wordCount" : 54,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-7-parts-of-the-body",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 7: Parts of the Body",
+            "_wordCount" : 29,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-8-barbecue",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 8: Barbecue",
+            "_wordCount" : 52,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-lesson-9-kabuki",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 9: Kabuki",
+            "_wordCount" : 62,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-9-colors",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 9: Colors",
+            "_wordCount" : 30,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-10-winter-vacation-plans",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 10: Winter Vacation Plans",
+            "_wordCount" : 54,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-10-at-the-station",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 10: At the Station",
+            "_wordCount" : 24,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-11-after-the-vacation",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 11: After the Vacation",
+            "_wordCount" : 55,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-11-in-the-japanese-class",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 11: In the Japanese Class",
+            "_wordCount" : 19,
+            "group" : "genki-i-2011-expressions"
+        },
+        {
+            "id" : "genki-i-2011-lesson-12-feeling-ill",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - 12: Feeling Ill",
+            "_wordCount" : 56,
+            "group" : "genki-i-2011"
+        },
+        {
+            "id" : "genki-i-2011-expressions-12-health-and-illness",
+            "file" : "cursed/genki-i-2011-l1.json",
+            "name" : "GENKI I - Expressions 12: Health and Illnes",
+            "_wordCount" : 23,
+            "group" : "genki-i-2011-expressions"
+        }
+    ]
+}

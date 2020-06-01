@@ -26,13 +26,294 @@ body {
     right: 0;
     bottom: 0;
     overflow: hidden;
+    background: linear-gradient(#e66465, #9198e5);
 }
+
+.container.main {
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    grid-template-rows: 10% 1fr 1em 3em 1em 3em 10%;
+    grid-template-areas: 
+        ". . settings"
+        ". library ."
+        ". . . "
+        ". gamelength ."
+        ". . ."
+        ". gamestart ."
+        ". . ."
+    ;
+    font-size: 6vw;
+}
+
+.container.main .library {
+    position: relative;
+    grid-area: library;
+    justify-self: stretch;
+    align-self: stretch;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.container.main .library-shelf-button {
+    position: absolute;
+    left: 0.5em;
+    bottom: 0.5em;
+    right: 0.5em;
+    text-align: center;
+    height: 1.5em;
+    line-height: 1.9;
+    background: rgba(242, 242, 242, 0.8);
+}
+
+.container.main .library-shelf {
+    position: absolute;
+    box-sizing: border-box;
+    left: 0.5em;
+    right: 0.5em;
+    top: 0.5em;
+    bottom: 0.5em;
+    overflow: hidden;
+    border: 0.2em solid #72350d;
+    border-bottom: 0;
+    background-color: #361906;
+    background: repeating-linear-gradient(#331805, #361906 2.6em, #72350d 2.6em, #72350d 2.8em);
+
+    --book-width: 0.5em;
+    --book-height: 2em;
+    --book-height-variance: 0.5em;
+    --shelf-height: 2.6em;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--book-width),1fr));
+    grid-auto-rows: 2.8em;
+    grid-auto-flow: row;
+    justify-content: start;
+
+}
+
+.container.main .library-shelf-book {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+    width: var(--book-width);
+    height: var(--shelf-height);
+}
+
+.container.main .library-shelf-book>div {
+    position: absolute;
+    width: 100%;
+    height: var(--book-height);
+    bottom: 0;
+    content: " ";
+    border: 0.5px solid #140319;
+    background-color: transparent;
+}
+
+.container.main .game-length {
+    position: relative;
+    grid-area: gamelength;
+    text-align: center;
+    background: rgba(242, 242, 242, 0.5);
+}
+
+.container.main .game-start {
+    position: relative;
+    grid-area: gamestart;
+    text-align: center;
+    background: rgba(242, 242, 242, 0.5);
+    line-height: 3em;
+}
+
+/* LIBRARY */
+
+.container.library {
+    font-size: 4vw;
+}
+
+.container.library .library-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 2em;
+    height: 2em;
+    line-height: 2;
+    color: #ffffff;
+    font-family: "Noto Sans JP";
+    text-align: center;
+}
+
+.container.library .library-header-back-button {
+    position: absolute;
+    top: 0.25em;
+    left: 0.375em;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.container.library .library-header-back-button::before {
+    position: absolute;
+    display: block;
+    content: "";
+    top: 0.75em;
+    left: 0.75em;
+    font-size: 50%;
+    width: 1.25em;
+    height: 1.25em;
+    border-left: 0.2em solid #ffffff;
+    border-top: 0.2em solid #ffffff;
+    transform: rotate(-45deg);
+}
+
+.container.library .library-books {
+    position: absolute;
+    top: 4em;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+}
+
+.container.library .library-book-group {
+    position: relative;
+    padding: 1em 0.5em;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.container.library .library-book-group-title {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.container.library .library-book-group-title>input[type="checkbox"] {
+    position: relative;
+    display: inline-block;
+    width: 1px;
+    height: 1px;
+    vertical-align: top;
+    margin-right: 1.5em;
+    visibility: hidden;
+    font-size: inherit;
+}
+
+.container.library .library-book-group-title>input[type="checkbox"]::before {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    visibility: visible;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 1.2em;
+    height: 1.2em;
+    background: #ffffff;
+    border: 0.1em solid #000000;
+    border-radius: 0.2em;
+}
+
+.container.library .library-book-group-title>input[type="checkbox"]::after {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    visibility: hidden;
+    content: "";
+    left: 0.4em;
+    top: -0.2em;
+    width: 0.75em;
+    height: 1.25em;
+    background: transparent;
+    border-bottom: 0.3em solid #006600;
+    border-right: 0.3em solid #006600;
+    transform: rotate(45deg);
+}
+
+.container.library .library-book-group-title>input[type="checkbox"]:checked::after {
+    visibility: visible;
+}
+
+
+.container.library .library-book {
+    position: relative;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 0.5em;
+    margin-top: 0.25em;
+    border-left: 0.5em solid transparent;
+}
+
+.container.library .library-book:first-child {
+    margin-top: 0;
+}
+
+.container.library .library-book-title {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.container.library .library-book-title>input[type="checkbox"] {
+    position: relative;
+    display: inline-block;
+    width: 1px;
+    height: 1px;
+    vertical-align: top;
+    margin-right: 1.5em;
+    visibility: hidden;
+    font-size: inherit;
+}
+
+.container.library .library-book-title>input[type="checkbox"]::before {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    visibility: visible;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 1.2em;
+    height: 1.2em;
+    background: #ffffff;
+    border: 0.1em solid #000000;
+    border-radius: 0.2em;
+}
+
+.container.library .library-book-title>input[type="checkbox"]::after {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    visibility: hidden;
+    content: "";
+    left: 0.4em;
+    top: -0.2em;
+    width: 0.75em;
+    height: 1.25em;
+    background: transparent;
+    border-bottom: 0.3em solid #006600;
+    border-right: 0.3em solid #006600;
+    transform: rotate(45deg);
+}
+
+.container.library .library-book-title>input[type="checkbox"]:checked::after {
+    visibility: visible;
+}
+
+
+/* GAME */
 
 .container.game {
     --panel-height: 18vw;
     --key-size: 15vw;
     --proposal-size: 8vw;
-    background: linear-gradient(#e66465, #9198e5);
 }
 
 .container.game .romajiboard {

@@ -1,4 +1,4 @@
-import m from "../../Mitrhil.js";
+import m from "../../Mithril.js";
 const RomajiProposalView = {
     oncreate(vnode) {
         vnode.attrs.input.registerRomajiProposal("game-romaji-proposal");

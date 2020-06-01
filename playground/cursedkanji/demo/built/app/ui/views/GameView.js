@@ -1,4 +1,4 @@
-import m from "../Mitrhil.js";
+import m from "../Mithril.js";
 import RomajiBoardView from "./game/RomajiboardView.js";
 import RomajiProposalView from "./game/RomajiProposalView.js";
 const GameView = {

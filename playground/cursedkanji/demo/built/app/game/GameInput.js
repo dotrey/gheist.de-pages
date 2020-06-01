@@ -1,5 +1,5 @@
 import TouchHandler from "../../touched/TouchHandler.js";
-import m from "../ui/Mitrhil.js";
+import m from "../ui/Mithril.js";
 export default class GameInput {
     constructor() {
         this.proposedText = "";
@@ -59,13 +59,10 @@ export default class GameInput {
             cancelTouchUpAfterMove: false,
             onTouchMove: (e, dx, dy) => {
                 dx *= -1;
-                console.log("scroll " + dx);
                 let snap = parseInt(e.getAttribute("data-scrollsnap") || "0");
                 let panelWidth = e.firstElementChild.offsetWidth;
                 e.scrollLeft = Math.max(0, snap * panelWidth + dx);
                 let scrollPercentage = Math.abs(dx / panelWidth);
-                console.log("panel width: " + panelWidth);
-                console.log("scroll percentage " + scrollPercentage);
                 if (scrollPercentage >= 0.25) {
                     if (dx > 0) {
                         snap++;
