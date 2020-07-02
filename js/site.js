@@ -1,6 +1,6 @@
 var site = (function(my) {
-    my.version = "0.3.0";
-    my.debug = true;
+    my.version = "0.4.0";
+    my.debug = false;
 
     my.config = {
         md2htmlWorker : null,
@@ -78,6 +78,23 @@ var site = (function(my) {
 
         // trigger possible event handlers
         this.trigger("content", html);
+    }
+
+    /* toggle dark/light mode */
+    my.toggleLightMode = function() {
+        try {
+            // wrapped in try..catch because some browsers throw an exception
+            // if the access to localStorage is blocked by e.g. incognito mode
+            if (!!localStorage.getItem("light-mode")) {
+                document.body.removeAttribute("data-light-mode");
+                localStorage.removeItem("light-mode");
+            }else{
+                document.body.setAttribute("data-light-mode", "");
+                localStorage.setItem("light-mode", "1");
+            }
+        }catch (e) {
+            // we will ignore this
+        }
     }
 
     /* image enlargment and lazy loading */
@@ -173,6 +190,7 @@ var site = (function(my) {
     /* setup */
 
     my.initialize = function() {
+        this.initLightMode();
         this.setupMd2Html();
         window.addEventListener("hashchange", this.onHashChange.bind(this), true);
         this.log("initialized site v" + this.version);
@@ -180,6 +198,18 @@ var site = (function(my) {
 
         window.setInterval(this.rotate.bind(this), this.config.rotationInterval);
     }
+
+    my.initLightMode = function() {
+        try {
+            // wrapped in try..catch because some browsers throw an exception
+            // if the access to localStorage is blocked by e.g. incognito mode
+            if (!!localStorage.getItem("light-mode")) {
+                document.body.setAttribute("data-light-mode", "");
+            }
+        }catch (e) {
+            // we will ignore this
+        }
+    };
 
     my.setupMd2Html = function() {
         this.log("setup md2html")
