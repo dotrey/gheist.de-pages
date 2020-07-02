@@ -11,11 +11,14 @@
 }
 
 :root {
+    font-size: 62.5%;
+
     --main-bg-color: #2B2B2B;
     --content-bg-color: #333333;
     --content-border-color: #303030;
     --content-box-bg-color: #3F3F3F;
     --content-box-border-color: #484848;
+    --content-border-width: 1rem;
     --main-color: #EEEEEE;
     --main-link-color:#589DF6;
     --low-contrast-color: #878787;
@@ -32,7 +35,7 @@ body, html {
 
 body {
 	font-family: "Open Sans Regular", Arial, sans-serif;
-	font-size: 14pt;
+	font-size: 1.6rem;
 	line-height: 1.4;
     color: var(--main-color);
     background-color: var(--main-bg-color);
@@ -59,11 +62,11 @@ a.arrow:before {
     position: relative;
     display: grid;
     min-height: 100%;
-    max-width: 60em;
+    max-width: 94rem;
     margin: 0 auto;
 
-    grid-template-columns: 1em 1fr 14em 1em;
-    grid-template-rows: 2em calc(50vh - 7em) 10em 1fr 2em;
+    grid-template-columns: 2rem 1fr 26rem 2rem;
+    grid-template-rows: 4rem calc(50vh - 13.3rem) 18.6rem 1fr 4rem;
     grid-template-areas: 
         ". . . ."
         ". content menutop ."
@@ -75,7 +78,7 @@ a.arrow:before {
 .layout-container .logo-de {
     position: relative;
     grid-area: menumiddle;
-    font-size: 10em;
+    font-size: 18.6rem;
     line-height: 1;
     user-select: none;
     text-align: center
@@ -98,7 +101,7 @@ a.arrow:before {
     grid-column: 2;
     grid-row: 3;
     text-align: right;
-    font-size: 10em;
+    font-size: 18.6rem;
     line-height: 1;
     user-select: none;
 }
@@ -134,17 +137,19 @@ a.arrow:before {
 
 .layout-container .logo-gh {
     position: relative;
+    font-size: 1.86rem;
     width: 10.5em;
     height: 7.5em;
     justify-self: center;
     align-self: center;
-    margin: 1em 0 1em -1.5em;
+    margin: 1em 0 1em -1.75em;
 }
 
 .layout-container .menu {
     position: relative;
     grid-area: menutop;
     margin: 0 0 0 3.5em;
+    font-size: 1.86rem
 }
 
 .layout-container .menu input[type="checkbox"] {
@@ -181,13 +186,13 @@ a.arrow:before {
 .layout-container .content {
     position: relative;
     grid-area: content;
-    justify-self: center;
+    justify-self: end;
     align-self: start;
-    max-width: 42em;
+    max-width: 64rem;
     width: 100%;
     box-sizing: border-box;
-    margin: -0.5em;
-    padding: 0.5em;
+    margin: calc(-1 * var(--content-border-width)) 0;
+    padding: var(--content-border-width) calc(2 * var(--content-border-width));
 }
 
 .content:not(:empty) ~ .logo-gheist,
@@ -210,145 +215,99 @@ a.arrow:before {
     color: var(--low-contrast-color);
 }
 
-/* @media screen and (min-width: 551px) {
-    .content:empty ~ .menu>.gh>.colors {
-        background-color: var(--content-bg-color);
-    }
-
-    .content:empty ~ .menu>.gh>.colors>.color {
-        visibility: hidden;
-    }
-} */
-
-/* mobile and small screens */
-@media screen and (max-width: 856px) {
-    body {
-        font-size: 2.2vw;
-    }
-}
-@media screen and (max-width: 550px) {
-    body {
-        font-size: 12pt;
-    }
-
-    .layout-container {    
-        grid-template-columns: 1em 1fr 1em;
-        grid-template-rows: 1em 1fr 2em;
-        grid-template-areas: 
-            ". . menu"
-            ". content ."
-            ". footer .";
-    }
-
-    .layout-container .logo-gheist {
-        grid-area: content;
-        align-self: center;
-        justify-self: center;
-        font-size: 31.4159vw;
-    }
-
-    .layout-container .logo-de {
-        display: none;
-    }
-
-    .layout-container .menu {
-        position: absolute;
-        width: 0;
-        height: 0;
-        grid-area: menu;
-        margin: 0;
-    }
-
-    .layout-container .menu .logo-gh {
-        position: absolute;
-        top: 1em;
-        right: 0;
-        width: 3.5em;
-        height: 2.5em;
-        margin: 0;
-        background-color: var(--content-bg-color);
-    }
-
-    .layout-container .menu::after {
-        position: absolute;
-        display: block;
-        top: 1em;
-        right: 3.5em;
-        height: 2.5em;
-        line-height: 2.5em;
-        background-color: var(--content-bg-color);
-        content: "menu";
-        padding: 0 1em;
-    }
-
-    .layout-container .menu::before {
-        position: absolute;
-        top: 1em;
-        right: 0;
-        width: 3.5em;
-        height: 2.5em;
-        display: block;
-        content: " ";
-        z-index: 11;
-    }
-
-    .layout-container .menu .links {
-        position: absolute;
-        box-sizing: border-box;
-        right: -0.5em;
-        top: 0.5em;
-        padding: 3.5em 1em 1em 2.4em;
-        background-color: var(--content-bg-color);
-        border: 0.5em solid var(--content-border-color);
-        display: none;
-    }
-
-    .layout-container .menu input[type="checkbox"]:checked ~ .links {
-        display: block;
-    }
-
-    .layout-container .menu .link.mobile-only {
-        display: block;
-    }
-
-    .layout-container .content {
-        margin-top: 3.5em;
-    }
-}
-@media screen and (max-height: 800px) {
-    .layout-container .logo-de {
-        display: none;
-    }
-}
-
 /* content design */
 .layout-container .content {
-    line-height: 1.5;
+    line-height: 1.6;
     overflow-wrap: break-word;
     word-break: break-word;
 }
 
 .layout-container .content:not(:empty) {
-    border: 0.5em solid var(--content-border-color);
+    border: var(--content-border-width) solid var(--content-border-color);
     background-color: var(--content-bg-color);
 }
 
 .layout-container .content h1 {
-    margin: 1em 0 0.25em 0;
+    margin: 1em 0 0.25em calc(-1 * var(--content-border-width));
     font-weight: normal;
     font-size: 2em;
 }
 
 .layout-container .content h2 {
-    margin: 1em 0 0.25em 0;
+    margin: 1em 0 0.25em calc(-1 * var(--content-border-width));
     font-weight: normal;
     font-size: 1.6em;
 }
 
 .layout-container .content h3 {
-    margin: 1em 0 0.25em 0;
+    margin: 1em 0 0.25em calc(-1 * var(--content-border-width));
     font-weight: normal;
     font-size: 1.3em;
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    .layout-container .content {
+        --h-grad-1: linear-gradient(27deg, rgb(255, 70, 37) 0%, rgb(186, 23, 255) 50%, rgb(0, 200, 255) 100%);
+        --h-grad-2: linear-gradient(27deg, rgb(186, 23, 255) 0%, rgb(0, 200, 255) 50%, rgb(255, 255, 0) 100%);
+        --h-grad-3: linear-gradient(27deg,  rgb(0, 200, 255) 0%, rgb(255, 255, 0) 50%, rgb(255, 70, 37) 100%);
+        --h-grad-4: linear-gradient(27deg,  rgb(255, 255, 0) 0%, rgb(255, 70, 37) 50%, rgb(186, 23, 255) 100%);
+    }
+
+    .layout-container .content h1:nth-of-type(1n) {
+        background: var(--h-grad-1);
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+    .layout-container .content h1:nth-of-type(2n),
+    .layout-container .content h2:nth-of-type(1n) {
+        background: var(--h-grad-2);
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+    .layout-container .content h1:nth-of-type(3n),
+    .layout-container .content h2:nth-of-type(2n),
+    .layout-container .content h3:nth-of-type(1n) {
+        background: var(--h-grad-3);
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+    .layout-container .content h1:nth-of-type(4n),
+    .layout-container .content h2:nth-of-type(3n),
+    .layout-container .content h3:nth-of-type(2n) {
+        background: var(--h-grad-4);
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+    
+    .layout-container .content h2:nth-of-type(4n),
+    .layout-container .content h3:nth-of-type(3n) {
+        background: var(--h-grad-1);
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+    .layout-container .content h3:nth-of-type(4n) {
+        background: var(--h-grad-2);
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+
+    .layout-container .content h1,
+    .layout-container .content h2,
+    .layout-container .content h3 {
+        /* background: linear-gradient(27deg, 
+        rgb(255, 70, 37) 0%,
+        rgb(186, 23, 255) 25%,
+        rgb(0, 200, 255) 50%,
+        rgb(40, 199, 0) 75%,
+        rgb(255, 255, 0) 100%);
+        background-attachment: fixed;
+        background-size: 100% 100vh; */
+        background-clip: text;
+        -webkit-background-clip: text;
+        font-weight: bold;
+        letter-spacing: 0.001em;
+        color: transparent;
+    }
 }
 
 .layout-container .content h1:first-child,
@@ -382,25 +341,25 @@ a.arrow:before {
 
 .layout-container .content blockquote {
     box-sizing: border-box;
-    margin: 0.5em;
+    margin: 0.5em 0;
     padding: 0.5em 1em;
     background-color: var(--content-box-bg-color);
-    border-left: 0.5em solid var(--main-color);
+    border-left: 0.25em solid var(--main-color);
 }
 
 .layout-container .content ol.codeblock {
     box-sizing: border-box;
-    margin: 0.5em;
+    margin: 0.5em 0;
     padding: 0.5em 1em 0.5em 0.5em;
     background-color: var(--content-box-bg-color);    
     font-family: "Roboto Mono Regular", monospace;
     list-style: none;
     counter-reset: item;
     border-left: 2em solid var(--content-box-border-color);
+    font-size: 0.9em;
 }
 
 .layout-container .content ol.codeblock li {
-    font-size: 0.8em;
     counter-increment: item;
     word-break: break-all;
 }
@@ -418,7 +377,7 @@ a.arrow:before {
 
 .layout-container .content span.inline-code {
     display: inline-block;
-    font-size: 0.8em;
+    font-size: 0.9em;
     padding: 0 0.5em;
     font-family: "Roboto Mono Regular", monospace;
     background-color: var(--content-box-bg-color);    
@@ -472,12 +431,12 @@ a.arrow:before {
     display: block;
     position: relative;
     box-sizing: border-box;
-    margin: 0.5em -1em;
+    margin: var(--content-border-width) calc(-3 * var(--content-border-width));
     border: 0;
-    border-top: 0.5em solid var(--content-border-color);
-    border-bottom: 0.5em solid var(--content-border-color);
+    border-top: var(--content-border-width) solid var(--content-border-color);
+    border-bottom: var(--content-border-width) solid var(--content-border-color);
     background-color: var(--main-bg-color);
-    height: 2.5em;
+    height: 5rem;
 }
 
 .layout-container .content hr.horizontal-break + h1,
@@ -490,9 +449,9 @@ a.arrow:before {
     position: relative;
     display: block;
     box-sizing: border-box;
-    width: 80%;
+    width: 90%;
     height: 10em;
-    margin: 1em 10%;
+    margin: 1em 5%;
     background-color: var(--content-border-color);
     background-position: center;
     background-repeat: no-repeat;
@@ -611,6 +570,112 @@ a.arrow:before {
     border: 0.1em solid var(--main-color);
     background-color: #FFFFFF;
     margin: 0.5em 0;
+}
+
+
+/* layout adjustments for mobile and small screens */
+@media screen and (max-width: 640px) {
+    .layout-container {    
+        grid-template-columns: 1em 1fr 1em;
+        grid-template-rows: 1em 1fr 2em;
+        grid-template-areas: 
+            ". . menu"
+            ". content ."
+            ". footer .";
+    }
+
+    .layout-container .logo-gheist {
+        grid-area: content;
+        align-self: center;
+        justify-self: center;
+        font-size: 31.4159vw;
+    }
+
+    .layout-container .logo-de {
+        display: none;
+    }
+
+    .layout-container .menu {
+        position: absolute;
+        font-size: 1.6rem;
+        width: 0;
+        height: 0;
+        grid-area: menu;
+        margin: 0;
+    }
+
+    .layout-container .menu .logo-gh {
+        position: absolute;
+        font-size: 1.6rem;
+        top: 1em;
+        right: 0;
+        width: 3.5em;
+        height: 2.5em;
+        margin: 0;
+        background-color: var(--content-bg-color);
+    }
+
+    .layout-container .menu::after {
+        position: absolute;
+        display: block;
+        top: 1em;
+        right: 3.5em;
+        height: 2.5em;
+        line-height: 2.5em;
+        background-color: var(--content-bg-color);
+        content: "menu";
+        padding: 0 1em;
+    }
+
+    .layout-container .menu::before {
+        position: absolute;
+        top: 1em;
+        right: 0;
+        width: 3.5em;
+        height: 2.5em;
+        display: block;
+        content: " ";
+        z-index: 11;
+    }
+
+    .layout-container .menu .links {
+        position: absolute;
+        box-sizing: border-box;
+        right: -0.5em;
+        top: 0.5em;
+        padding: 3.5em 1em 1em 2.4em;
+        background-color: var(--content-bg-color);
+        border: 0.5em solid var(--content-border-color);
+        display: none;
+    }
+
+    .layout-container .menu input[type="checkbox"]:checked ~ .links {
+        display: block;
+    }
+
+    .layout-container .menu .link.mobile-only {
+        display: block;
+    }
+
+    .layout-container .content {
+        margin-top: 3.5em;
+        padding: var(--content-border-width);
+    }
+
+    .layout-container .content h1,
+    .layout-container .content h2,
+    .layout-container .content h3 {
+        margin-left: 0;
+    }
+
+    .layout-container .content hr.horizontal-break {
+        margin: var(--content-border-width) calc(-2 * var(--content-border-width));
+    }
+}
+@media screen and (max-height: 800px) {
+    .layout-container .logo-de {
+        display: none;
+    }    
 }
 
 /* GH */
