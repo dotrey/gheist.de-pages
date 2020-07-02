@@ -294,6 +294,16 @@ a.arrow:before {
     .layout-container .content h1,
     .layout-container .content h2,
     .layout-container .content h3 {
+        /* background: linear-gradient(27deg, 
+        rgb(255, 70, 37) 0%,
+        rgb(186, 23, 255) 25%,
+        rgb(0, 200, 255) 50%,
+        rgb(40, 199, 0) 75%,
+        rgb(255, 255, 0) 100%);
+        background-attachment: fixed;
+        background-size: 100% 100vh; */
+        background-clip: text;
+        -webkit-background-clip: text;
         font-weight: bold;
         letter-spacing: 0.001em;
         color: transparent;
