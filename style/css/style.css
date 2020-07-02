@@ -62,7 +62,7 @@ a.arrow:before {
     position: relative;
     display: grid;
     min-height: 100%;
-    max-width: 120rem;
+    max-width: 94rem;
     margin: 0 auto;
 
     grid-template-columns: 2rem 1fr 26rem 2rem;
