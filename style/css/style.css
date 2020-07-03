@@ -431,7 +431,7 @@ body[data-light-mode] .sun-moon::after {
 .layout-container .content ol.codeblock {
     box-sizing: border-box;
     margin: 0.5em 0;
-    padding: 0.5em 1em 0.5em 0.5em;
+    padding: 0.5em;
     background-color: var(--content-box-bg-color);    
     font-family: "Roboto Mono Regular", monospace;
     list-style: none;
