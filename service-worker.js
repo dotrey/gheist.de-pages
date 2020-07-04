@@ -7,7 +7,6 @@
 var cachePatterns = [
     new RegExp(/(\.ttf|\.png|\.jpe?g|\.gif|\.ico)$/)
 ];
-var cacheDuration = 60 * 60 * 24 * 365;
 
 self.addEventListener("install", function(e){
     if ("skipWaiting" in self) {
@@ -23,22 +22,28 @@ self.addEventListener("activate", function(e){
 
 self.addEventListener("fetch", function(e){
     if (matchesCachePattern(e.request.url)) {
-        e.respondWith(modifiedResponse(e.request));
+        e.respondWith(modifiedRequest(e.request));
     }else{
         e.respondWith(fetch(e.request));
     }
 });
 
-function modifiedResponse(request) {
-    return fetch(request).then((response) => {
-        let headers = new Headers(response.headers);
-        headers.set("cache-control", "public, max-age=" + cacheDuration);
-        return new Response(response.body, {
-            status : response.status,
-            statusText : response.statusText,
-            headers : headers
-        });
-    });
+function modifiedRequest(request) {
+    request = new Request(
+        request.url,
+        {
+            method : request.method,
+            header : request.headers,
+            body : request.body,
+            mode : request.mode,
+            credentials : request.credentials,
+            cache : "force-cache",
+            redirect : request.redirect,
+            referrer : request.referrer,
+            integrity : request.integrity
+        }
+    )
+    return fetch(request);
 }
 
 function matchesCachePattern(url) {
