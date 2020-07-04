@@ -30,7 +30,7 @@ This version went live on 04.10.2014 and consisted mainly of a refreshed design.
 This version went live on 26.04.2012, bringing a large update to the backend of the page by moving to a new CMS.
 
 ## gheist.de - v1
-This is it, the first version of gheist.de I ever launched on 16.05.2020! But of course not the first website. In fact, gheist.de was the successor of dogx-games.de (talking about some youthful follies...).
+This is it, the first version of gheist.de I ever launched on 16.05.2010! But of course not the first website. In fact, gheist.de was the successor of dogx-games.de (talking about some youthful follies...).
 
 ## dogx-games.de
 Yes, this is it. My very first domain. I had various small websites on different free hosters before, but in 2005 the time for my very own top-level domain had finally come. And obviously, my main interests back then were dogs and developing games.

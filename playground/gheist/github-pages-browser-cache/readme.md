@@ -26,6 +26,6 @@ On an interesting side note: modifying the `max-age` with the service worker all
 
 Maybe it wasn't. I tried modifying the response, which didn't work. But with the service worker I can also modify the request, and the request allows to set a [cache mode](https://developer.mozilla.org/en-US/docs/Web/API/Request/cache). This can be set to `force-cache`, telling the browser to always serve the cached version (if there is one), regardless of how stale it might be. If there is no cached version, the browser will make a regular request to the server.
 
-And does this work? After testing a bit, It seems to be working. The font file is added to the browser's cache on the first visit, and -- in contrast to all the other files put in the cache on the first visit -- when requested after the cache has expired, the service worker returns HTTP status 200 from disk cache. The other files cause a request to the server resulting in HTTP status 304 (not modified).
+And does this work? After testing for a bit, it seems to be working. The font file is added to the browser's cache on the first visit, and -- in contrast to all the other files put in the cache on the first visit -- when requested after the cache has expired, the service worker returns HTTP status 200 from disk cache. The other files cause a request to the server resulting in HTTP status 304 (not modified).
 
 Keep in mind that this comes with the downside that if you actually want to update the file, you must either trigger a force refresh, rename the file or find another way around the `force-cache`.
