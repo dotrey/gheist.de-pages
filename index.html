@@ -8,73 +8,28 @@
     <link rel="preload" href="/style/css/style.css" as="style">
     <link rel="preload" href="/style/font/OpenSans-Regular.ttf" as="font" crossorigin>
 
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("/service-worker.js", {
-                scope : "/"
-            });
-        }else{
-            console.log("no service worker support");
-        }
-    </script>
-
     <link rel="icon" href="/style/img/gheist.ico">
     <title>Geoffrey Heinze | gheist.de</title>
 
     <link rel="stylesheet" href="/style/css/style.css">
 </head>
-<body>    
-    <div class="layout-container">
-        <main class="content" id="content"></main>
-        <div class="logo-gheist"><span>gheist</span><div class="subtitle">Geoffrey-Alexeij Heinze |&nbsp;
-            <div class="rotator" id="logo-rotator">
-                <span class="visible">software engineer</span>
-                <span>D&amp;D player</span>
-                <span>Game Boy collector</span>
-                <span>traveller</span>
-                <span>whisk(e)y fan</span>
-                <span>developer</span>
-                <span>board game lover</span>
-                <span>pixel artist</span>
-                <span>Japan enthusiast</span>
-            </div>
-            <br/><span style="position:relative;display:inline-block;direction:rtl;user-select:none;"><span style="float:left;display:none;">3</span><span style="float:right;">e</span><span style="display:none;">c</span><span style="float:right;">d</span><span style="float:right;">.</span><span style="display:none;">5</span><span style="float:right;">t</span><span style="display:none;">v</span><span style="float:right;">s</span><span style="display:none;">p</span><span style="float:left;">c</span><span style="float:right;display:none;">5</span><span style="float:left;">o</span><span style="float:left;">n</span><span style="float:right;display:none;">i</span><span style="float:left;">t</span><span style="float:right;display:none;">f</span><span style="float:left;">a</span><span style="float:left;display:none;">y</span><span style="display:inline-block;">i</span><span style="display:none;">s</span><span style="display:inline-block;">e</span><span style="float:left;display:none;">5</span><span style="display:inline-block;">h</span><span style="float:right;display:none;">q</span><span style="display:inline-block;">g</span><span style="display:inline-block;">@</span><span style="display:inline-block;">t</span><span style="display:inline-block;">c</span></span></div>
-        </div>
-        <div class="logo-de"><span>de</span></div>        
-        <label class="menu">
-            <input type="checkbox" id="checkbox-menu-open" />
-            <div class="gh logo-gh" onclick="location.href=('#!/');return false;" data-group="x">
-                <div class="colors">
-                    <div class="color" data-color="1"></div>
-                    <div class="color" data-color="2"></div>
-                    <div class="color" data-color="3"></div>
-                    <div class="color" data-color="4"></div>
-                    <div class="color" data-color="5"></div>
-                    <div class="color" data-color="6"></div>
-                </div>
-                <div class="block group-gh gh1"></div>
-                <div class="block group-gh gh2"></div>
-                <div class="block group-gh gh3"></div>
-                <div class="block group-gh gh4"></div>
-                <div class="block group-gh gh5"></div>
-
-                <div class="block group-x x1"></div>
-                <div class="block group-x x2"></div>
-                <div class="block group-x x3"></div>
-                <div class="block group-x x4"></div>
-                <div class="block group-x x5"></div>
-            </div>
-            <nav class="links">
-                <a class="link mobile-only" href="#!/">home</a>
-                <a class="link" href="#!/about/">about</a>
-                <a class="link" href="#!/playground/">playground</a>
-                <a class="link" href="#!/pixel/">pixel</a>
-            </nav>
-        </label>
-        <footer class="footer"><span class="day-night" onclick="site.toggleLightMode()"><div class="sun-moon"></div></span> | Copyright &copy; Geoffrey-Alexeij Heinze | <a class="link" href="#!/imprint.md">Imprint</a></footer>
-        <div class="day-night"></div>
-    </div>
-
-    <script src="/js/site.min.js"></script>
+<body>
+    <header>
+        <svg class="svg-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450" height="450" viewBox="0 0 450.00 450.00">
+            <rect class="svg-logo-bg" x="0" y="0" width="450" height="450"/>
+            <path class="svg-logo-gh" d="M 50,100L 100,100L 250,100L 250,150L 100,150L 100,300L 200,300L 200,250L 150,250L 150,200L 200,200L 250,200L 350,200L 350,100L 400,100L 400,200L 400,250L 400,350L 350,350L 350,250L 250,250L 250,300L 250,350L 100,350L 50,350L 50,100 Z "/>
+        </svg>
+        <h1 class="title">Geoffrey-Alexeij Heinze</h1>
+    </header>
+    <nav>
+        <a href="#" class="menu-link">About</a>
+        <a href="#" class="menu-link menu-space-right">Projects</a>
+        <a href="#" class="menu-link menu-space-left">Journey</a>
+        <a href="#" class="menu-link">Blog</a>
+    </nav>
+    <main style="height: 2000px;">
+        Hello World
+    </main>
+    <script src="/js/gheist-v7.js"></script>
 </body>
 </html>

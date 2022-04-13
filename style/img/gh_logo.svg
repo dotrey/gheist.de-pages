@@ -1,0 +1,4 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450" height="450" viewBox="0 0 450.00 450.00">
+	<rect x="0" y="0" fill="#FFFFFF" fill-opacity="1" stroke-width="0.2" stroke-linejoin="miter" stroke="#FFFFFF" stroke-opacity="1" width="450" height="450"/>
+	<path class="svg-logo-gh" fill-opacity="1" stroke-width="0.2" stroke-linejoin="miter" stroke-opacity="1" d="M 50,100L 100,100L 250,100L 250,150L 100,150L 100,300L 200,300L 200,250L 150,250L 150,200L 200,200L 250,200L 350,200L 350,100L 400,100L 400,200L 400,250L 400,350L 350,350L 350,250L 250,250L 250,300L 250,350L 100,350L 50,350L 50,100 Z "/>
+</svg>

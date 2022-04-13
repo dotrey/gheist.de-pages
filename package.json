@@ -1,0 +1,34 @@
+{
+  "name": "gheist.de-pages",
+  "version": "7.0.0",
+  "description": "Geoffrey's private website",
+  "private": true,
+  "scripts": {
+    "build": "npx rollup --config",
+    "release": "npx rollup --config rollup.release.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dotrey/gheist.de-pages.git"
+  },
+  "author": "Geoffrey-Alexeij Heinze",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/dotrey/gheist.de-pages/issues"
+  },
+  "homepage": "https://gheist.de",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.1",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "rollup": "^2.59.0",
+    "rollup-plugin-filesize": "^9.1.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4",
+    "http-server": "*"
+  },
+  "dependencies": {
+    "kidoo": "file:../kidoo"
+  }
+}
