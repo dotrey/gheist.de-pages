@@ -27,6 +27,7 @@ export class UiController {
 
     handleNavigated(route: string) {
         this.effects.apply(route);
+        this.kidooTick();
     }
 
     private kidooTick() {

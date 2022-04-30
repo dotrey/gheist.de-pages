@@ -73,7 +73,7 @@ nav {
     top: 0;
     left: 0;
     right: 0;
-    height: 12rem;
+    height: 8rem;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -85,11 +85,19 @@ nav {
 }
 
 nav.logo-scrolling {
-    --menu-center-spacing: calc(var(--scroll-progress) * 5em);
+    --menu-center-spacing: calc(var(--scroll-progress) * 4em);
+    height: calc(12rem - var(--scroll-progress) * 4rem);
+    --nav-bg-color: rgba(43, 43, 43, calc(0.8 * var(--scroll-progress)));
+    background-color: var(--nav-bg-color);
+    backdrop-filter: blur(calc(1rem * var(--scroll-progress)));
+    /* box-shadow: 0 0 1em 0.5em var(--nav-bg-color); */
 }
 
 nav.logo-embedded {
-    --menu-center-spacing: 5em;
+    --menu-center-spacing: 4em;
+    background-color: rgba(43, 43, 43, 0.8);
+    backdrop-filter: blur(1rem);
+    /* box-shadow: 0 0 1em 0.5em var(--bg-color); */
 }
 
 nav a.menu-link {
@@ -119,17 +127,31 @@ header {
     align-items: center;
 }
 
+header::before {
+    position: absolute;
+    display: block;
+    content: "";
+    background-image: url('../img/A-01-faded.png');
+    background-position: center top;
+    width: 100%;
+    height: 1080px;
+    top: 0;
+}
+
 header .svg-logo {
-    position: relative;
-    width: min(50vh, 50vw);
-    height: min(50vh, 50vw);
+    position: sticky;
+    top: -2rem;
+    --logo-size: calc(12rem + min(50vh, 50vw) * (1 - var(--scroll-progress)));
+    width: var(--logo-size);
+    height: var(--logo-size);
+    z-index: 1;
 }
 
 header.logo-embedded .svg-logo{
     position: fixed;
-    top: -1.5rem;
-    width: 15rem;
-    height: 15rem;
+    top: -2rem;
+    width: 12rem;
+    height: 12rem;
 }
 
 header .svg-logo-gh {

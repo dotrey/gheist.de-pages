@@ -305,6 +305,7 @@
         }
         handleNavigated(route) {
             this.effects.apply(route);
+            this.kidooTick();
         }
         kidooTick() {
             this.kidoo.tick(Math.fround((window.scrollY / window.innerHeight) * 1000));
