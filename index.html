@@ -15,10 +15,18 @@
 </head>
 <body data-path="/">
     <nav class="logo-scrolling">
-        <a href="#about" class="menu-link">About</a>
-        <a href="#" class="menu-link menu-space-right">Projects</a>
-        <a href="#" class="menu-link menu-space-left">Journey</a>
-        <a href="#" class="menu-link">Blog</a>
+        <a href="#" class="menu-link" onclick="demoNav('logo-scrolling', 'index logo-scrolling')">About</a>
+        <a href="#" class="menu-link menu-space-right" onclick="demoNav('logo-embedded', 'projects logo-embedded')">Projects</a>
+        <a href="#" class="menu-link menu-space-left" onclick="demoNav('logo-embedded', 'journey logo-embedded')">Journey</a>
+        <a href="#" class="menu-link" onclick="demoNav('logo-embedded', 'blog logo-embedded')">Blog</a>
+        <script>
+            function demoNav(cnav, cheader) {
+                let nav = document.querySelector("nav");
+                let header = document.querySelector("header");
+                nav.setAttribute("class", cnav);
+                header.setAttribute("class", cheader);
+            }
+        </script>
     </nav>
     <header class="index">
         <svg class="svg-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450" height="450" viewBox="0 0 450.00 450.00">
