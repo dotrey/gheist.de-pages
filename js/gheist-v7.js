@@ -311,7 +311,7 @@
             this.kidoo.tick(Math.fround((window.scrollY / window.innerHeight) * 1000));
         }
         createEffects() {
-            this.effects.addRoute("\/", new LogoScrollEffect(this.kidoo));
+            this.effects.addRoute("^/$", new LogoScrollEffect(this.kidoo));
         }
     }
 

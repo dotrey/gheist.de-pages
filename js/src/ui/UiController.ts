@@ -35,6 +35,6 @@ export class UiController {
     }
 
     private createEffects() {
-        this.effects.addRoute("\/", new LogoScrollEffect(this.kidoo));
+        this.effects.addRoute("^/$", new LogoScrollEffect(this.kidoo));
     }
 }

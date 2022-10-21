@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="30.72" height="30.72" viewBox="0 0 30.72 30.72" enable-background="new 0 0 30.72 30.72" xml:space="preserve">
+	<ellipse fill="none" stroke-width="1.92" stroke-linejoin="round" stroke="#000000" stroke-opacity="1" cx="13.56" cy="11.3" rx="2.1" ry="3.26"/>
+	<ellipse fill="none" stroke-width="1.92" stroke-linejoin="round" stroke="#000000" stroke-opacity="1" cx="20.26" cy="10.88" rx="2.1" ry="3.26"/>
+	<path fill="none" stroke-width="2.88" stroke-linejoin="round" stroke="#000000" stroke-opacity="1" d="M 27.1838,10.2891C 25.8302,4.55962 22.1832,3.49013 20.4536,2.7644C 19.7656,2.4757 7.7623,-1.0743 4.8502,7.42434C 2.78227,13.4593 2.96181,14.0154 3.50699,24.634C 3.62699,27.914 2.28161,30.5275 8.14699,28.274C 14.0124,26.0204 10.6815,25.4199 14.4754,28.0121C 17.1449,29.836 17.1825,29.158 22.0704,26.2551C 22.3044,26.116 23.1841,25.194 26.6574,28.4704C 27.1838,28.967 29.4397,30.0747 27.5222,21.6333C 26.1163,15.4443 30.2669,17.9283 16.1674,19.1506"/>
+</svg>
