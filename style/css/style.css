@@ -62,6 +62,38 @@ body {
     transition: background-color 0.2s ease;
 }
 
+body::before {    
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    display: block;
+    content: "";
+    background-image: radial-gradient(var(--flake-color) 0.1rem, transparent 0.3rem);
+    --spacing: 4rem;
+    background-size: var(--spacing) var(--spacing);
+    background-position: 0 0;
+    background-repeat: repeat;
+    z-index: -1;
+}
+
+body::after {    
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    display: block;
+    content: "";
+    background-image: radial-gradient(var(--flake-color) 0.1rem, transparent 0.1rem);
+    --spacing: 4rem;
+    background-size: var(--spacing) var(--spacing);
+    background-position: 0 0;
+    background-repeat: repeat;
+    z-index: -1;
+}
+
 a, a:visited {
     color: var(--text-color);
     text-decoration: underline;
@@ -363,21 +395,6 @@ header:not(.index) .fader {
     width: 100%;
     overflow: hidden;
     z-index: -2;
-}
-
-header:not(.index) .fader::after {
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    height: 100%;
-    width: 100%;
-    display: block;
-    content: "";
-    background-image: radial-gradient(var(--flake-color) 0.1rem, transparent 0.3rem);
-    --spacing: 4rem;
-    background-size: var(--spacing) var(--spacing);
-    background-position: 0 0;
-    background-repeat: repeat;
 }
 
 /*
