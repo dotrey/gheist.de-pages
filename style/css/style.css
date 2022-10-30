@@ -15,11 +15,13 @@
     --content-border-width: 1rem;
 
     --bg-color: #2b2b2b;
-    --bg-color-rgb: 43;
+    --bg-color-rgb: 43, 43, 43;
     --bg-color-darker: #202020;
     --bg-color-lighter: #878787;
     --text-color: #f4f4f5;
     --accent-color: #48f795;
+    --flake-color: #2f2f2f;
+
 
     /*
     --main-bg-color: #2b2b2b;
@@ -100,14 +102,14 @@ nav {
 nav.logo-scrolling {
     --menu-center-spacing: calc(var(--scroll-progress) * 4em);
     height: calc(12rem - var(--scroll-progress) * 4rem);
-    --nav-bg-color: rgba(var(--bg-color-rgb), var(--bg-color-rgb), var(--bg-color-rgb), calc(0.8 * var(--scroll-progress)));
+    --nav-bg-color: rgba(var(--bg-color-rgb), calc(0.8 * var(--scroll-progress)));
     background-color: var(--nav-bg-color);
     backdrop-filter: blur(calc(1rem * var(--scroll-progress)));
 }
 
 nav.logo-embedded {
     --menu-center-spacing: 4em;
-    background-color: rgba(var(--bg-color-rgb), var(--bg-color-rgb), var(--bg-color-rgb), 0.8);
+    background-color: rgba(var(--bg-color-rgb), 0.8);
     backdrop-filter: blur(1rem);
 }
 
@@ -317,7 +319,7 @@ header.index .fader {
     left: 0;
     right: 0;
     height: 12vh;
-    background: linear-gradient(rgba(var(--bg-color-rgb), var(--bg-color-rgb), var(--bg-color-rgb), 0), var(--bg-color));
+    background: linear-gradient(rgba(var(--bg-color-rgb), 0), var(--bg-color));
     --gradient-spacing-1: 3.4rem;
     --gradient-spacing-2: 3.5rem;
 }
@@ -359,13 +361,11 @@ header:not(.index) .fader {
     top: 0;
     height: 100%;
     width: 100%;
-    --gradient-spacing-1: 3.4rem;
-    --gradient-spacing-2: 3.5rem;
     overflow: hidden;
     z-index: -2;
 }
 
-header:not(.index) .fader::before {
+header:not(.index) .fader::after {
     position: fixed;
     top: 0%;
     left: 0%;
@@ -373,11 +373,11 @@ header:not(.index) .fader::before {
     width: 100%;
     display: block;
     content: "";
-    background-image: repeating-linear-gradient(45deg,
-      transparent,
-      transparent var(--gradient-spacing-1),
-      var(--accent-color) var(--gradient-spacing-1),
-      var(--accent-color) var(--gradient-spacing-2));
+    background-image: radial-gradient(var(--flake-color) 0.1rem, transparent 0.3rem);
+    --spacing: 4rem;
+    background-size: var(--spacing) var(--spacing);
+    background-position: 0 0;
+    background-repeat: repeat;
 }
 
 /*
