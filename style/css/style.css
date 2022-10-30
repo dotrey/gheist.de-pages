@@ -60,6 +60,8 @@ body {
     color: var(--text-color);
     background-color: var(--bg-color);
     transition: background-color 0.2s ease;
+    --bg-offset-x: 0;
+    --bg-offset-y: 0;
 }
 
 body::before {    
@@ -73,7 +75,7 @@ body::before {
     background-image: radial-gradient(var(--flake-color) 0.1rem, transparent 0.3rem);
     --spacing: 4rem;
     background-size: var(--spacing) var(--spacing);
-    background-position: 0 0;
+    background-position: calc(2rem * var(--bg-offset-x)) calc(2rem * var(--bg-offset-y));
     background-repeat: repeat;
     z-index: -1;
 }
@@ -89,7 +91,7 @@ body::after {
     background-image: radial-gradient(var(--flake-color) 0.1rem, transparent 0.1rem);
     --spacing: 4rem;
     background-size: var(--spacing) var(--spacing);
-    background-position: 0 0;
+    background-position: calc(1rem * var(--bg-offset-x)) calc(1rem * var(--bg-offset-y));
     background-repeat: repeat;
     z-index: -1;
 }
