@@ -76,6 +76,10 @@ a.arrow:before {
     content: "\2192";
 }
 
+/*
+    Navigation
+*/
+
 nav {
     position: fixed;
     top: 0;
@@ -124,12 +128,20 @@ nav .menu-space-left {
     margin-left: var(--menu-center-spacing);
 }
 
+/*
+    Header
+*/
+
 header {
     position: relative;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr minmax(15rem, 37.5rem) minmax(15rem, 37.5rem) 1fr;
     grid-template-rows: 8rem 4rem 50vh;
+    --bg-image-x: center;
+    --bg-image-y: top;
+    --bg-image-opacity: 0;
+    --bg-image-size: cover;
 }
 
 header.index {
@@ -138,6 +150,31 @@ header.index {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
+    --bg-image-x: center;
+    --bg-image-y: top;
+    --bg-image-opacity: 1;
+    --bg-image-size: cover;
+}
+
+header.projects {
+    --bg-image-x: 67%;
+    --bg-image-y: -5%;
+    --bg-image-opacity: 0.25;
+    --bg-image-size: 256%;
+}
+
+header.journey {
+    --bg-image-x: 15%;
+    --bg-image-y: 35%;
+    --bg-image-opacity: 0.25;
+    --bg-image-size: 256%;
+}
+
+header.blog {    
+    --bg-image-x: 58%;
+    --bg-image-y: 42%;
+    --bg-image-opacity: 0.15;
+    --bg-image-size: 256%;
 }
 
 header::before {
@@ -155,50 +192,49 @@ header::before {
         url('../img/A-02-2K-L.webp') 1x,
         url('../img/A-02-4K-L.webp') 2x
     );
-    background-size: 256%;
+    background-size: var(--bg-image-size);
     background-position: var(--bg-image-x) var(--bg-image-y);
     background-repeat: no-repeat;
     height: 100%;
     width: 100%;
-    opacity: 0;
+    opacity: var(--bg-image-opacity);
     transition: all 0.5s ease;
+}
+
+header::after {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    display: block;
+    content: "";
+    background-color: var(--bg-color);
+    -webkit-mask-image: url('../img/A-02-2K-L.webp');
+    mask-image: url('../img/A-02-2K-L.webp');
+    -webkit-mask-size: 256%;
+    mask-size: 256%;
+    -webkit-mask-position: var(--bg-image-x) var(--bg-image-y);
+    mask-position: var(--bg-image-x) var(--bg-image-y);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    transition: all 0.5s ease;
+    z-index: -1;
 }
 
 header.index::before {
     position: absolute;
-    background-position: center top;
-    background-size: cover;
     width: 100%;
     height: 100vh;
     top: 10vh;
-    opacity: 1;
 }
 
-header.projects {
-    --bg-image-x: 67%;
-    --bg-image-y: -5%;
-}
-
-header.projects::before {
-    opacity: 0.25;
-}
-
-header.journey {
-    --bg-image-x: 15%;
-    --bg-image-y: 35%;
-}
-
-header.journey::before {
-    opacity: 0.25;
-}
-
-header.blog {    
-    --bg-image-x: 58%;
-    --bg-image-y: 42%;
-}
-
-header.blog::before {
-    opacity: 0.15;
+header.index::after {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 10vh;
+    opacity: 0;
 }
 
 header.index .svg-logo {
@@ -301,6 +337,21 @@ header.index .fader::before {
       var(--accent-color) var(--gradient-spacing-2));
 }
 
+header.index .fader::after {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 50%;
+    display: block;
+    content: "";
+    background-image: repeating-linear-gradient(-45deg,
+      transparent,
+      transparent var(--gradient-spacing-1),
+      var(--accent-color) var(--gradient-spacing-1),
+      var(--accent-color) var(--gradient-spacing-2));
+}
+
 header:not(.index) .fader {
     position: fixed;
     display: block;
@@ -323,41 +374,6 @@ header:not(.index) .fader::before {
     display: block;
     content: "";
     background-image: repeating-linear-gradient(45deg,
-      transparent,
-      transparent var(--gradient-spacing-1),
-      var(--accent-color) var(--gradient-spacing-1),
-      var(--accent-color) var(--gradient-spacing-2));
-}
-
-header:not(.index) .fader::after {
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    height: 100%;
-    width: 100%;
-    display: block;
-    content: "";
-    background-color: var(--bg-color);
-    -webkit-mask-image: url('../img/A-02-4K-L.webp');
-    mask-image: url('../img/A-02-4K-L.webp');
-    -webkit-mask-size: 256%;
-    mask-size: 256%;
-    -webkit-mask-position: var(--bg-image-x) var(--bg-image-y);
-    mask-position: var(--bg-image-x) var(--bg-image-y);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    transition: all 0.5s ease;
-}
-
-header.index .fader::after {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    height: 100%;
-    width: 50%;
-    display: block;
-    content: "";
-    background-image: repeating-linear-gradient(-45deg,
       transparent,
       transparent var(--gradient-spacing-1),
       var(--accent-color) var(--gradient-spacing-1),
