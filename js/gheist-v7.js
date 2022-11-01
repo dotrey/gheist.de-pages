@@ -220,12 +220,16 @@
         constructor(kidoo) {
             super(0, Number.MAX_SAFE_INTEGER);
             this.kidoo = kidoo;
+            this.orientationX = 0;
+            this.orientationY = 0;
         }
         apply(_route) {
             this.kidoo.addOccurrence(this);
+            window.addEventListener("deviceorientation", this.handleOrientation.bind(this), true);
         }
         remove() {
             this.kidoo.removeOccurrence(this);
+            window.removeEventListener("deviceorientation", this.handleOrientation);
             this.reset();
         }
         onactivate() {
@@ -237,12 +241,21 @@
         ontick(_tick, _globalTick) {
             this.updateProgress();
         }
+        handleOrientation(event) {
+            var _a, _b;
+            this.orientationX = ((_a = event.gamma) !== null && _a !== void 0 ? _a : 0) / 90;
+            this.orientationY = ((_b = event.beta) !== null && _b !== void 0 ? _b : 0) / 180;
+            console.log(`orientation adjustment ${this.orientationX} - ${this.orientationY}`);
+            this.updateProgress();
+        }
         reset() {
             document.body.style.setProperty("--bg-offset-x", "0");
             document.body.style.setProperty("--bg-offset-y", "0");
         }
         updateProgress() {
-            let y = -this.currentGlobalTick / 100;
+            let y = this.orientationY - this.currentGlobalTick / 100;
+            let x = this.orientationX;
+            document.body.style.setProperty("--bg-offset-x", "" + x);
             document.body.style.setProperty("--bg-offset-y", "" + y);
         }
     }
