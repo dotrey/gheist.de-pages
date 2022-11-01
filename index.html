@@ -26,13 +26,6 @@
                 nav.setAttribute("class", cnav);
                 header.setAttribute("class", cheader);
             }
-
-            document.body.addEventListener("mousemove", (e) => {
-                let x = -((document.body.offsetWidth / 2) - e.clientX) / document.body.offsetWidth;
-                let y = -((document.body.offsetHeight / 2) - e.clientY) / document.body.offsetHeight;
-                document.body.style.setProperty("--bg-offset-x", "" + x);
-                document.body.style.setProperty("--bg-offset-y", "" + y);
-            });
         </script>
     </nav>
     <header class="index">

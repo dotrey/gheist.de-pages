@@ -1,5 +1,6 @@
 import { Kidoo } from "kidoo";
 import { EffectRouter } from "./EffectRouter";
+import { BackgroundScrollEffect } from "./effects/BackgroundScrollEffect";
 import { LogoScrollEffect } from "./effects/LogoScrollEffect";
 
 export class UiController {
@@ -36,5 +37,6 @@ export class UiController {
 
     private createEffects() {
         this.effects.addRoute("^/$", new LogoScrollEffect(this.kidoo));
+        this.effects.addRoute(".*", new BackgroundScrollEffect(this.kidoo));
     }
 }

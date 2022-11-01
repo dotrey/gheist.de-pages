@@ -216,6 +216,37 @@
         }
     }
 
+    class BackgroundScrollEffect extends Occurrence {
+        constructor(kidoo) {
+            super(0, Number.MAX_SAFE_INTEGER);
+            this.kidoo = kidoo;
+        }
+        apply(_route) {
+            this.kidoo.addOccurrence(this);
+        }
+        remove() {
+            this.kidoo.removeOccurrence(this);
+            this.reset();
+        }
+        onactivate() {
+            this.updateProgress();
+        }
+        ondeactivate() {
+            this.updateProgress();
+        }
+        ontick(_tick, _globalTick) {
+            this.updateProgress();
+        }
+        reset() {
+            document.body.style.setProperty("--bg-offset-x", "0");
+            document.body.style.setProperty("--bg-offset-y", "0");
+        }
+        updateProgress() {
+            let y = -this.currentGlobalTick / 100;
+            document.body.style.setProperty("--bg-offset-y", "" + y);
+        }
+    }
+
     class LogoScrollEffect extends Occurrence {
         constructor(kidoo) {
             super(0, 500);
@@ -312,6 +343,7 @@
         }
         createEffects() {
             this.effects.addRoute("^/$", new LogoScrollEffect(this.kidoo));
+            this.effects.addRoute(".*", new BackgroundScrollEffect(this.kidoo));
         }
     }
 

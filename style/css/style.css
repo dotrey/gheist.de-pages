@@ -72,26 +72,14 @@ body::before {
     width: 100%;
     display: block;
     content: "";
-    background-image: radial-gradient(var(--flake-color) 0.1rem, transparent 0.3rem);
+    background-image: 
+        radial-gradient(var(--flake-color) 0.1rem, transparent 0.1rem),
+        radial-gradient(var(--flake-color) 0.1rem, transparent 0.3rem);
     --spacing: 4rem;
     background-size: var(--spacing) var(--spacing);
-    background-position: calc(2rem * var(--bg-offset-x)) calc(2rem * var(--bg-offset-y));
-    background-repeat: repeat;
-    z-index: -1;
-}
-
-body::after {    
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    height: 100%;
-    width: 100%;
-    display: block;
-    content: "";
-    background-image: radial-gradient(var(--flake-color) 0.1rem, transparent 0.1rem);
-    --spacing: 4rem;
-    background-size: var(--spacing) var(--spacing);
-    background-position: calc(1rem * var(--bg-offset-x)) calc(1rem * var(--bg-offset-y));
+    background-position: 
+        calc(1rem * var(--bg-offset-x)) calc(1rem * var(--bg-offset-y)),
+        calc(2rem * var(--bg-offset-x)) calc(2rem * var(--bg-offset-y));
     background-repeat: repeat;
     z-index: -1;
 }
